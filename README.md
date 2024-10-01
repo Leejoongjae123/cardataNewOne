@@ -36,7 +36,7 @@
 
 You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
 
-## Deploy to Vercel
+## 
 
 Vercel deployment will guide you through creating a Supabase account and project.
 
