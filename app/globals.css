@@ -837,7 +837,9 @@ input:checked + .switch-button:before {
   align-items: flex-start;
   height: 100%;
 }
-
+#wrapper{
+  background-color: rgb(var(--color-bgbody) / var(--tw-bg-opacity));
+}
 .simplebar-wrapper {
   overflow: hidden;
   width: inherit;
