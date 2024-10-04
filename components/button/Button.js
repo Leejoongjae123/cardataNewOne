@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import Spinner from '../Spinner';  // Spinner 컴포넌트의 경로를 적절히 조정해주세요
+import Spinner from '@nextui-org/react';  // Spinner 컴포넌트의 경로를 적절히 조정해주세요
 
 export function SubmitButton({ children }) {
   const { pending } = useFormStatus();

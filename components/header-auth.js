@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
-
+import { SubmitButton } from "@/components/button/Button";
 export default async function AuthButton() {
   const {
     data: { user },
@@ -49,7 +49,11 @@ export default async function AuthButton() {
   return user ? (
     <div className="flex items-center gap-4">
       Hey, {user.email}!
-      <form action={signOutAction}>
+      <form method="#" action="#">
+        {/* <div>
+          <SubmitButton formAction={signOutAction}>Sign out</SubmitButton>
+        </div> */}
+
         <Button type="submit" variant={"outline"}>
           Sign out
         </Button>
@@ -58,10 +62,14 @@ export default async function AuthButton() {
   ) : (
     <div className="flex gap-2">
       <Button asChild size="sm" variant={"outline"}>
-        <Link className="text-black" href="/sign-in">Sign in</Link>
+        <Link className="text-black" href="/sign-in">
+          Sign in
+        </Link>
       </Button>
       <Button asChild size="sm" variant={"default"}>
-        <Link className="text-black" href="/sign-up">Sign up</Link>
+        <Link className="text-black" href="/sign-up">
+          Sign up
+        </Link>
       </Button>
     </div>
   );

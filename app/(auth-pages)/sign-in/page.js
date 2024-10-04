@@ -20,23 +20,13 @@ export default function Login({ searchParams }) {
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
         >
-          <a href="#">
-            {" "}
+          <a href="/sign-in">
             <img
               src="/images/logo1.png"
-              className="w-28 absolute top-10 left-10 dark:hidden"
+              className="w-48 absolute top-10 left-10 dark:hidden"
               alt=""
             />
           </a>
-          <a href="#">
-            {" "}
-            <img
-              src="/images/logo-light.png"
-              className="w-28 absolute top-10 left-10 hidden dark:!block"
-              alt=""
-            />
-          </a>
-
           <div className="hidden">
             <img
               className="w-12"
@@ -116,8 +106,7 @@ export default function Login({ searchParams }) {
                 <Spinner size="sm" />
                 Sign in
               </button> */}
-              <SubmitButton formAction={signInAction}>Sign in</SubmitButton>
-            </div>
+              <SubmitButton formAction={signInAction}>Sign in</SubmitButton>            </div>
 
             <div className="text-center flex items-center gap-6">
               <hr className="flex-1 border-slate-200 dark:border-slate-800" />

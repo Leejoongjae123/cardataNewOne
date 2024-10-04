@@ -39,7 +39,7 @@ export default function RootLayout({
           <Header></Header>
           
           <div id="wrapper" className="flex-grow flex flex-col">
-            <main id="site__main" className="w-full flex-grow">
+            <main id="site__main" className="w-full h-full flex flex-col">
               <div className="h-[10vh]"></div>
               <div
                 className="flex w-full justify-center h-full"

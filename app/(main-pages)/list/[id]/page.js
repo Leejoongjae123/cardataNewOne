@@ -218,6 +218,7 @@ function page({ params }) {
         <div
           class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col"
           id="js-oversized"
+          style="background-color: rgb(var(--color-bgbody) / var(--tw-bg-opacity));"
         >
           <div class="flex-1 space-y-4">
             <div class="box p-5 px-6 relative">
