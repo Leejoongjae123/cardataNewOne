@@ -1766,6 +1766,14 @@ input[type='text'],
     background-color: rgb(51 65 85 / var(--tw-bg-opacity));
   }
 }
+.button {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
 
 input[type='text']:focus,
     input[type='password']:focus,

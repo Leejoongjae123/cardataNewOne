@@ -1,6 +1,5 @@
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import IonIcon from "@reacticons/ionicons";
@@ -9,6 +8,9 @@ import { Icon } from "@iconify/react";
 import { RiAppleFill } from "react-icons/ri";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaFacebook } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import {Spinner} from "@nextui-org/spinner";
+import {SubmitButton} from "@/components/submit-button";
 import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
@@ -106,14 +108,15 @@ export default function Login({ searchParams }) {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="submit"
                 className="button bg-primary text-white w-full"
                 formAction={signInAction}
-
               >
+                <Spinner size="sm" />
                 Sign in
-              </button>
+              </button> */}
+              <SubmitButton formAction={signInAction}>Sign in</SubmitButton>
             </div>
 
             <div className="text-center flex items-center gap-6">
@@ -130,26 +133,23 @@ export default function Login({ searchParams }) {
                 href="#"
                 className="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"
               >
-                {" "}
-                <ion-icon
-                  name="logo-facebook"
-                  className="text-lg"
-                ></ion-icon>{" "}
+                <RiKakaoTalkFill />
+                Kakao
+              </a>
+              <a
+                href="#"
+                className="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"
+              >
+                <FaFacebook />
                 facebook{" "}
               </a>
+
               <a
                 href="#"
                 className="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"
               >
-                {" "}
-                <ion-icon name="logo-twitter"></ion-icon> twitter{" "}
-              </a>
-              <a
-                href="#"
-                className="button flex-1 flex items-center gap-2 bg-black text-white text-sm"
-              >
-                {" "}
-                <ion-icon name="logo-github"></ion-icon> github{" "}
+                <RiAppleFill></RiAppleFill>
+                Apple
               </a>
             </div>
           </form>
@@ -173,18 +173,18 @@ export default function Login({ searchParams }) {
                   class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
                   uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
                 >
-
                   <h4
                     class="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 600,0,0"
                   >
-Find Your Perfect Used Car Today!
+                    Find Your Perfect Used Car Today!
                   </h4>
                   <p
                     class="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-We handpick only the safest and most reliable used cars. Search and compare effortlessly to find your ideal vehicle!
+                    We handpick only the safest and most reliable used cars.
+                    Search and compare effortlessly to find your ideal vehicle!
                   </p>
                 </div>
               </div>
@@ -201,12 +201,12 @@ We handpick only the safest and most reliable used cars. Search and compare effo
                   class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
                   uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
                 >
-
                   <h4
                     class="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 800,0,0"
                   >
-                    Reliable Used Cars at the Best Prices!                  </h4>
+                    Reliable Used Cars at the Best Prices!{" "}
+                  </h4>
                   <p
                     class="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
