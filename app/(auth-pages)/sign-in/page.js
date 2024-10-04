@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
     <div className="w-full flex">
-      <div className="w-[30vw] relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
+      <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
         <div
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -155,7 +155,7 @@ export default function Login({ searchParams }) {
           </form>
         </div>
       </div>
-      <div class="flex-1 relative bg-primary max-md:hidden">
+      <div class="w-full relative bg-primary max-md:hidden">
         <div
           class="relative w-full h-full"
           tabindex="-1"
@@ -211,8 +211,10 @@ We handpick only the safest and most reliable used cars. Search and compare effo
                     class="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-
-                    Experience hassle-free car buying with trusted dealers and transparent transactions.
+                    {" "}
+                    This phrase is more casual and playful. It suggests that you
+                    are keeping your friends updated on what’s happening in your
+                    life.
                   </p>
                 </div>
               </div>
