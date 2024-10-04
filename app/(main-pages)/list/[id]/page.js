@@ -6,9 +6,12 @@ function page({ params }) {
   console.log("id:", id);
   return (
     <div>
-      <div class="max-w-[1065px] mx-auto">
+      <div class="max-w-[1065px] mx-auto flex flex-col">
+      <div className="w-full h-5"></div>
         <div class="flex max-lg:flex-col 2xl:gap-6 gap-6 md:p-4 rounded-lg box">
+          
           <div class="lg:max-w-[680px] w-full">
+            
             <div class="relative" uk-slideshow="animation: push; ratio: 7:5">
               <ul
                 class="uk-slideshow-items overflow-hidden rounded-xl"
