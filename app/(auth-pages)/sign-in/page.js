@@ -164,7 +164,7 @@ export default function Login({ searchParams }) {
           <ul class="uk-slideshow-items w-full h-full">
             <li class="w-full">
               <img
-                src="/images/post/img-3.jpg"
+                src="/images/thumb/thumb1.jpg"
                 alt=""
                 class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left"
               />
@@ -173,26 +173,18 @@ export default function Login({ searchParams }) {
                   class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
                   uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
                 >
-                  <img
-                    class="w-12"
-                    src="/images/logo-icon.png"
-                    alt="Socialite html template"
-                  />
+
                   <h4
                     class="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 600,0,0"
                   >
-                    {" "}
-                    Connect With Friends{" "}
+Find Your Perfect Used Car Today!
                   </h4>
                   <p
                     class="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-                    {" "}
-                    This phrase is more casual and playful. It suggests that you
-                    are keeping your friends updated on what’s happening in your
-                    life.
+We handpick only the safest and most reliable used cars. Search and compare effortlessly to find your ideal vehicle!
                   </p>
                 </div>
               </div>
@@ -200,7 +192,7 @@ export default function Login({ searchParams }) {
             </li>
             <li class="w-full">
               <img
-                src="/images/post/img-2.jpg"
+                src="/images/thumb/thumb2.jpg"
                 alt=""
                 class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left"
               />
@@ -209,26 +201,18 @@ export default function Login({ searchParams }) {
                   class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
                   uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
                 >
-                  <img
-                    class="w-12"
-                    src="/images/logo-icon.png"
-                    alt="Socialite html template"
-                  />
+
                   <h4
                     class="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 800,0,0"
                   >
-                    {" "}
-                    Connect With Friends{" "}
-                  </h4>
+                    Reliable Used Cars at the Best Prices!                  </h4>
                   <p
                     class="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-                    {" "}
-                    This phrase is more casual and playful. It suggests that you
-                    are keeping your friends updated on what’s happening in your
-                    life.
+
+                    Experience hassle-free car buying with trusted dealers and transparent transactions.
                   </p>
                 </div>
               </div>
