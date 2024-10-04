@@ -9,24 +9,22 @@ import { RiAppleFill } from "react-icons/ri";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaFacebook } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
-import {Spinner} from "@nextui-org/spinner";
-import {SubmitButton} from "@/components/submit-button";
+import { Spinner } from "@nextui-org/spinner";
+import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
     <div className="w-full flex">
-      <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10  z-10">
+      <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center pt-10  z-10 flex-col">
+        <img
+          src="/images/logo1.png"
+          className="w-48  "
+          alt=""
+        />
         <div
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
         >
-          <a href="/sign-in">
-            <img
-              src="/images/logo1.png"
-              className="w-48 absolute top-10 left-10 "
-              alt=""
-            />
-          </a>
           <div className="hidden">
             <img
               className="w-12"
@@ -116,19 +114,19 @@ export default function Login({ searchParams }) {
             </div>
 
             <div
-              className="flex gap-2"
+              className="flex gap-2 flex-wrap"
               uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
             >
-              <a
+              <div
                 href="#"
-                className="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"
+                className="button items-center gap-2 bg-primary text-white text-sm flex-1"
               >
                 <RiKakaoTalkFill />
                 Kakao
-              </a>
+              </div>
               <a
                 href="#"
-                className="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"
+                className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
               >
                 <FaFacebook />
                 facebook{" "}
@@ -136,7 +134,7 @@ export default function Login({ searchParams }) {
 
               <a
                 href="#"
-                className="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"
+                className="button  items-center gap-2 bg-sky-600 text-white text-sm flex-1"
               >
                 <RiAppleFill></RiAppleFill>
                 Apple
