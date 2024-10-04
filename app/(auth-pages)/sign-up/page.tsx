@@ -20,7 +20,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       <form className="flex flex-col w-[30vw] ">
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
-          Already have an account?{" "}
+          Already have an account?
           <Link className="text-primary font-medium underline" href="/sign-in">
             Sign in
           </Link>

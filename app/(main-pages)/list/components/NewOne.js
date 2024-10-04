@@ -10,7 +10,7 @@ function NewOne() {
   const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`);
 
   return (
-    <div>
+    <div className="mt-10">
       <div className="page-heading">
         <h1 className="page-title test"> New </h1>
 
@@ -32,7 +32,7 @@ function NewOne() {
       </div>
       <div
         className="relative"
-        tabindex="-1"
+        tabIndex="-1"
         uk-slider="autoplay: true;infinite: false;autoplayInterval:2000"
       >
         <div className="uk-slider-container pb-1">

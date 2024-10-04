@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="flex flex-col h-screen">
+      <body className="flex flex-col h-screen ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -42,10 +42,10 @@ export default function RootLayout({
             <main id="site__main" className="w-full flex-grow">
               <div className="h-[10vh]"></div>
               <div
-                className="flex w-full justify-center items-center h-full"
+                className="flex w-full justify-center h-full"
                 id="js-oversized"
               >
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center ">
                   <div className="w-[50vw] ">
                     <NextUIProvider>{children}</NextUIProvider>
                   </div>

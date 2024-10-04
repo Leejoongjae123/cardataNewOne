@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
 import { Pagination } from "@nextui-org/react";
 import Link from "next/link";
+import { Select, SelectItem } from "@nextui-org/react";
+import { animals } from "./data";
+import { Input } from "@nextui-org/input";
 
 function AllOne() {
   const items = Array.from({ length: 15 }, (_, index) => `Item ${index + 1}`);
@@ -25,6 +29,42 @@ function AllOne() {
           </ul>
         </nav>
       </div>
+      <div className="flex">
+        <div className="flex gap-3 w-full h-15">
+          <Select
+            items={animals}
+            label="Favorite Animal"
+            placeholder="Select an animal"
+            className="max-w-xs"
+          >
+            {(animal) => <SelectItem>{animal.label}</SelectItem>}
+          </Select>
+          <Select
+            items={animals}
+            label="Favorite Animal"
+            placeholder="Select an animal"
+            className="max-w-xs"
+          >
+            {(animal) => <SelectItem>{animal.label}</SelectItem>}
+          </Select>
+          <Select
+            items={animals}
+            label="Favorite Animal"
+            placeholder="Select an animal"
+            className="max-w-xs"
+          >
+            {(animal) => <SelectItem>{animal.label}</SelectItem>}
+          </Select>
+          <div className="w-full h-15 p-2">
+            <button
+              type="button"
+              className="button bg-primary text-white w-full h-full px-5"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
       <div
         className="grid sm:grid-cols-3 grid-cols-2 gap-3"
         uk-scrollspy="target: > div; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -32,10 +72,10 @@ function AllOne() {
         {items.map((item, index) => (
           <div className="card uk-transition-toggle" key={index}>
             <Link href={`/list/${index}`}>
-            <div className="card-media sm:aspect-[2/1.7] h-36">
-              <img src="/images/product/product-8.jpg" alt="" />
-              <div className="card-overly"></div>
-            </div>
+              <div className="card-media sm:aspect-[2/1.7] h-36">
+                <img src="/images/product/product-8.jpg" alt="" />
+                <div className="card-overly"></div>
+              </div>
             </Link>
             <div className="card-body flex justify-between">
               <div className="flex-1">
