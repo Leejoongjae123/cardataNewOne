@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
     <div className="flex justify-center items-center">
-      <div className="relative w-1/2 p-10 h-2/3 bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10 justify-center">
+      <div className="relative w-1/2 p-10 h-2/3 bg-white shadow-xl flex items-center pt-10 z-10 justify-center">
         <div
           className="flex flex-col gap-2 justify-center items-center"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -100,9 +100,9 @@ export default function Login({ searchParams }) {
             </div>
 
             <div className="text-center flex items-center gap-6">
-              <hr className="flex-1 border-slate-200 dark:border-slate-800" />
+              <hr className="flex-1 border-slate-200 " />
               Or continue with
-              <hr className="flex-1 border-slate-200 dark:border-slate-800" />
+              <hr className="flex-1 border-slate-200 " />
             </div>
 
             <div

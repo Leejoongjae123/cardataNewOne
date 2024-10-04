@@ -46,7 +46,7 @@ export default function RootLayout({
                 id="js-oversized"
               >
                 <div className="flex justify-center ">
-                  <div className="w-[50vw] ">
+                  <div className="w-[90vw] md:w-[50vw] ">
                     <NextUIProvider>{children}</NextUIProvider>
                   </div>
                 </div>

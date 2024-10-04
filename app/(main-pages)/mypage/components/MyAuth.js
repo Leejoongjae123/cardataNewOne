@@ -92,74 +92,41 @@ function MyInfo({ session }) {
         <div>
           <div class="space-y-6">
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Name </label>
+              <label class="md:w-32 text-right"> Current Password </label>
               <div class="flex-1 max-md:mt-4">
                 <input
-                  type="text"
-                  placeholder="Monroe"
+                  type="password"
+                  placeholder=""
                   class="w-full"
-                  value={profile?.name}
-                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                 />
               </div>
             </div>
 
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Phone </label>
+              <label class="md:w-32 text-right"> New Password </label>
               <div class="flex-1 max-md:mt-4">
                 <input
-                  type="text"
-                  placeholder="info@mydomain.com"
+                  type="password"
+                  placeholder=""
                   class="w-full"
-                  value={profile?.phone}
-                  onChange={(e) =>
-                    setProfile({ ...profile, phone: e.target.value })
-                  }
+                  onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
             </div>
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Email </label>
+              <label class="md:w-32 text-right"> Confirm Password </label>
               <div class="flex-1 max-md:mt-4">
                 <input
-                  type="text"
-                  placeholder="info@mydomain.com"
+                  type="password"
+                  placeholder=""
                   class="w-full"
-                  value={profile?.email}
-                  onChange={(e) =>
-                    setProfile({ ...profile, email: e.target.value })
-                  }
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
             </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Referer Email </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.refererEmail}
-                  onChange={(e) =>
-                    setProfile({ ...profile, refererEmail: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Referer Phone </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.refererPhone}
-                  onChange={(e) =>
-                    setProfile({ ...profile, refererPhone: e.target.value })
-                  }
-                />
-              </div>
-            </div>
+
+
 
             <div class="md:flex items-start gap-10 " hidden>
               <label class="md:w-32 text-right"> Avatar </label>
@@ -184,9 +151,8 @@ function MyInfo({ session }) {
             <button
               type="button"
               class="button lg:px-10 bg-primary text-white max-md:flex-1"
-              onClick={changeInfo}
+              onClick={changePassword}
             >
-              {" "}
               Save <span class="ripple-overlay"></span>
             </button>
           </div>

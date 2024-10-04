@@ -114,7 +114,7 @@ function page({ params }) {
                   {" "}
                   Long evening dress with beatuful neckline{" "}
                 </h3>
-                <p class="text-xs mt-2 font-light text-gray-900 dark:text-white">
+                <p class="text-xs mt-2 font-light text-gray-900 ">
                   {" "}
                   Listed on 2 weeeks ago in Turkey
                 </p>
@@ -174,7 +174,7 @@ function page({ params }) {
                 </button>
               </div>
 
-              <p class="text-sm text-black font-light dark:text-white">
+              <p class="text-sm text-black font-light ">
                 {" "}
                 sed diam nonummy nibh euismod tincidunt volutpat laoreet dolore
                 magna aliquam erat volutpat{" "}
@@ -194,12 +194,12 @@ function page({ params }) {
                   <div class="flex-1">
                     <a href="timeline.html">
                       {" "}
-                      <h4 class="text-black dark:text-white">
+                      <h4 class="text-black ">
                         {" "}
                         Monroe Parker{" "}
                       </h4>{" "}
                     </a>
-                    <div class="text-xs text-gray-500 dark:text-white/80">
+                    <div class="text-xs text-gray-500 ">
                       {" "}
                       2 hours ago{" "}
                     </div>
@@ -218,11 +218,10 @@ function page({ params }) {
         <div
           class="flex 2xl:gap-12 gap-10 mt-8 max-lg:flex-col"
           id="js-oversized"
-          style="background-color: rgb(var(--color-bgbody) / var(--tw-bg-opacity));"
         >
           <div class="flex-1 space-y-4">
             <div class="box p-5 px-6 relative">
-              <h3 class="font-semibold text-lg text-black dark:text-white">
+              <h3 class="font-semibold text-lg text-black ">
                 {" "}
                 About{" "}
               </h3>

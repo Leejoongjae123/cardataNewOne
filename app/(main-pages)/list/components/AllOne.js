@@ -7,7 +7,7 @@ import { animals } from "./data";
 import { Input } from "@nextui-org/input";
 
 function AllOne() {
-  const items = Array.from({ length: 15 }, (_, index) => `Item ${index + 1}`);
+  const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
   return (
     <div>
       <div className="page-heading">
@@ -30,7 +30,7 @@ function AllOne() {
         </nav>
       </div>
       <div className="flex">
-        <div className="flex gap-3 w-full h-15">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full h-15 my-5">
           <Select
             items={animals}
             label="Favorite Animal"
@@ -66,13 +66,13 @@ function AllOne() {
         </div>
       </div>
       <div
-        className="grid sm:grid-cols-3 grid-cols-2 gap-3"
+        className="grid grid-cols-2 md:grid-cols-4 gap-5"
         uk-scrollspy="target: > div; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
       >
         {items.map((item, index) => (
           <div className="card uk-transition-toggle" key={index}>
             <Link href={`/list/${index}`}>
-              <div className="card-media sm:aspect-[2/1.7] h-36">
+              <div className="card-media h-36">
                 <img src="/images/product/product-8.jpg" alt="" />
                 <div className="card-overly"></div>
               </div>
@@ -86,29 +86,7 @@ function AllOne() {
               </div>
               <h4 className="card-title"> 50$/20M </h4>
             </div>
-            {/* <div className="absolute w-full bottom-0 bg-white/20 backdrop-blur-sm uk-transition-slide-bottom-small max-xl:h-full z-[2] flex flex-col justify-center">
-              <div className="grid grid-cols-2 gap-3 py-4 px-3">
-                <div className="w-full flex justify-center items-center">
-                  <button
-                    type="button"
-                    className="button bg-primary text-white "
-                  >
-                    Chat
-                  </button>
-                </div>
-
-                <div className="w-full flex justify-center items-center">
-                  <Link href={`/list/${index}`}>
-                    <button
-                      type="button"
-                      className="button border bg-white "
-                    >
-                      Veiw
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div> */}
+            
           </div>
         ))}
       </div>

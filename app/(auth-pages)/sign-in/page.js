@@ -15,7 +15,7 @@ import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
     <div className="w-full flex">
-      <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
+      <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10  z-10">
         <div
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -23,7 +23,7 @@ export default function Login({ searchParams }) {
           <a href="/sign-in">
             <img
               src="/images/logo1.png"
-              className="w-48 absolute top-10 left-10 dark:hidden"
+              className="w-48 absolute top-10 left-10 "
               alt=""
             />
           </a>
@@ -51,7 +51,7 @@ export default function Login({ searchParams }) {
           <form
             method="#"
             action="#"
-            className="space-y-7 text-sm text-black font-medium dark:text-white"
+            className="space-y-7 text-sm text-black font-medium "
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
@@ -66,7 +66,7 @@ export default function Login({ searchParams }) {
                   autofocus=""
                   placeholder="Email"
                   required=""
-                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function Login({ searchParams }) {
                   name="password"
                   type="password"
                   placeholder="***"
-                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
@@ -106,12 +106,13 @@ export default function Login({ searchParams }) {
                 <Spinner size="sm" />
                 Sign in
               </button> */}
-              <SubmitButton formAction={signInAction}>Sign in</SubmitButton>            </div>
+              <SubmitButton formAction={signInAction}>Sign in</SubmitButton>
+            </div>
 
             <div className="text-center flex items-center gap-6">
-              <hr className="flex-1 border-slate-200 dark:border-slate-800" />
+              <hr className="flex-1 border-slate-200 " />
               Or continue with
-              <hr className="flex-1 border-slate-200 dark:border-slate-800" />
+              <hr className="flex-1 border-slate-200 " />
             </div>
 
             <div

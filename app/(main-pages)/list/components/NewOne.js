@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import IonIcon from "@reacticons/ionicons";
-import {Pagination} from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 import Link from "next/link";
 function NewOne() {
   const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`);
@@ -43,36 +43,33 @@ function NewOne() {
             {items.map((item, index) => (
               <li
                 key={index}
-                className="pr-3 md:w-1/3 w-1/2"
-              uk-scrollspy-className="uk-animation-fade"
-            >
-              <div className="card">
-                <Link href={`/list/${index}`}>
-                  <div className="card-media sm:aspect-[2/1.7] h-36">
-                    <img src="/images/product/product-1.jpg" alt="" />
-                    <div className="card-overly"></div>
-                  </div>
-                </Link>
-                <div className="card-body relative">
-                  <a href="#">
-                    <span className="text-teal-600 font-semibold text-xs">
-                      {" "}
-                      BMW 520d
-                    </span>
-                  </a>
-                  <a href="product-view-1.html">
-                    <p className="card-text block text-black mt-0.5"> </p>
-                  </a>
-                  <div className="-top-3 absolute bg-blue-100 font-medium px-2  py-0.5 right-2 rounded-full text text-blue-500 text-sm z-20">
-                    250$/48M
+                className="pr-3 md:w-1/4 w-1/2"
+                uk-scrollspy-className="uk-animation-fade"
+              >
+                <div className="card">
+                  <Link href={`/list/${index}`}>
+                    <div className="card-media sm:aspect-[2/1.7] h-36">
+                      <img src="/images/product/product-1.jpg" alt="" />
+                      <div className="card-overly"></div>
+                    </div>
+                  </Link>
+                  <div className="card-body relative">
+                    <a href="#">
+                      <span className="text-teal-600 font-semibold text-xs">
+                        {" "}
+                        BMW 520d
+                      </span>
+                    </a>
+                    <a href="product-view-1.html">
+                      <p className="card-text block text-black mt-0.5"> </p>
+                    </a>
+                    <div className="-top-3 absolute bg-blue-100 font-medium px-2  py-0.5 right-2 rounded-full text text-blue-500 text-sm z-20">
+                      250$/48M
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
+              </li>
             ))}
-            
-            
-            
           </ul>
         </div>
 
@@ -101,7 +98,6 @@ function NewOne() {
           </ul>
         </div>
       </div>
-
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useFormStatus } from 'react-dom';
 import Spinner from '@nextui-org/react';  // Spinner 컴포넌트의 경로를 적절히 조정해주세요
 
-export function SubmitButton({ children }) {
+export function SubmitButtonSignIn({ children }) {
   const { pending } = useFormStatus();
 
   return (

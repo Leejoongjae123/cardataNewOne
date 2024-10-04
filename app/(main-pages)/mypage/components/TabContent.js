@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import MyInfo from "./MyInfo";
+import MyAuth from "./MyAuth";
 import MyPrice from "./MyPrice";
 
 export default function TabContent({ session }) {
@@ -14,10 +15,10 @@ export default function TabContent({ session }) {
           <MyInfo session={session} />
         </li>
         <li className={activeTab === 'estimates' ? 'uk-active' : ''}>
-          <MyPrice session={session} />
+          <MyAuth session={session} />
         </li>
         <li className={activeTab === 'chat' ? 'uk-active' : ''}>
-          {/* Chat 컴포넌트를 여기에 추가하세요 */}
+          <MyPrice session={session} />
         </li>
       </ul>
     </div>

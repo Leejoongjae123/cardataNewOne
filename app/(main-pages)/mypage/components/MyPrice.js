@@ -1,4 +1,5 @@
 import React from "react";
+import { Pagination } from "@nextui-org/react";
 
 function MyPrice() {
   return (
@@ -131,6 +132,9 @@ function MyPrice() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex w-full justify-center items-center py-5">
+        <Pagination className="text-white" total={10} initialPage={1} />
       </div>
     </div>
   );
