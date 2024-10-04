@@ -12,28 +12,45 @@ import { FaFacebook } from "react-icons/fa";
 import Image from "next/image";
 export default function Login({ searchParams }) {
   return (
-    <div className="flex justify-center items-center">
-      <div className="relative w-1/2 p-10 h-2/3 bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10 justify-center">
+    <div className="w-full flex">
+      <div className="w-[30vw] relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
         <div
-          className="flex flex-col gap-2 justify-center items-center"
+          className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
         >
-          <div className="flex justify-center items-center w-1/2 h-1/4">
+          <a href="#">
+            {" "}
             <img
               src="/images/logo1.png"
-              className="w-full h-full object-cover"
-              alt="Logo"
+              className="w-28 absolute top-10 left-10 dark:hidden"
+              alt=""
+            />
+          </a>
+          <a href="#">
+            {" "}
+            <img
+              src="/images/logo-light.png"
+              className="w-28 absolute top-10 left-10 hidden dark:!block"
+              alt=""
+            />
+          </a>
+
+          <div className="hidden">
+            <img
+              className="w-12"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=600"
+              alt="Socialite html template"
             />
           </div>
 
-          <div className="flex flex-col w-full justify-center items-center">
+          <div>
             <h2 className="text-2xl font-semibold mb-1.5">
               {" "}
               Sign in to your account{" "}
             </h2>
             <p className="text-sm text-gray-700 font-normal">
               If you haven’t signed up yet.{" "}
-              <a href="/sign-up" className="text-blue-700">
+              <a href="form-register.html" className="text-blue-700">
                 Register here!
               </a>
             </p>
@@ -42,7 +59,7 @@ export default function Login({ searchParams }) {
           <form
             method="#"
             action="#"
-            className="w-1/2 flex flex-col space-y-7 text-sm text-black font-medium dark:text-white"
+            className="space-y-7 text-sm text-black font-medium dark:text-white"
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
@@ -77,26 +94,26 @@ export default function Login({ searchParams }) {
             </div>
 
             <div className="flex items-center justify-between">
-              {/* <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5">
                 <input id="rememberme" name="rememberme" type="checkbox" />
                 <label for="rememberme" className="font-normal">
                   Remember me
                 </label>
-              </div> */}
+              </div>
               <a href="#" className="text-blue-700">
                 Forgot password{" "}
               </a>
             </div>
 
             <div>
-              <SubmitButton
-                className="w-full text-white"
-                pendingText="Signing In..."
+              <button
+                type="submit"
+                className="button bg-primary text-white w-full"
                 formAction={signInAction}
+
               >
                 Sign in
-              </SubmitButton>
-              <FormMessage message={searchParams} />
+              </button>
             </div>
 
             <div className="text-center flex items-center gap-6">
@@ -106,43 +123,124 @@ export default function Login({ searchParams }) {
             </div>
 
             <div
-              className="flex gap-2 w-full"
-              uk-scrollspy="cls: uk-animation-scale-up; delay: 400 ;repeat: true"
+              className="flex gap-2"
+              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
             >
-              <div className="flex flex-col gap-5 w-full">
-                <Button
-                  startContent={
-                    <Icon icon="flat-color-icons:google" width={24} />
-                  }
-                  variant="flat"
-                >
-                  Continue with Google
-                </Button>
-                <Button
-                  startContent={
-                    <RiKakaoTalkFill className="text-[#FFCD00] text-4xl" />
-                  }
-                  variant="flat"
-                >
-                  Continue with KAKAO
-                </Button>
-                <Button
-                  startContent={
-                    <FaFacebook className="text-2xl text-[#1877F2]" />
-                  }
-                  variant="flat"
-                >
-                  Continue with Facebook
-                </Button>
-                <Button
-                  startContent={<RiAppleFill className="text-3xl text-black" />}
-                  variant="flat"
-                >
-                  Continue with Apple
-                </Button>
-              </div>
+              <a
+                href="#"
+                className="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"
+              >
+                {" "}
+                <ion-icon
+                  name="logo-facebook"
+                  className="text-lg"
+                ></ion-icon>{" "}
+                facebook{" "}
+              </a>
+              <a
+                href="#"
+                className="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"
+              >
+                {" "}
+                <ion-icon name="logo-twitter"></ion-icon> twitter{" "}
+              </a>
+              <a
+                href="#"
+                className="button flex-1 flex items-center gap-2 bg-black text-white text-sm"
+              >
+                {" "}
+                <ion-icon name="logo-github"></ion-icon> github{" "}
+              </a>
             </div>
           </form>
+        </div>
+      </div>
+      <div class="flex-1 relative bg-primary max-md:hidden">
+        <div
+          class="relative w-full h-full"
+          tabindex="-1"
+          uk-slideshow="animation: slide; autoplay: true"
+        >
+          <ul class="uk-slideshow-items w-full h-full">
+            <li class="w-full">
+              <img
+                src="/images/post/img-3.jpg"
+                alt=""
+                class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left"
+              />
+              <div class="absolute bottom-0 w-full uk-tr ansition-slide-bottom-small z-10">
+                <div
+                  class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
+                  uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
+                >
+                  <img
+                    class="w-12"
+                    src="/images/logo-icon.png"
+                    alt="Socialite html template"
+                  />
+                  <h4
+                    class="!text-white text-2xl font-semibold mt-7"
+                    uk-slideshow-parallax="y: 600,0,0"
+                  >
+                    {" "}
+                    Connect With Friends{" "}
+                  </h4>
+                  <p
+                    class="!text-white text-lg mt-7 leading-8"
+                    uk-slideshow-parallax="y: 800,0,0;"
+                  >
+                    {" "}
+                    This phrase is more casual and playful. It suggests that you
+                    are keeping your friends updated on what’s happening in your
+                    life.
+                  </p>
+                </div>
+              </div>
+              <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
+            </li>
+            <li class="w-full">
+              <img
+                src="/images/post/img-2.jpg"
+                alt=""
+                class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left"
+              />
+              <div class="absolute bottom-0 w-full uk-tr ansition-slide-bottom-small z-10">
+                <div
+                  class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
+                  uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
+                >
+                  <img
+                    class="w-12"
+                    src="/images/logo-icon.png"
+                    alt="Socialite html template"
+                  />
+                  <h4
+                    class="!text-white text-2xl font-semibold mt-7"
+                    uk-slideshow-parallax="y: 800,0,0"
+                  >
+                    {" "}
+                    Connect With Friends{" "}
+                  </h4>
+                  <p
+                    class="!text-white text-lg mt-7 leading-8"
+                    uk-slideshow-parallax="y: 800,0,0;"
+                  >
+                    {" "}
+                    This phrase is more casual and playful. It suggests that you
+                    are keeping your friends updated on what’s happening in your
+                    life.
+                  </p>
+                </div>
+              </div>
+              <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
+            </li>
+          </ul>
+
+          <div class="flex justify-center">
+            <ul class="inline-flex flex-wrap justify-center  absolute bottom-8 gap-1.5 uk-dotnav uk-slideshow-nav">
+              {" "}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
