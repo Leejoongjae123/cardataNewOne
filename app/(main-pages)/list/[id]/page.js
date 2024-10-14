@@ -4,6 +4,17 @@ import { createClient } from "@/utils/supabase/server";
 import { LuMail } from "react-icons/lu";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { Chip } from "@nextui-org/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Link,
+  Image,
+} from "@nextui-org/react";
+import { Select, SelectSection, SelectItem } from "@nextui-org/select";
+import Exchanger from './components/Exchanger'
 
 async function page({ params }) {
   const { id } = params;
@@ -61,7 +72,7 @@ async function page({ params }) {
                 <p className="text-medium">{carSpec}</p>
               </div>
             </div>
-            <div className="w-full flex flex-col lg:flex-row">
+            <div className="w-full flex flex-col lg:flex-row space-x-5">
               <div
                 className="relative w-full lg:w-2/3"
                 uk-slideshow="animation: push; ratio: 7:5"
@@ -110,18 +121,18 @@ async function page({ params }) {
                   </a>
                 </div>
 
-                <ul className="flex flex-wrap gap-1 py-4 w-full justify-center items-center">
+                <ul className="flex flex-wrap w-full justify-center items-center">
                   {carData.uploadedImageUrls.map((elem, index) => {
                     return (
                       <li
-                        className="w-1/20 mb-4"
+                        className="w-1/20"
                         uk-slideshow-item={index.toString()}
                       >
                         <a href="#">
                           <img
                             src={elem.url}
                             alt=""
-                            className="w-full h-6 md:h-8 rounded object-cover"
+                            className="w-full h-6 lg:h-8 rounded object-cover"
                           />
                         </a>
                       </li>
@@ -130,20 +141,20 @@ async function page({ params }) {
                 </ul>
               </div>
               <div className="w-full lg:w-1/2 space-y-8">
-                <div className="md:space-y-5 space-y-3 px-5 ">
+                <div className="md:space-y-5 space-y-3 ">
                   <div>
                     <div className="flex w-full justify-around items-center">
                       {carData.sellType === "리스" ? (
                         <>
-                          <div className="text-sm border-r pr-2">
+                          <div className="text-sm border-r pr-2 text-center">
                             <p>월리스료</p>
                             <p>{parseInt(carData.monthlyPrice)}만원/월</p>
                           </div>
-                          <div className="text-sm border-r pr-2">
+                          <div className="text-sm border-r pr-2 text-center">
                             <p>인수금</p>
                             <p>{parseInt(carData.leaseReceivePrice)}만원</p>
                           </div>
-                          <div className="text-sm">
+                          <div className="text-sm text-center">
                             <p>차량가격</p>
                             <p>{parseInt(carData.carPrice)}만원</p>
                           </div>
@@ -178,7 +189,6 @@ async function page({ params }) {
                       <div className="text-teal-600"> Instock </div>
                     </div>
                   </div> */}
-                  
 
                   <div className="flex gap-1 py-2 justify-between items-center">
                     <button className="button bg-primary px-3 text-white w-full">
@@ -193,7 +203,37 @@ async function page({ params }) {
                       확인할 수 있습니다.
                     </p>
                   </div>
-
+                  <Exchanger></Exchanger>
+                  
+                  <div class="w-full">
+                    <label
+                      for="brand"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Brand
+                    </label>
+                  </div>
+                  {/* <Card className="w-full">
+                    <CardHeader className="flex gap-3">
+                      <div className="flex flex-col">
+                        <p className="text-md">환율 계산</p>
+                      </div>
+                    </CardHeader>
+                    <Divider />
+                    <CardBody>
+                      
+                    </CardBody>
+                    <Divider />
+                    <CardFooter>
+                      <Link
+                        isExternal
+                        showAnchorIcon
+                        href="https://github.com/nextui-org/nextui"
+                      >
+                        Visit source code on GitHub.
+                      </Link>
+                    </CardFooter>
+                  </Card> */}
                   <button
                     className="button bg-secondery px-3"
                     uk-tooltip="title: Chat; offset: 8"
