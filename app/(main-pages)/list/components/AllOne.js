@@ -6,7 +6,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { animals } from "./data";
 import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
-
+import {Chip} from "@nextui-org/react";
 function AllOne() {
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
 
@@ -19,6 +19,7 @@ function AllOne() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState("1");
+  const [selectedPlatform, setSelectedPlatform]=useState("SKEncar")
   const itemsPerPage = 20;
 
   const getManufacturer = async () => {
@@ -141,11 +142,15 @@ function AllOne() {
           >
             <li>
               {" "}
-              <a href="#"> SK Encar</a>{" "}
+              <a onClick={()=>{
+                setSelectedPlatform("SKEncar")
+              }}> SK Encar</a>
             </li>
             <li>
-              {" "}
-              <a href="#"> Naver Cafe</a>{" "}
+              
+              <a onClick={()=>{
+                setSelectedPlatform("NaverPolamfe")
+              }}> Naver Cafe</a>{" "}
             </li>
           </ul>
         </nav>
@@ -161,7 +166,7 @@ function AllOne() {
               onChange={(e) => {
                 setSelectedManufacturer(e.target.value);
                 setSelectedModel("");
-                setSelectedModelGroup;
+                setSelectedModelGroup("");
               }}
             >
               {(manufacturer) => <SelectItem>{manufacturer.label}</SelectItem>}
@@ -209,6 +214,14 @@ function AllOne() {
       >
         {data.map((item, index) => (
           <div className="card uk-transition-toggle" key={item.id}>
+            <div className="absolute top-2 right-2 z-10">
+              <Chip
+                size="sm"
+                color={selectedPlatform === "SKEncar" ? "danger" : "success"}
+              >
+                {selectedPlatform}
+              </Chip>
+            </div>
             <Link href={`/list/${item.id}`}>
               <div className="card-media h-36">
                 <img src={item?.uploadedImageUrls[0]?.url} alt="" />

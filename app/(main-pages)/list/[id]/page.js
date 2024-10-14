@@ -1,111 +1,79 @@
 import React from "react";
 import IonIcon from "@reacticons/ionicons";
+import { createClient } from "@/utils/supabase/server";
 
-function page({ params }) {
+async function page({ params }) {
   const { id } = params;
-  console.log("id:", id);
+
+  const supabase = createClient();
+
+  // Fetch car data from Supabase
+  const { data: carData, error } = await supabase
+    .from("cardata")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching car data:", error);
+    // Handle the error appropriately
+  }
+
   return (
     <div>
-      <div class="max-w-[1065px] mx-auto flex flex-col">
-      <div className="w-full h-5"></div>
+      <div class="mx-auto flex flex-col">
+        <div className="w-full h-5"></div>
         <div class="flex max-lg:flex-col 2xl:gap-6 gap-6 md:p-4 rounded-lg box">
-          
-          <div class="lg:max-w-[680px] w-full">
-            
+          <div class="w-1/2">
             <div class="relative" uk-slideshow="animation: push; ratio: 7:5">
               <ul
                 class="uk-slideshow-items overflow-hidden rounded-xl"
                 uk-lightbox="animation: fade"
               >
-                <li class="w-full">
-                  <a
-                    class="inline"
-                    href="/images/product/product-1.jpg"
-                    data-caption="Caption 1"
-                  >
-                    <img
-                      src="/images/product/product-1.jpg"
-                      alt=""
-                      class="w-full h-full absolute object-cover insta-0"
-                    />
-                  </a>
-                </li>
-                <li class="w-full">
-                  <a
-                    class="inline"
-                    href="/images/product/product-5.jpg"
-                    data-caption="Caption 2"
-                  >
-                    <img
-                      src="/images/product/product-5.jpg"
-                      alt=""
-                      class="w-full h-full absolute object-cover insta-0"
-                    />
-                  </a>
-                </li>
-                <li class="w-full">
-                  <a
-                    class="inline"
-                    href="/images/product/product-10.jpg"
-                    data-caption="Caption 3"
-                  >
-                    <img
-                      src="/images/product/product-10.jpg"
-                      alt=""
-                      class="w-full h-full absolute object-cover insta-0"
-                    />
-                  </a>
-                </li>
+                {carData.uploadedImageUrls.map((elem, index) => {
+                  return (
+                    <li class="w-full">
+                      <a
+                        class="inline"
+                        href={elem.url}
+                        data-caption="Caption 1"
+                      >
+                        <img
+                          src={elem.url}
+                          alt=""
+                          class="w-full h-full absolute object-cover insta-0"
+                        />
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
 
               <div class="max-md:hidden">
                 <a class="nav-prev m-6" href="#" uk-slideshow-item="previous">
                   {" "}
-                  <IonIcon
-                    name="chevron-back"
-                    class="text-2xl"
-                  ></IonIcon>{" "}
+                  <IonIcon name="chevron-back" class="text-2xl"></IonIcon>{" "}
                 </a>
                 <a class="nav-next m-6" href="#" uk-slideshow-item="next">
                   {" "}
-                  <IonIcon
-                    name="chevron-forward"
-                    class="text-2xl"
-                  ></IonIcon>
+                  <IonIcon name="chevron-forward" class="text-2xl"></IonIcon>
                 </a>
               </div>
 
-              <ul class="flex justify-center gap-4 py-4 absolute w-full bottom-0">
-                <li uk-slideshow-item="0">
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="/images/product/product-1.jpg"
-                      alt=""
-                      class="w-16 h-12 rounded"
-                    />{" "}
-                  </a>
-                </li>
-                <li uk-slideshow-item="1">
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="/images/product/product-5.jpg"
-                      alt=""
-                      class="w-16 h-12 rounded"
-                    />
-                  </a>
-                </li>
-                <li uk-slideshow-item="2">
-                  <a href="#">
-                    {" "}
-                    <img
-                      src="/images/product/product-10.jpg"
-                      alt=""
-                      class="w-16 h-12 rounded"
-                    />
-                  </a>
-                </li>
+              <ul class="flex flex-wrap gap-4 py-4 w-full justify-center items-center">
+                {carData.uploadedImageUrls.map((elem, index) => {
+                  return (
+                    <li className="w-1/20 mb-4" uk-slideshow-item={index.toString()}>
+                      <a href="#">
+                        <img
+                          src={elem.url}
+                          alt=""
+                          class="w-full h-8 rounded object-cover"
+                        />
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
@@ -113,14 +81,7 @@ function page({ params }) {
           <div class="flex-1 space-y-8">
             <div class="md:space-y-5 space-y-3 p-5 max-md:pt-0 md:pr-2">
               <div>
-                <h3 class="text-lg font-semibold">
-                  {" "}
-                  Long evening dress with beatuful neckline{" "}
-                </h3>
-                <p class="text-xs mt-2 font-light text-gray-900 ">
-                  {" "}
-                  Listed on 2 weeeks ago in Turkey
-                </p>
+                <h3 class="text-lg font-semibold">{carData.title}</h3>
               </div>
 
               <h1 class="text-2xl font-semibold"> $12.99 </h1>
@@ -134,9 +95,9 @@ function page({ params }) {
               </div>
 
               <div class="flex gap-2 py-2">
-                <button class="button bg-primary text-white flex-1 py-1">
+                {/* <button class="button bg-primary text-white flex-1 py-1">
                   Add to cart{" "}
-                </button>
+                </button> */}
                 <button
                   class="button bg-secondery px-3"
                   uk-tooltip="title: Hello World; offset: 8"
@@ -197,15 +158,9 @@ function page({ params }) {
                   <div class="flex-1">
                     <a href="timeline.html">
                       {" "}
-                      <h4 class="text-black ">
-                        {" "}
-                        Monroe Parker{" "}
-                      </h4>{" "}
+                      <h4 class="text-black "> Monroe Parker </h4>{" "}
                     </a>
-                    <div class="text-xs text-gray-500 ">
-                      {" "}
-                      2 hours ago{" "}
-                    </div>
+                    <div class="text-xs text-gray-500 "> 2 hours ago </div>
                   </div>
 
                   <button type="button" class="button border2 px-3">
@@ -224,10 +179,7 @@ function page({ params }) {
         >
           <div class="flex-1 space-y-4">
             <div class="box p-5 px-6 relative">
-              <h3 class="font-semibold text-lg text-black ">
-                {" "}
-                About{" "}
-              </h3>
+              <h3 class="font-semibold text-lg text-black "> About </h3>
 
               <div class="space-y-4 leading-7 tracking-wide mt-4 text-black text-sm dark:text-white">
                 <p>
