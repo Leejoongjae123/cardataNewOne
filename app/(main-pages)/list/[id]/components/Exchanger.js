@@ -2,6 +2,9 @@
 import React, { useState, useEffect,useCallback } from "react";
 import { debounce } from "lodash";
 import axios from 'axios'
+import {Select, SelectItem, Avatar} from "@nextui-org/react";
+
+
 function Exchanger() {
   const [country1, setCountry1] = useState("KR");
   const [country2, setCountry2] = useState("US");
@@ -61,7 +64,7 @@ function Exchanger() {
   return (
     <div>
       <div>
-        <h1 className="font-bold mb-2 ">환율 계산</h1>
+        <h1 className="text-medium font-bold mb-2 ">환율 계산</h1>
 
         <div className="flex space-x-5">
           <select

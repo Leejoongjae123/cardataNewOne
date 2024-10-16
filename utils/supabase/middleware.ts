@@ -1,5 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import {createClient} from '@/utils/supabase/server'
+import { create } from "lodash";
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -38,15 +40,33 @@ export const updateSession = async (request: NextRequest) => {
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
-
-    // protected routes
-    if (request.nextUrl.pathname.startsWith("/list") && user.error) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+    
+    let userRole = null;
+    let certificated=null
+    if (!user.error) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.data.user.id)
+        .single();
+      
+      if (!error && data) {
+        userRole = data.role;
+        certificated=data.certificated
+      }
     }
+if (request.nextUrl.pathname.startsWith("/list") && (!certificated)) {
+  return NextResponse.redirect(new URL("/authority", request.url));
+}
+// protected route
+if (request.nextUrl.pathname.startsWith("/list") && (user.error)) {
+  return NextResponse.redirect(new URL("/sign-in", request.url));
+}
 
-    if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/list", request.url));
-    }
+    // else if (request.nextUrl.pathname === "/" && !user.error && userRole==='master') {
+    //   return NextResponse.redirect(new URL("/list", request.url));
+    // }
+
 
     return response;
   } catch (e) {

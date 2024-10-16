@@ -12,9 +12,13 @@ import { FaTwitter } from "react-icons/fa";
 import { Spinner } from "@nextui-org/spinner";
 import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
+import {headers} from "next/headers";
+import ToastBox from './components/ToastBox'
 export default function Login({ searchParams }) {
+  console.log('searchParams:',searchParams.result)
   return (
     <div className="w-full flex">
+      <ToastBox searchParams={searchParams}></ToastBox>
       <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center pt-10  z-10 flex-col">
         <img
           src="/images/logo1.png"
