@@ -10,7 +10,7 @@ export default async function Page() {
 
   return (
     <div className="mt-10">
-      <div className="page-heading">
+      <div className="page-heading flex flex-col justify-start items-start">
         <h1 className="page-title test"> My Page </h1>
 
         <nav className="nav__underline">

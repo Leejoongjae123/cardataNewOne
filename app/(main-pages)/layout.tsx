@@ -45,7 +45,7 @@ export default function RootLayout({
                 className="flex w-full justify-center h-full"
                 id="js-oversized"
               >
-                <div className="flex w-full h-full justify-center items-center ">
+                <div className="flex w-full h-full justify-center items-start ">
                   <div className="w-[90vw] md:w-[50vw] ">
                     <NextUIProvider>{children}</NextUIProvider>
                   </div>
