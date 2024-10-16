@@ -90,7 +90,7 @@ async function page({ params }) {
                 <p className="text-medium">{carSpec}</p>
               </div>
             </div>
-            <div className="w-full h-full flex flex-col lg:flex-row space-x-5 justify-center items-center">
+            <div className="w-full h-full flex flex-col lg:flex-row px-5 py-5 gap-5 justify-center items-center">
               <div
                 className="relative w-full lg:w-2/3"
                 uk-slideshow="animation: push; ratio: 7:5"
@@ -158,7 +158,7 @@ async function page({ params }) {
                   })}
                 </ul>
               </div>
-              <div className="w-full lg:w-1/2 space-y-8">
+              <div className="w-full lg:w-1/2 ">
                 <div className="md:space-y-5 space-y-3 ">
                   <h1 className="text-medium font-bold mb-2 ">주요정보</h1>
                   <div>
@@ -443,13 +443,147 @@ async function page({ params }) {
                   </li>
                 </ul>
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="box p-5 px-6 pr-0 col-span-1">
+                  <h3 className="font-semibold text-lg text-black dark:text-white">
+                    Insurance
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        <ion-icon
+                          name="heart"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.history}
+                        </h3>
+                        <p>자동차 용도이력</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.changeCount}
+                        </h3>
+                        <p>번호/소유자 변경횟수</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        <ion-icon
+                          name="heart"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.accidentSelf}
+                        </h3>
+                        <p>사고이력:내차 피해</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.accidentOther}
+                        </h3>
+                        <p>사고이력:타차 가해</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="box p-5 px-6 pr-0 cols-span-1">
+                  <h3 className="font-semibold text-lg text-black dark:text-white">
+                    Price
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="heart"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.leaseReceivePrice} KRW
+                        </h3>
+                        <p>인수금</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.leasePriceIn} KRW
+                        </h3>
+                        <p>기간 내 금액</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.leasePriceOut} KRW
+                        </h3>
+                        <p>기간 외 금액</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                          {carData.leasePriceAll} KRW
+                        </h3>
+                        <p>전체 금액</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="box p-5 px-6 pr-0">
                 <h3 className="font-semibold text-lg text-black dark:text-white">
-                  Insurance
+                  Issues
                 </h3>
-                <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
                   <div className="flex gap-3">
                     <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      
                       <ion-icon
                         name="heart"
                         className="text-2xl text-rose-600"
@@ -457,95 +591,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        162
+                        {carData.performanceDashboard}
                       </h3>
-                      <p>Intersted</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        162
-                      </h3>
-                      <p>Going</p>
-                    </div>
-                  </div>
-                </div>
-                <ul className="mt-6 space-y-4 text-gray-600 text-sm dark:text-white/80">
-                  <li className="flex items-center gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-                      ></path>
-                    </svg>
-                    <div>
-                      {" "}
-                      <span className="font-semibold text-black dark:text-white">
-                        {" "}
-                        3,240{" "}
-                      </span>{" "}
-                      friends{" "}
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
-                      ></path>
-                    </svg>
-                    <div>
-                      {" "}
-                      on Socialite since{" "}
-                      <span className="font-semibold text-black dark:text-white">
-                        {" "}
-                        2014
-                      </span>{" "}
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div className="box p-5 px-6 pr-0">
-                <h3 className="font-semibold text-lg text-black dark:text-white">
-                  Price Info
-                </h3>
-                <div className="grid grid-cols-2 gap-2 text-sm mt-4">
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="heart"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        162
-                      </h3>
-                      <p>Intersted</p>
+                      <p>주행거리 계기상태</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -558,67 +606,133 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        162
+                        {carData.performanceDistance}
                       </h3>
-                      <p>Going</p>
+                      <p>주행거리</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceVIN}
+                      </h3>
+                      <p>차대번호</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceEmit}
+                      </h3>
+                      <p>배출가스</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceTuning}
+                      </h3>
+                      <p>튜닝</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceSpecial}
+                      </h3>
+                      <p>특별이력</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceChange}
+                      </h3>
+                      <p>용도변경</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceColor}
+                      </h3>
+                      <p>색상</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceOption}
+                      </h3>
+                      <p>주요옵션</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                      {" "}
+                      <ion-icon
+                        name="leaf-outline"
+                        className="text-2xl text-rose-600"
+                      ></ion-icon>
+                    </div>
+                    <div>
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        {carData.performanceRecall}
+                      </h3>
+                      <p>리콜대상</p>
                     </div>
                   </div>
                 </div>
-                <ul className="mt-6 space-y-4 text-gray-600 text-sm dark:text-white/80">
-                  <li className="flex items-center gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-                      ></path>
-                    </svg>
-                    <div>
-                      {" "}
-                      <span className="font-semibold text-black dark:text-white">
-                        {" "}
-                        3,240{" "}
-                      </span>{" "}
-                      friends{" "}
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
-                      ></path>
-                    </svg>
-                    <div>
-                      {" "}
-                      on Socialite since{" "}
-                      <span className="font-semibold text-black dark:text-white">
-                        {" "}
-                        2014
-                      </span>{" "}
-                    </div>
-                  </li>
-                </ul>
               </div>
-
-              
-
-              
             </div>
           </div>
         </div>
