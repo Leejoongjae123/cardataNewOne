@@ -1,143 +1,95 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Pagination } from "@nextui-org/react";
+import { createClient } from "@/utils/supabase/client";
+import { Chip } from "@nextui-org/react";
+function MyPrice({ session }) {
+  const supabase = createClient();
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState("1");
+  const itemsPerPage = 5;
+  console.log("session:", session);
+  const getData = async () => {
+    const { data, error, count } = await supabase
+      .from("requests")
+      .select("*", { count: "exact" })
+      .eq("userId", session.user.email)
+      .order("created_at", { ascending: false })
+      .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
-function MyPrice() {
+    if (error) {
+      console.error("Error fetching data:", error);
+      return;
+    }
+    setData(data);
+    setCount(count);
+    setTotalPages(Math.ceil(count / itemsPerPage));
+  };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [currentPage]);
+
+  console.log("data22:", data);
+  console.log("totalPages:", totalPages);
+
   return (
     <div>
-      <div class="flex items-center justify-between text-black dark:text-white py-3 mt-8">
-        <h3 class="text-xl font-semibold"> List </h3>
-        <a href="#" class="text-sm text-blue-500">
-          See all
-        </a>
-      </div>
       <div class="box p-5 mt-4">
-        <div class="card-list">
-          <a href="blog-read.html" class="lg:order-1">
-            <div class="card-list-media h-32">
-              <img src="/images/blog/img-2.jpg" alt="" />
-            </div>
-          </a>
-          <div class="card-list-body">
-            <a href="blog-read.html">
-              {" "}
-              <h3 class="card-list-title">
-                {" "}
-                Top amazing web demos and experiments in 2024 should know about{" "}
-              </h3>{" "}
-            </a>
-            <p class="card-list-text">
-              {" "}
-              consectetuer adipiscing elit, sed diam nonummy nibh euismod
-              tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
-              enim ad minim veniam,
-            </p>
-            <a href="#">
-              {" "}
-              <div class="card-list-link"> Jesse Steeve </div>{" "}
-            </a>
-            <div class="card-list-info">
-              <div class="flex items-center gap-2">
-                <ion-icon name="heart-outline" class="text-lg"></ion-icon>
-                45
+        {data.map((item, index) => (
+          <>
+            <div class="card-list">
+              <div class="card-list-media h-32">
+                <img src={item.thumbImage} alt="" />
               </div>
-              <div class="md:block hidden">·</div>
-              <div class="flex items-center gap-2">
-                <ion-icon
-                  name="chatbubble-ellipses-outline"
-                  class="text-lg"
-                ></ion-icon>
-                156.9K
+
+              <div class="card-list-body flex flex-col justify-center items-start">
+                <div className="w-full flex justify-start items-center">
+                  <Chip
+                    className="mx-2 text-white"
+                    color={item.response ? "primary" : "danger"}
+                  >
+                    {item.response ? "회신완료" : "검토중"}
+                  </Chip>
+                  <h1 className="ml-2 text-medium font-semibold">
+                    {item.title}
+                  </h1>
+                </div>
+                <p class="card-list-text">{item.description}</p>
+                <div class="card-list-link"> {formatTimestamp(item.created_at)} </div>{" "}
+                
               </div>
             </div>
-          </div>
-        </div>
-        <hr class="card-list-divider" />
-        <div class="card-list">
-          <a href="blog-read.html" class="lg:order-1">
-            <div class="card-list-media h-32">
-              <img src="/images/blog/img-3.jpg" alt="" />
-            </div>
-          </a>
-          <div class="card-list-body">
-            <a href="blog-read.html">
-              {" "}
-              <h3 class="card-list-title">
-                {" "}
-                Interesting JavaScript and CSS libraries should Know About{" "}
-              </h3>{" "}
-            </a>
-            <p class="card-list-text">
-              {" "}
-              consectetuer adipiscing elit, sed diam nonummy nibh euismod
-              tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
-              enim ad minim veniam,
-            </p>
-            <a href="#">
-              {" "}
-              <div class="card-list-link"> Monroe Parker </div>{" "}
-            </a>
-            <div class="card-list-info">
-              <div class="flex items-center gap-2">
-                <ion-icon name="heart-outline" class="text-lg"></ion-icon>
-                45
-              </div>
-              <div class="md:block hidden">·</div>
-              <div class="flex items-center gap-2">
-                <ion-icon
-                  name="chatbubble-ellipses-outline"
-                  class="text-lg"
-                ></ion-icon>
-                156.9K
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr class="card-list-divider" />
-        <div class="card-list">
-          <a href="blog-read.html" class="lg:order-1">
-            <div class="card-list-media h-32">
-              <img src="/images/blog/img-4.jpg" alt="" />
-            </div>
-          </a>
-          <div class="card-list-body">
-            <a href="blog-read.html">
-              {" "}
-              <h3 class="card-list-title">
-                Interesting javaScript and CSS libraries you should be learn
-              </h3>{" "}
-            </a>
-            <p class="card-list-text">
-              {" "}
-              consectetuer adipiscing elit, sed diam nonummy nibh euismod
-              tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
-              enim ad minim veniam,
-            </p>
-            <a href="#">
-              {" "}
-              <div class="card-list-link"> Martin Gray </div>{" "}
-            </a>
-            <div class="card-list-info">
-              <div class="flex items-center gap-2">
-                <ion-icon name="heart-outline" class="text-lg"></ion-icon>
-                45
-              </div>
-              <div class="md:block hidden">·</div>
-              <div class="flex items-center gap-2">
-                <ion-icon
-                  name="chatbubble-ellipses-outline"
-                  class="text-lg"
-                ></ion-icon>
-                156.9K
-              </div>
-            </div>
-          </div>
-        </div>
+            {index !== data.length - 1 && <hr class="card-list-divider" />}
+          </>
+        ))}
       </div>
       <div className="flex w-full justify-center items-center py-5">
-        <Pagination className="text-white" total={10} initialPage={1} />
+        <Pagination
+          total={totalPages}
+          initialPage={1}
+          page={currentPage}
+          onChange={(page) => setCurrentPage(page)}
+          className="text-white"
+        />
       </div>
     </div>
   );
 }
 
 export default MyPrice;
+
+function formatTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}

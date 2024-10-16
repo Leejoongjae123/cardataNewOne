@@ -149,8 +149,8 @@ function AllOne() {
             <li>
               
               <a onClick={()=>{
-                setSelectedPlatform("NaverPolamfe")
-              }}> Naver Cafe</a>{" "}
+                setSelectedPlatform("Other")
+              }}> Other car</a>{" "}
             </li>
           </ul>
         </nav>

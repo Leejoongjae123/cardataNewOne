@@ -57,9 +57,9 @@ function NewOne() {
             <li>
               
             <a onClick={()=>{
-                setSelectedPlatform("NaverPolamfe")
+                setSelectedPlatform("Other")
               }}>
-                 Naver Cafe</a>
+                 Other car</a>
             </li>
           </ul>
         </nav>

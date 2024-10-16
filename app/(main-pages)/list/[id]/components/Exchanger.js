@@ -77,6 +77,7 @@ function Exchanger() {
             <option value="USD">USD</option>
             <option value="RUB">RUB</option>
             <option value="AED">AED</option>
+            <option value="CNY">CNY</option>
           </select>
           <input
             type="text"
@@ -107,6 +108,7 @@ function Exchanger() {
             <option value="USD">USD</option>
             <option value="RUB">RUB</option>
             <option value="AED">AED</option>
+            <option value="CNY">CNY</option>
           </select>
           <input
             type="text"

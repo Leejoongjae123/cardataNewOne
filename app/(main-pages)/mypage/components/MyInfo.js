@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@nextui-org/react";
 function MyInfo({ session }) {
   const supabase = createClient();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -12,6 +13,7 @@ function MyInfo({ session }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function MyInfo({ session }) {
       .select("*")
       .eq("id", session.user.id)
       .single();
-    console.log("data11:", data);
+    setIsLoading(false);
     setProfile(data);
   };
 
@@ -88,109 +90,117 @@ function MyInfo({ session }) {
         pauseOnHover
         theme="light"
       />
-      <div>
-        <div>
-          <div class="space-y-6">
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Name </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="Monroe"
-                  class="w-full"
-                  value={profile?.name}
-                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                />
+      <div className="w-full flex justify-start items-center">
+        {isLoading ? (
+          <div className="w-full flex justify-center items-center">
+            <Spinner color="primary" />
+          </div>
+        ) : (
+          <div>
+            <div class="space-y-6">
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Name </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="Monroe"
+                    class="w-full"
+                    value={profile?.name}
+                    onChange={(e) =>
+                      setProfile({ ...profile, name: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Phone </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.phone}
+                    onChange={(e) =>
+                      setProfile({ ...profile, phone: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Email </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.email}
+                    onChange={(e) =>
+                      setProfile({ ...profile, email: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Referer Email </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.refererEmail}
+                    onChange={(e) =>
+                      setProfile({ ...profile, refererEmail: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Referer Phone </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.refererPhone}
+                    onChange={(e) =>
+                      setProfile({ ...profile, refererPhone: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div class="md:flex items-start gap-10 " hidden>
+                <label class="md:w-32 text-right"> Avatar </label>
+                <div class="flex-1 flex items-center gap-5 max-md:mt-4">
+                  <img
+                    src="assets/images/avatars/avatar-3.jpg"
+                    alt=""
+                    class="w-10 h-10 rounded-full"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                  >
+                    {" "}
+                    Change
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Phone </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.phone}
-                  onChange={(e) =>
-                    setProfile({ ...profile, phone: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Email </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.email}
-                  onChange={(e) =>
-                    setProfile({ ...profile, email: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Referer Email </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.refererEmail}
-                  onChange={(e) =>
-                    setProfile({ ...profile, refererEmail: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Referer Phone </label>
-              <div class="flex-1 max-md:mt-4">
-                <input
-                  type="text"
-                  placeholder="info@mydomain.com"
-                  class="w-full"
-                  value={profile?.refererPhone}
-                  onChange={(e) =>
-                    setProfile({ ...profile, refererPhone: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            <div class="md:flex items-start gap-10 " hidden>
-              <label class="md:w-32 text-right"> Avatar </label>
-              <div class="flex-1 flex items-center gap-5 max-md:mt-4">
-                <img
-                  src="assets/images/avatars/avatar-3.jpg"
-                  alt=""
-                  class="w-10 h-10 rounded-full"
-                />
-                <button
-                  type="submit"
-                  class="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
-                >
-                  {" "}
-                  Change
-                </button>
-              </div>
+            <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
+              <button
+                type="button"
+                class="button lg:px-10 bg-primary text-white max-md:flex-1"
+                onClick={changeInfo}
+              >
+                {" "}
+                Save <span class="ripple-overlay"></span>
+              </button>
             </div>
           </div>
-
-          <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
-            <button
-              type="button"
-              class="button lg:px-10 bg-primary text-white max-md:flex-1"
-              onClick={changeInfo}
-            >
-              {" "}
-              Save <span class="ripple-overlay"></span>
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

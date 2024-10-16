@@ -15,6 +15,8 @@ import {
 } from "@nextui-org/react";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import Exchanger from "./components/Exchanger";
+import RequestEst from "./components/RequestEst";
+
 
 async function page({ params }) {
   const { id } = params;
@@ -60,7 +62,6 @@ async function page({ params }) {
     carData.clr,
     carData.inqCrrgsnb,
   ].join(" • ");
-  console.log(carSpec);
 
   return (
     <div>
@@ -198,12 +199,7 @@ async function page({ params }) {
                   </div>
 
                   <div className="flex gap-1 py-2 justify-between items-center">
-                    <button
-                      className="button bg-primary px-3 text-white w-full"
-                      uk-tooltip="title: Ask; offset: 8"
-                    >
-                      계산 요청하기
-                    </button>
+                    <RequestEst description={carSpec}title={carData.title} desc={carData.description} thumbImage={carData.uploadedImageUrls[0].url} productId={carData.productId} id={id} userId={session.user.email}></RequestEst>
                   </div>
                   {profiles.role === "master" ? (
                     <div>
