@@ -15,10 +15,11 @@ export default async function Page() {
 
         <nav className="nav__underline">
           <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
-            <li><a href="#"> Estimates</a></li>
-            <li><a href="#"> Auth</a></li>
-            <li><a href="#"> Info</a></li>
-            <li><a href="#">Chat</a></li>
+            <li><a href="#"> Role</a></li>
+            <li><a href="#"> Answer</a></li>
+            <li><a href="#"> Products</a></li>
+            <li><a href="#"> Chat</a></li>
+            
           </ul>
         </nav>
       </div>
