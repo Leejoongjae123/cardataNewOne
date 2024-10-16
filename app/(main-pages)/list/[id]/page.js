@@ -150,7 +150,7 @@ async function page({ params }) {
                           <img
                             src={elem.url}
                             alt=""
-                            className="w-full h-6 lg:h-8 rounded object-cover"
+                            className="w-6 h-6 lg:h-8 rounded object-cover"
                           />
                         </a>
                       </li>
