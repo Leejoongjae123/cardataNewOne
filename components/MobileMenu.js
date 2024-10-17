@@ -30,7 +30,7 @@ const MobileMenu = () => {
           <div className="p-4">
             <Link href={"/list"} className="block py-2">LIST</Link>
             <Link href={"/mypage"} className="block py-2">MY PAGE</Link>
-            <Link href={"/mypage"} className="block py-2">ADMIN</Link>
+            <Link href={"/admin"} className="block py-2">ADMIN</Link>
           </div>
         </div>
       )}
