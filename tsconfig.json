@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(auth-pages)/sign-in/page.js", "app/(main-pages)/list/page.js", "components/header-auth.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(auth-pages)/sign-in/page.js", "app/(main-pages)/list/page.js", "components/header-auth.js", "app/(auth-pages)/sign-up/page.js"],
   "exclude": ["node_modules"]
 }

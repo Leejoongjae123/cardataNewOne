@@ -5,19 +5,19 @@ import Answer from "./Answer";
 import Role from "./Role";
 import Products from "./Products";
 export default function TabContent({ session }) {
-  const [activeTab, setActiveTab] = useState("info");
+  const [activeTab, setActiveTab] = useState("role");
 
   return (
     <div>
       <ul className="uk-switcher" id="group-tabs">
-        <li className={activeTab === "chat" ? "uk-active" : ""}>
+        <li className={activeTab === "role" ? "uk-active" : ""}>
           <Role session={session} />
         </li>
-        <li className={activeTab === "estimates" ? "uk-active" : ""}>
+        <li className={activeTab === "answer" ? "uk-active" : ""}>
           <Answer session={session} />
         </li>
 
-        <li className={activeTab === "info" ? "uk-active" : ""}>
+        <li className={activeTab === "products" ? "uk-active" : ""}>
           <Products session={session} />
         </li>
       </ul>

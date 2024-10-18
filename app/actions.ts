@@ -35,6 +35,58 @@ export const signUpAction = async (formData: FormData) => {
   }
 };
 
+export const signUpFirstAction = async (formData: FormData) => {
+  const password = formData.get("password")?.toString();
+  const confirmPassword = formData.get("confirm password")?.toString();
+  const name = formData.get("name")?.toString();
+  const mobileNumber = formData.get("mobile number")?.toString();
+  const region = formData.get("region")?.toString();
+  const recommenderEmail = formData.get("recommenderEmail")?.toString();
+  const recommenderPhone = formData.get("recommenderPhone")?.toString();
+  if (!password) {
+    return encodedRedirect("error", "/sign-up", "Password is required");
+  }
+  if (!confirmPassword) {
+    return encodedRedirect("error", "/sign-up", "Confirm password is required");
+  }
+  if (!name) {
+    return encodedRedirect("error", "/sign-up", "Name is required");
+  }
+  if (!mobileNumber) {
+    return encodedRedirect("error", "/sign-up", "Mobile number is required");
+  }
+  if (!recommenderEmail) {
+    return encodedRedirect("error", "/sign-up", "Recommender email is required");
+  }
+  if (!recommenderPhone) {
+    return encodedRedirect("error", "/sign-up", "Recommender phone is required");
+  }
+  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+  if (!password || !passwordRegex.test(password)) {
+    return encodedRedirect("error", "/sign-up", "Password must be at least 8 characters long and include at least one number and one special character");
+  }
+  
+  if (password !== confirmPassword) {
+    return encodedRedirect("error", "/sign-up", "Passwords do not match");
+  }
+
+  const params: Record<string, string> = {
+    password,
+    confirmPassword,
+    name,
+    mobileNumber,
+    recommenderEmail,
+    recommenderPhone,
+    region
+  };
+  
+  const searchParams = new URLSearchParams(params);
+
+
+  return redirect(`/sign-up2?${searchParams.toString()}`);
+};
+
 export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;

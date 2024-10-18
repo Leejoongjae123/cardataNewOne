@@ -1,9 +1,9 @@
-import { signInAction } from "@/app/actions";
+import { signUpFirstAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import IonIcon from "@reacticons/ionicons";
-import { Button, Link, Divider } from "@nextui-org/react";
+import { Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { RiAppleFill } from "react-icons/ri";
 import { RiKakaoTalkFill } from "react-icons/ri";
@@ -12,18 +12,16 @@ import { FaTwitter } from "react-icons/fa";
 import { Spinner } from "@nextui-org/spinner";
 import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
-import {headers} from "next/headers";
-import ToastBox from './components/ToastBox'
-export default function Login({ searchParams }) {
+import { headers } from "next/headers";
+import ToastBox from "./components/ToastBox";
+import { Button } from "@/components/ui/button";
+
+export default function SignUp({ searchParams }) {
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
       <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center pt-10  z-10 flex-col">
-        <img
-          src="/images/logo1.png"
-          className="w-48  "
-          alt=""
-        />
+        <img src="/images/logo1.png" className="w-48  " alt="" />
         <div
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -38,26 +36,19 @@ export default function Login({ searchParams }) {
 
           <div>
             <h2 className="text-2xl font-semibold mb-1.5">
-              {" "}
-              Sign in to your account{" "}
+              Sign Up for the Sincar
             </h2>
-            <p className="text-sm text-gray-700 font-normal">
-              If you haven’t signed up yet.{" "}
-              <a href="/sign-up" className="text-blue-700">
-                Register here!
-              </a>
-            </p>
           </div>
 
           <form
             method="#"
             action="#"
-            className="space-y-7 text-sm text-black font-medium "
+            className="space-y-3 text-sm text-black font-medium "
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
               <label for="email" className="">
-                Email address
+                Email
               </label>
               <div className="mt-2.5">
                 <input
@@ -65,14 +56,14 @@ export default function Login({ searchParams }) {
                   name="email"
                   type="email"
                   autofocus=""
-                  placeholder="Email"
+                  placeholder="Please enter your email address"
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
-              <label for="email" className="">
+              <label for="password" className="">
                 Password
               </label>
               <div className="mt-2.5">
@@ -80,68 +71,122 @@ export default function Login({ searchParams }) {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="***"
+                  placeholder="Please enter your Password"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
+                />
+              </div>
+              <p>* Please enter at least 8 characters</p>
+              <p>
+                * Combination of two or more of English upper and lower cast
+                letters / number / special characters
+              </p>
+            </div>
+            <div>
+              <label for="confirm password" className="">
+                Confirm Password
+              </label>
+              <div className="mt-2.5">
+                <input
+                  id="confirm password"
+                  name="confirm password"
+                  type="password"
+                  placeholder="your password again"
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <input id="rememberme" name="rememberme" type="checkbox" />
-                <label for="rememberme" className="font-normal">
-                  Remember me
-                </label>
-              </div>
-              <a href="#" className="text-blue-700">
-                Forgot password{" "}
-              </a>
-            </div>
-
             <div>
-              {/* <button
-                type="submit"
-                className="button bg-primary text-white w-full"
-                formAction={signInAction}
-              >
-                <Spinner size="sm" />
-                Sign in
-              </button> */}
-              <Link formAction={signInAction}>Sign in</Link>
-            </div>
-
-            <div className="text-center flex items-center gap-6">
-              <hr className="flex-1 border-slate-200 " />
-              Or continue with
-              <hr className="flex-1 border-slate-200 " />
-            </div>
-
-            <div
-              className="flex gap-2 flex-wrap"
-              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
-            >
-              <div
-                href="#"
-                className="button items-center gap-2 bg-primary text-white text-sm flex-1"
-              >
-                <RiKakaoTalkFill />
-                Kakao
+              <label for="confirm password" className="">
+                Name
+              </label>
+              <div className="mt-2.5">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Please enter your name"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
+                />
               </div>
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
+            </div>
+            <div>
+              <label for="mobile number" className="">
+                Mobile Number
+              </label>
+              <div className="mt-2.5">
+                <input
+                  id="mobile number"
+                  name="mobile number"
+                  type="text"
+                  placeholder="Please enter your mobile number"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
+                />
+              </div>
+            </div>
+            <div>
+              <label for="confirm password" className="">
+                Region
+              </label>
+              <div className="mt-2.5">
+                <select
+                  id="region"
+                  name="region"
+                  defaultValue=""
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="" disabled>
+                    Choose a country
+                  </option>
+                  <option value="KOREA">KOREA</option>
+                  <option value="UNITED STATES">UNITED STATES</option>
+                  <option value="RUSSIA">RUSSIA</option>
+                  <option value="UNITED ARAB EMIRATES">
+                    UNITED ARAB EMIRATES
+                  </option>
+                  <option value="CHINA">CHINA</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="confirm password" className="">
+                Recommender Email
+              </label>
+              <div className="mt-2.5">
+                <input
+                  id="recommenderEmail"
+                  name="recommenderEmail"
+                  type="email"
+                  placeholder="Please enter your recommender email"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
+                />
+              </div>
+            </div>
+            <div>
+              <label for="Recommender Phone" className="">
+                Recommender Phone
+              </label>
+              <div className="mt-2.5">
+                <input
+                  id="recommenderPhone"
+                  name="recommenderPhone"
+                  type="text"
+                  placeholder="Please enter your recommender phone"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              {/* <Link href="/sign-up2">Next</Link> */}
+              <Button
+                className="h-12 w-full text-white bg-primary hover:bg-primary/90 transition-colors"
+                formAction={signUpFirstAction}
               >
-                <FaFacebook />
-                facebook{" "}
-              </a>
-
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-sky-600 text-white text-sm flex-1"
-              >
-                <RiAppleFill></RiAppleFill>
-                Apple
-              </a>
+                Next
+              </Button>
+              <div className="w-full h-12 flex justify-center items-center">
+              <Link href="/sign-in">Go to Sign In Page</Link>
+              </div>
+              
             </div>
           </form>
         </div>
