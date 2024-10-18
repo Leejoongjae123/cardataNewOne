@@ -72,14 +72,16 @@ export const signUpFirstAction = async (formData: FormData) => {
   }
 
   const params: Record<string, string> = {
-    password,
-    confirmPassword,
-    name,
-    mobileNumber,
-    recommenderEmail,
-    recommenderPhone,
-    region
+    password: password as string,
+    confirmPassword: confirmPassword as string,
+    name: name as string,
+    mobileNumber: mobileNumber as string,
+    recommenderEmail: recommenderEmail as string,
+    recommenderPhone: recommenderPhone as string,
+    region: region ?? '', // 널 병합 연산자 사용
   };
+
+  
   
   const searchParams = new URLSearchParams(params);
 
