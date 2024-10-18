@@ -175,15 +175,15 @@ export default function SignUp({ searchParams }) {
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center gap-y-2">
               {/* <Link href="/sign-up2">Next</Link> */}
               <Button
-                className="h-12 w-full text-white bg-primary hover:bg-primary/90 transition-colors"
+                className="h-full w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signUpFirstAction}
               >
                 Next
               </Button>
-              <div className="w-full h-12 flex justify-center items-center">
+              <div className="w-full h-full flex justify-center items-center">
               <Link href="/sign-in">Go to Sign In Page</Link>
               </div>
               

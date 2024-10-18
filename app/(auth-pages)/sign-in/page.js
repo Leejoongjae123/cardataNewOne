@@ -3,7 +3,7 @@ import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import IonIcon from "@reacticons/ionicons";
-import { Button, Link, Divider } from "@nextui-org/react";
+import { Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { RiAppleFill } from "react-icons/ri";
 import { RiKakaoTalkFill } from "react-icons/ri";
@@ -12,18 +12,15 @@ import { FaTwitter } from "react-icons/fa";
 import { Spinner } from "@nextui-org/spinner";
 import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
-import {headers} from "next/headers";
-import ToastBox from './components/ToastBox'
+import { headers } from "next/headers";
+import { Button } from "@/components/ui/button";
+import ToastBox from "./components/ToastBox";
 export default function Login({ searchParams }) {
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
       <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center pt-10  z-10 flex-col">
-        <img
-          src="/images/logo1.png"
-          className="w-48  "
-          alt=""
-        />
+        <img src="/images/logo1.png" className="w-48  " alt="" />
         <div
           className="w-full lg:max-w-sm mx-auto space-y-10"
           uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
@@ -48,7 +45,6 @@ export default function Login({ searchParams }) {
               </a>
             </p>
           </div>
-
 
           <form
             method="#"
@@ -108,7 +104,14 @@ export default function Login({ searchParams }) {
                 <Spinner size="sm" />
                 Sign in
               </button> */}
-              <Link formAction={signInAction}>Sign in</Link>
+              <Button
+                type="submit"
+                className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
+                formAction={signInAction}
+              >
+                Sign in
+              </Button>
+              {/* <Link formAction={signInAction}>Sign in</Link> */}
             </div>
 
             <div className="text-center flex items-center gap-6">
