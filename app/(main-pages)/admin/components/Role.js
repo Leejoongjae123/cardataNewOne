@@ -96,24 +96,23 @@ function Role({ session }) {
         phone: selectData.phone,
         role: selectData.role,
         certificated: selectData.certificated,
-        refererEmail: selectData.refererEmail,
-        refererPhone: selectData.refererPhone,
+        recommenderEmail: selectData.recommenderEmail,
+        recommenderPhone: selectData.recommenderPhone,
       })
       .eq("id", selectData.id);
     if (error) {
       console.error("Error updating data:", error);
-      toast.error("데이타 변경 실패");
+      toast.error("change failed");
       return;
     }
     console.log("Data updated successfully:", data);
     console.log("error:", error);
-    toast.success("데이타 변경 성공");
+    toast.success("change successfully");
     getData();
   };
 
   const handleCancel = () => {
     setSelectData(null);
-    toast.error("취소");
   };
   console.log("selectData:", selectData);
 
@@ -187,7 +186,7 @@ function Role({ session }) {
                   <TableCell className="text-center">{item.phone}</TableCell>
                   <TableCell className="text-center">{item.role}</TableCell>
                   <TableCell className="text-center">
-                    {item.certification}
+                    {item.certificated.toString()}
                   </TableCell>
                   <TableCell className="text-center">
                     <Button
@@ -283,8 +282,8 @@ function Role({ session }) {
                       <SelectItem key="client" value="client">
                         Client
                       </SelectItem>
-                      <SelectItem key="referer" value="referer">
-                        Referer
+                      <SelectItem key="recommender" value="recommender">
+                        Recommender
                       </SelectItem>
                     </Select>
                   </div>
@@ -314,10 +313,10 @@ function Role({ session }) {
                       onChange={(e) =>
                         setSelectData({
                           ...selectData,
-                          refererEmail: e.target.value,
+                          recommenderEmail: e.target.value,
                         })
                       }
-                      value={selectData?.refererEmail || ""}
+                      value={selectData?.recommenderEmail || ""}
                       className="w-full"
                       type="text"
                     />
@@ -328,10 +327,10 @@ function Role({ session }) {
                       onChange={(e) =>
                         setSelectData({
                           ...selectData,
-                          refererPhone: e.target.value,
+                          recommenderPhone: e.target.value,
                         })
                       }
-                      value={selectData?.refererPhone || ""}
+                      value={selectData?.recommenderPhone || ""}
                       className="w-full"
                       type="text"
                     />

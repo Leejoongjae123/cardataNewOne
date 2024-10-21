@@ -1,4 +1,4 @@
-import { signInAction } from "@/app/actions";
+import { signInAction } from "@/app/actions.js";
 import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,9 +38,9 @@ export default function Login({ searchParams }) {
               {" "}
               Sign in to your account{" "}
             </h2>
-            <p className="text-sm text-gray-700 font-normal">
+            <p className="text-medium text-gray-700 font-normal">
               If you haven’t signed up yet.{" "}
-              <a href="/sign-up" className="text-blue-700">
+              <a href="/sign-up" className="text-blue-700 font-bold">
                 Register here!
               </a>
             </p>
@@ -77,20 +77,20 @@ export default function Login({ searchParams }) {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="***"
+                  placeholder="Password"
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-end">
+              {/* <div className="flex items-center gap-2.5">
                 <input id="rememberme" name="rememberme" type="checkbox" />
                 <label for="rememberme" className="font-normal">
                   Remember me
                 </label>
-              </div>
-              <a href="#" className="text-blue-700">
+              </div> */}
+              <a href="#" className="text-blue-700 font-bold">
                 Forgot password{" "}
               </a>
             </div>

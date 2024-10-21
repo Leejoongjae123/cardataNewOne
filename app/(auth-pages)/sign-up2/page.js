@@ -1,4 +1,4 @@
-import { signUpFirstAction } from "@/app/actions";
+import { signUpAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,7 +14,89 @@ import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
 import { headers } from "next/headers";
 import ToastBox from "./components/ToastBox";
+import { createClient } from "@/utils/supabase/server";
+import { encodedRedirect } from "@/utils/utils";
+
 export default function Login({ searchParams }) {
+  const formAction = async (formData) => {
+    "use server";
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+    const name = formData.get("name");
+    const phone = formData.get("phone");
+    const recommenderEmail = formData.get("recommenderEmail");
+    const recommenderPhone = formData.get("recommenderPhone");
+    const region = formData.get("region");
+    const businessName = formData.get("businessName")?.toString();
+    const businessRegistrationNumber = formData.get("businessRegistrationNumber")?.toString();
+    const businessCertificate = formData.get("businessCertificate");
+    
+    // const email='jjcoding3001@naver.com'
+    // const password='dlwndwo2!'
+
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    console.log("data:", data);
+    if (error) {
+      console.log("error:", error);
+      return encodedRedirect("error", "/sign-up", error.message);
+    } else {
+      let businessCertificateUrl = "";
+      if (businessCertificate && businessCertificate.size > 0) {
+        const fileName = `${Date.now()}_${businessCertificate.name}`;
+        const { data: storageData, error: storageError } = await supabase.storage
+          .from("certificate")
+          .upload(
+            `public/${data.user.id}/${fileName}`,
+            businessCertificate
+          );
+
+        if (storageError) {
+          console.log("storageError:", storageError);
+          return encodedRedirect("error", "/sign-up", storageError.message);
+        }
+        console.log("storageData:", storageData);
+
+        businessCertificateUrl = supabase.storage
+          .from("certificate")
+          .getPublicUrl(`public/${data.user.id}/${fileName}`)
+          .data.publicUrl;
+      } else {
+        console.log("No business certificate file uploaded");
+      }
+
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .update({
+          email: email,
+          businessName: businessName,
+          businessRegistrationNumber: businessRegistrationNumber,
+          businessCertificate: businessCertificateUrl,
+          name: name,
+          phone: phone,
+          recommenderEmail: recommenderEmail,
+          recommenderPhone: recommenderPhone,
+          region: region,
+        })
+        .eq("id", data.user.id);
+
+      if (profileError) {
+        console.log("profileError:", profileError);
+        return encodedRedirect("error", "/sign-up", profileError.message);
+      }
+
+      return encodedRedirect(
+        "success",
+        "/sign-in",
+        "Thanks for signing up! Please check your email for a verification link."
+      );
+    }
+  };
+
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -39,12 +121,51 @@ export default function Login({ searchParams }) {
           </div>
 
           <form
-            method="#"
-            action="#"
+            action={formAction}
             className="space-y-3 text-sm text-black font-medium "
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
+              <input
+                type="hidden"
+                name="email"
+                value={searchParams.email || ""}
+              />
+              <input
+                type="hidden"
+                name="password"
+                value={searchParams.password || ""}
+              />
+              <input
+                type="hidden"
+                name="confirmPassword"
+                value={searchParams.confirmPassword || ""}
+              />
+              <input
+                type="hidden"
+                name="name"
+                value={searchParams.name || ""}
+              />
+              <input
+                type="hidden"
+                name="phone"
+                value={searchParams.phone || ""}
+              />
+              <input
+                type="hidden"
+                name="recommenderEmail"
+                value={searchParams.recommenderEmail || ""}
+              />
+              <input
+                type="hidden"
+                name="recommenderPhone"
+                value={searchParams.recommenderPhone || ""}
+              />
+              <input
+                type="hidden"
+                name="region"
+                value={searchParams.region || ""}
+              />
               <label for="email" className="">
                 Business name
               </label>
@@ -89,9 +210,7 @@ export default function Login({ searchParams }) {
             </div>
 
             <div>
-              <SubmitButton formAction={signUpFirstAction}>
-                Sign Up
-              </SubmitButton>
+              <SubmitButton>Sign Up</SubmitButton>
               <div className="w-full h-12 flex justify-center items-center">
                 <Link href="/sign-in">Go to Sign In Page</Link>
               </div>

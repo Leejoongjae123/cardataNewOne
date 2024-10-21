@@ -7,16 +7,16 @@ function page() {
       <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div class="mx-auto max-w-screen-sm text-center">
           <h1 class="mb-4 text-5xl font-bold">
-            검토중
+            Now in Review
           </h1>
           <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
-            관리자가 당신의 계정의 권한을 확인중입니다.
+            Your account is now under review.
           </p>
           <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-            불편을 드려 죄송합니다.
+            We apologize for the inconvenience.
           </p>
           <Link href="/sign-in">
-              로그인 화면으로
+            Go to Login Page
           </Link>
         </div>
       </div>

@@ -5,9 +5,20 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const signUpAction = async (formData: FormData) => {
-  const email = formData.get("email")?.toString();
-  const password = formData.get("password")?.toString();
+export const signUpAction = async (formData) => {
+
+
+  
+  const password = searchParams.get("password");
+  const confirmPassword = searchParams.get("confirmPassword");
+  const name = searchParams.get("name");
+  const mobileNumber = searchParams.get("mobileNumber");
+  const recommenderEmail = searchParams.get("recommenderEmail");
+  const recommenderPhone = searchParams.get("recommenderPhone");
+  const region = searchParams.get("region");
+  const businessName = formData.get("businessName")?.toString();
+  const businessRegistrationNumber = formData.get("businessRegistrationNumber")?.toString();
+  const businessCertificate = formData.get("businessCertificate")?.toString();
   const supabase = createClient();
   const origin = headers().get("origin");
 
@@ -35,14 +46,16 @@ export const signUpAction = async (formData: FormData) => {
   }
 };
 
-export const signUpFirstAction = async (formData: FormData) => {
+export async function signUpFirstAction(formData) {
+  
+  const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
   const confirmPassword = formData.get("confirm password")?.toString();
   const name = formData.get("name")?.toString();
-  const mobileNumber = formData.get("mobile number")?.toString();
+  const phone = formData.get("phone")?.toString();
   const region = formData.get("region")?.toString();
-  const recommenderEmail = formData.get("recommenderEmail")?.toString();
-  const recommenderPhone = formData.get("recommenderPhone")?.toString();
+  const recommenderEmail = formData.get("recommenderEmail")?.toString() || '';
+  const recommenderPhone = formData.get("recommenderPhone")?.toString() || '';
   if (!password) {
     return encodedRedirect("error", "/sign-up", "Password is required");
   }
@@ -52,15 +65,15 @@ export const signUpFirstAction = async (formData: FormData) => {
   if (!name) {
     return encodedRedirect("error", "/sign-up", "Name is required");
   }
-  if (!mobileNumber) {
+  if (!phone) {
     return encodedRedirect("error", "/sign-up", "Mobile number is required");
   }
-  if (!recommenderEmail) {
-    return encodedRedirect("error", "/sign-up", "Recommender email is required");
-  }
-  if (!recommenderPhone) {
-    return encodedRedirect("error", "/sign-up", "Recommender phone is required");
-  }
+  // if (!recommenderEmail) {
+  //   return encodedRedirect("error", "/sign-up", "Recommender email is required");
+  // }
+  // if (!recommenderPhone) {
+  //   return encodedRedirect("error", "/sign-up", "Recommender phone is required");
+  // }
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
   if (!password || !passwordRegex.test(password)) {
@@ -71,13 +84,14 @@ export const signUpFirstAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-up", "Passwords do not match");
   }
 
-  const params: Record<string, string> = {
-    password: password as string,
-    confirmPassword: confirmPassword as string,
-    name: name as string,
-    mobileNumber: mobileNumber as string,
-    recommenderEmail: recommenderEmail as string,
-    recommenderPhone: recommenderPhone as string,
+  const params = {
+    email: email,
+    password: password ,
+    confirmPassword: confirmPassword,
+    name: name,
+    phone: phone,
+    recommenderEmail: recommenderEmail,
+    recommenderPhone: recommenderPhone,
     region: region ?? '', // 널 병합 연산자 사용
   };
 
@@ -89,9 +103,9 @@ export const signUpFirstAction = async (formData: FormData) => {
   return redirect(`/sign-up2?${searchParams.toString()}`);
 };
 
-export const signInAction = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+export const signInAction = async (formData) => {
+  const email = formData.get("email");
+  const password = formData.get("password");
   const supabase = createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -106,7 +120,7 @@ export const signInAction = async (formData: FormData) => {
   return redirect("/list");
 };
 
-export const forgotPasswordAction = async (formData: FormData) => {
+export const forgotPasswordAction = async (formData) => {
   const email = formData.get("email")?.toString();
   const supabase = createClient();
   const origin = headers().get("origin");
@@ -140,11 +154,11 @@ export const forgotPasswordAction = async (formData: FormData) => {
   );
 };
 
-export const resetPasswordAction = async (formData: FormData) => {
+export const resetPasswordAction = async (formData) => {
   const supabase = createClient();
 
-  const password = formData.get("password") as string;
-  const confirmPassword = formData.get("confirmPassword") as string;
+  const password = formData.get("password");
+  const confirmPassword = formData.get("confirmPassword");
 
   if (!password || !confirmPassword) {
     encodedRedirect(

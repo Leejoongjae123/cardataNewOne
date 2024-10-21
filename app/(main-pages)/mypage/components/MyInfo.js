@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@nextui-org/react";
+import {Link} from '@nextui-org/react'
 function MyInfo({ session }) {
   const supabase = createClient();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -14,6 +15,7 @@ function MyInfo({ session }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -62,8 +64,11 @@ function MyInfo({ session }) {
         name: profile.name,
         phone: profile.phone,
         email: profile.email,
-        refererEmail: profile.refererEmail,
-        refererPhone: profile.refererPhone,
+        recommenderEmail: profile.recommenderEmail,
+        recommenderPhone: profile.recommenderPhone,
+        businessName: profile.businessName,
+        businessRegistrationNumber: profile.businessRegistrationNumber,
+        businessCertificate: profile.businessCertificate,
       })
       .eq("id", session.user.id);
 
@@ -74,6 +79,28 @@ function MyInfo({ session }) {
       toast.success("Profile updated successfully.");
       router.refresh();
     }
+  };
+
+  const uploadBusinessCertificate = async (file) => {
+    setIsUploading(true);
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data, error } = await supabase.storage
+      .from("certificate")
+      .upload(`public/${session.user.id}/${fileName}`, file);
+
+    if (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Error uploading file: " + error.message);
+      setIsUploading(false);
+      return null;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from("certificate")
+      .getPublicUrl(`public/${session.user.id}/${fileName}`);
+
+    setIsUploading(false);
+    return publicUrl;
   };
 
   return (
@@ -99,8 +126,8 @@ function MyInfo({ session }) {
           <div className="w-full">
             <div class="space-y-6">
               <div class="md:flex items-center gap-10">
-                <label class="md:w-full text-right"> Name </label>
-                <div class="w-full max-md:mt-4">
+                <label class="md:w-32 text-right"> Name </label>
+                <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder="Monroe"
@@ -142,31 +169,98 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Referer Email </label>
+                <label class="md:w-32 text-right"> Recommender Email </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder="info@mydomain.com"
                     class="w-full"
-                    value={profile?.refererEmail}
+                    value={profile?.recommenderEmail}
                     onChange={(e) =>
-                      setProfile({ ...profile, refererEmail: e.target.value })
+                      setProfile({ ...profile, recommenderEmail: e.target.value })
                     }
                   />
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Referer Phone </label>
+                <label class="md:w-32 text-right"> Recommender Phone </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder="info@mydomain.com"
                     class="w-full"
-                    value={profile?.refererPhone}
+                    value={profile?.recommenderPhone}
                     onChange={(e) =>
-                      setProfile({ ...profile, refererPhone: e.target.value })
+                      setProfile({
+                        ...profile,
+                        recommenderPhone: e.target.value,
+                      })
                     }
                   />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Business Name </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.businessName}
+                    onChange={(e) =>
+                      setProfile({
+                        ...profile,
+                        businessName: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Business Registration Number </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="text"
+                    placeholder="info@mydomain.com"
+                    class="w-full"
+                    value={profile?.businessRegistrationNumber}
+                    onChange={(e) =>
+                      setProfile({
+                        ...profile,
+                        businessRegistrationNumber: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div class="md:flex items-center gap-10">
+                <label class="md:w-32 text-right"> Business Certificate </label>
+                <div class="flex-1 max-md:mt-4">
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    class="w-full"
+                    onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const publicUrl = await uploadBusinessCertificate(file);
+                        if (publicUrl) {
+                          setProfile({
+                            ...profile,
+                            businessCertificate: publicUrl,
+                          });
+                        }
+                      }
+                    }}
+                  />
+                  {isUploading && <p>Uploading...</p>}
+                  {profile?.businessCertificate && (
+                    <p class="mt-2 text-sm text-gray-600">
+                      <Link target="_blank" href={profile.businessCertificate}>
+                        View Business Certificate
+                      </Link>
+                    </p>
+                  )}
                 </div>
               </div>
 

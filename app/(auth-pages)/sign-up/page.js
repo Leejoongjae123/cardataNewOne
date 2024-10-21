@@ -1,4 +1,4 @@
-import { signUpFirstAction } from "@/app/actions";
+import { signUpFirstAction } from "@/app/actions.js";
 import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -110,13 +110,13 @@ export default function SignUp({ searchParams }) {
               </div>
             </div>
             <div>
-              <label for="mobile number" className="">
+              <label for="phone" className="">
                 Mobile Number
               </label>
               <div className="mt-2.5">
                 <input
-                  id="mobile number"
-                  name="mobile number"
+                  id="phone"
+                  name="phone"
                   type="text"
                   placeholder="Please enter your mobile number"
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
@@ -176,7 +176,6 @@ export default function SignUp({ searchParams }) {
               </div>
             </div>
             <div className="flex flex-col justify-center items-center gap-y-2">
-              {/* <Link href="/sign-up2">Next</Link> */}
               <Button
                 className="h-full w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signUpFirstAction}
