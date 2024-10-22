@@ -15,6 +15,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {Link} from '@nextui-org/react'
+import axios from "axios";
 function Answer({ session }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const supabase = createClient();
@@ -81,15 +82,11 @@ function Answer({ session }) {
   console.log("responseData:", responseData);
   const handleSendMail = async () => {
     try {
-      const response = await fetch('https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email', {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          receiver: responseData.productId.email, // 가정: 이메일 필드가 productId 객체 내에 있다고 가정
-          responsedatetime: formatTimestamp(new Date()),
+      const response = await axios.post(
+        'https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email',
+        {
+          receiver: responseData.userId,
+          responsedatetime: formatDateToWords(new Date()),
           name: responseData.productId.title,
           number: responseData.productId.inqCrrgsnb,
           modelyear: responseData.productId.year,
@@ -98,11 +95,17 @@ function Answer({ session }) {
           color: responseData.productId.clr,
           accidenthistory: responseData.productId.accidentSelf,
           result: responseData.answer,
-          id: responseData.id
-        })
-      });
+          id: responseData.id.toString()
+        },
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
   
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("이메일이 성공적으로 전송되었습니다.");
       } else {
         toast.error("이메일 전송에 실패했습니다.");

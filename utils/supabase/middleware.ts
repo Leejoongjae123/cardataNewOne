@@ -61,12 +61,15 @@ export const updateSession = async (request: NextRequest) => {
         certificated=data.certificated
       }
     }
-if (request.nextUrl.pathname.startsWith("/list") && (!certificated)) {
-  return NextResponse.redirect(new URL("/authority", request.url));
-}
-// protected route
-if (request.nextUrl.pathname.startsWith("/list") && (user.error)) {
-  return NextResponse.redirect(new URL("/sign-in", request.url));
+if (request.nextUrl.pathname.startsWith("/list")) {
+  if (user.error) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+  if (!certificated) {
+    return NextResponse.redirect(new URL("/authority", request.url));
+  }
+  // 여기서 추가 검사나 로직을 수행할 수 있습니다.
+  // 예: 특정 ID에 대한 접근 권한 확인 등
 }
 
     // else if (request.nextUrl.pathname === "/" && !user.error && userRole==='master') {
