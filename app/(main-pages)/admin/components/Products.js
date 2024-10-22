@@ -146,7 +146,7 @@ function Role({ session }) {
 
     const { error } = await supabase.from("cardata").delete().eq("id", itemId);
     if (error) {
-      console.log("error:", error);
+      console.log("삭제 실패")
     } else {
       console.log("삭제 성공");
       getData();
