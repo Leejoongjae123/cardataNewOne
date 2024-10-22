@@ -12,7 +12,9 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {Link} from '@nextui-org/react'
 function Answer({ session }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const supabase = createClient();
@@ -22,21 +24,25 @@ function Answer({ session }) {
   const [totalPages, setTotalPages] = useState("1");
   const [responseData, setResponseData] = useState(null);
   const [productData, setProductData] = useState(null);
+  const [answer, setAnswer] = useState(null);
+
   const itemsPerPage = 5;
   const getData = async () => {
     const { data, error, count } = await supabase
       .from("requests")
-      .select("*, answerId(*),productId(*)", { count: "exact" })
+      .select("*, productId(*)", { count: "exact" })
       .order("created_at", { ascending: false })
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
     if (error) {
-      console.error("Error fetching data:", error);
+      console.error("데이터 조회 실패:", error);
       return;
     }
     setData(data);
     setCount(count);
     setTotalPages(Math.ceil(count / itemsPerPage));
+
+    
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -45,9 +51,81 @@ function Answer({ session }) {
   useEffect(() => {
     getData();
   }, [currentPage]);
-  console.log("data1111:", data);
+
+  const changeData = async () => {
+    const { data, error } = await supabase
+      .from("requests")
+      .update({ response: responseData.response })
+      .eq("id", responseData.id);
+    if (error) {
+      toast.error("업데이트 실패:", error);
+      return;
+    }
+    toast.success("업데이트 완료");
+  };
+
+  const saveAnswer = async () => {
+    const { data, error } = await supabase
+      .from("requests")
+      .update({ answer: answer, response_at: new Date(),response:true })
+      .eq("id", responseData.id);
+    if (error) {
+      toast.error("업데이트 실패:", error);
+      return;
+    }
+    toast.success("업데이트 완료");
+    getData();
+    setAnswer("");
+    
+  }
+  console.log("responseData:", responseData);
+  const handleSendMail = async () => {
+    try {
+      const response = await fetch('https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          receiver: responseData.productId.email, // 가정: 이메일 필드가 productId 객체 내에 있다고 가정
+          responsedatetime: formatTimestamp(new Date()),
+          name: responseData.productId.title,
+          number: responseData.productId.inqCrrgsnb,
+          modelyear: responseData.productId.year,
+          mileage: responseData.productId.mileage,
+          fuel: responseData.productId.fuelType,
+          color: responseData.productId.clr,
+          accidenthistory: responseData.productId.accidentSelf,
+          result: responseData.answer,
+          id: responseData.id
+        })
+      });
+  
+      if (response.ok) {
+        toast.success("이메일이 성공적으로 전송되었습니다.");
+      } else {
+        toast.error("이메일 전송에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("이메일 전송 중 오류 발생:", error);
+      toast.error("이메일 전송 중 오류가 발생했습니다.");
+    }
+  };
   return (
     <div>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div class="box p-5 mt-4">
         {data.map((item, index) => (
           <>
@@ -67,6 +145,7 @@ function Answer({ session }) {
                         className="text-white"
                         onPress={() => {
                           setResponseData(item);
+                          setAnswer(item.answer);
                           onOpen();
                         }}
                       >
@@ -76,6 +155,7 @@ function Answer({ session }) {
                       <Button
                         onPress={() => {
                           setResponseData(item);
+                          setAnswer(item.answer);
                           onOpen();
                         }}
                         className="text-white"
@@ -140,20 +220,35 @@ function Answer({ session }) {
                   label=""
                   placeholder="Enter your description"
                   className="w-full"
+                  onChange={(e) => setAnswer(e.target.value)}
+                  value={answer}
                 />
+                
+                <hr />
+                <h1>※ 엔카경로</h1>
+                <Link target="_blank" href={`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}>
+                  {`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}
+                </Link>
               </ModalBody>
               <ModalFooter>
                 <Button
                   className="text-white"
                   color="primary"
-                  onPress={onClose}
+                  onPress={()=>{
+                    saveAnswer();
+                    handleSendMail();
+                    onClose();
+                  }}
                 >
                   메일송부
                 </Button>
                 <Button
                   className="text-white"
                   color="primary"
-                  onPress={onClose}
+                  onPress={() => {
+                    saveAnswer();
+                    onClose();
+                  }}
                 >
                   저장하기
                 </Button>

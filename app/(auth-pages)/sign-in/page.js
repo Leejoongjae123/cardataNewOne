@@ -16,6 +16,7 @@ import { headers } from "next/headers";
 import { Button } from "@/components/ui/button";
 import ToastBox from "./components/ToastBox";
 export default function Login({ searchParams }) {
+  
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -104,14 +105,13 @@ export default function Login({ searchParams }) {
                 <Spinner size="sm" />
                 Sign in
               </button> */}
-              <Button
+              <SubmitButton
                 type="submit"
                 className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signInAction}
               >
                 Sign in
-              </Button>
-              {/* <Link formAction={signInAction}>Sign in</Link> */}
+              </SubmitButton>
             </div>
 
             <div className="text-center flex items-center gap-6">
