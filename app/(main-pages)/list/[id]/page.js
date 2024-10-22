@@ -16,7 +16,7 @@ import {
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import Exchanger from "./components/Exchanger";
 import RequestEst from "./components/RequestEst";
-
+import { redirect } from "next/navigation";
 
 async function page({ params }) {
   const { id } = params;
@@ -28,6 +28,7 @@ async function page({ params }) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  console.log("params:", params);
   // Fetch car data from Supabase
   // Fetch car data from Supabase
   const { data: profiles, error: error1 } = await supabase
@@ -47,6 +48,11 @@ async function page({ params }) {
     .select("*")
     .eq("id", id)
     .single();
+
+  if (error2 || !carData) {
+    console.error("Error fetching car data or car not found:", error2);
+    redirect("/nopage");
+  }
 
   if (error2) {
     console.error("Error fetching car data2:", error2);
@@ -199,7 +205,15 @@ async function page({ params }) {
                   </div>
 
                   <div className="flex gap-1 py-2 justify-between items-center">
-                    <RequestEst description={carSpec}title={carData.title} desc={carData.description} thumbImage={carData.uploadedImageUrls[0].url} productId={carData.productId} id={id} userId={session.user.email}></RequestEst>
+                    <RequestEst
+                      description={carSpec}
+                      title={carData.title}
+                      desc={carData.description}
+                      thumbImage={carData.uploadedImageUrls[0].url}
+                      productId={carData.productId}
+                      id={id}
+                      userId={session.user.email}
+                    ></RequestEst>
                   </div>
                   {profiles.role === "master" ? (
                     <div>
@@ -503,7 +517,7 @@ async function page({ params }) {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="box p-5 px-6 pr-0 cols-span-1">
                   <h3 className="font-semibold text-lg text-black dark:text-white">
                     Price
@@ -579,7 +593,6 @@ async function page({ params }) {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
                   <div className="flex gap-3">
                     <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      
                       <ion-icon
                         name="heart"
                         className="text-2xl text-rose-600"
