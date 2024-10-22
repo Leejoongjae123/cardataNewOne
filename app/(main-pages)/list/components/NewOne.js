@@ -21,6 +21,7 @@ function NewOne() {
       .from("cardata")
       .select("*")
       .order("created_at", { ascending: false })
+      .eq('like', false)  // Add this line to filter for like = false
       .limit(10);
 
     const { data, error } = await query;

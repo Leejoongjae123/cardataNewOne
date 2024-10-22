@@ -88,6 +88,7 @@ function AllOne() {
     let query = supabase
       .from("cardata")
       .select("*", { count: "exact" })
+      .eq('like', false)  // Add this line to filter for like = false
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
     if (selectedManufacturer) {

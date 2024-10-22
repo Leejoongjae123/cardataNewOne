@@ -14,10 +14,16 @@ import {
 } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {Link} from '@nextui-org/react'
+import { Link } from "@nextui-org/react";
 import axios from "axios";
 function Answer({ session }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onOpenChange: onOpenChange2,
+  } = useDisclosure();
+
   const supabase = createClient();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -42,8 +48,6 @@ function Answer({ session }) {
     setData(data);
     setCount(count);
     setTotalPages(Math.ceil(count / itemsPerPage));
-
-    
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -68,7 +72,7 @@ function Answer({ session }) {
   const saveAnswer = async () => {
     const { data, error } = await supabase
       .from("requests")
-      .update({ answer: answer, response_at: new Date(),response:true })
+      .update({ answer: answer, responseDate: new Date(), response: true })
       .eq("id", responseData.id);
     if (error) {
       toast.error("업데이트 실패:", error);
@@ -76,45 +80,37 @@ function Answer({ session }) {
     }
     toast.success("업데이트 완료");
     getData();
-    setAnswer("");
-    
-  }
-  console.log("responseData:", responseData);
-  const handleSendMail = async () => {
-    try {
-      const response = await axios.post(
-        'https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email',
-        {
-          receiver: responseData.userId,
-          responsedatetime: formatDateToWords(new Date()),
-          name: responseData.productId.title,
-          number: responseData.productId.inqCrrgsnb,
-          modelyear: responseData.productId.year,
-          mileage: responseData.productId.mileage,
-          fuel: responseData.productId.fuelType,
-          color: responseData.productId.clr,
-          accidenthistory: responseData.productId.accidentSelf,
-          result: responseData.answer,
-          id: responseData.id.toString()
-        },
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-  
-      if (response.status === 200) {
-        toast.success("이메일이 성공적으로 전송되었습니다.");
-      } else {
-        toast.error("이메일 전송에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("이메일 전송 중 오류 발생:", error);
-      toast.error("이메일 전송 중 오류가 발생했습니다.");
-    }
+    setResponseData((prevResponseData) => ({
+      ...prevResponseData,
+      answer: answer,
+    }));
   };
+
+  const handleSendMail = async () => {
+    const response = await axios.post(
+      "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
+      {
+        receiver: responseData.userId,
+        responsedatetime: formatDateToWords(new Date()),
+        name: responseData.productId.title,
+        number: responseData.productId.inqCrrgsnb,
+        modelyear: responseData.productId.year,
+        mileage: responseData.productId.mileage,
+        fuel: responseData.productId.fuelType,
+        color: responseData.productId.clr,
+        accidenthistory: responseData.productId.accidentSelf,
+        result: responseData.answer,
+        id: responseData.id.toString(),
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+  console.log("responseData:", responseData);
   return (
     <div>
       <ToastContainer
@@ -202,7 +198,7 @@ function Answer({ session }) {
                 <p>
                   Hello, this is Sincar. I am sending this email to provide the
                   vehicle appraisal value for the vehicle you requested on{" "}
-                  {formatDateToWords(responseData.response_at)}.
+                  {formatDateToWords(responseData.responseDate)}.
                 </p>
                 <hr className="" />
                 <h2>Spec</h2>
@@ -226,10 +222,13 @@ function Answer({ session }) {
                   onChange={(e) => setAnswer(e.target.value)}
                   value={answer}
                 />
-                
+
                 <hr />
                 <h1>※ 엔카경로</h1>
-                <Link target="_blank" href={`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}>
+                <Link
+                  target="_blank"
+                  href={`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}
+                >
                   {`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}
                 </Link>
               </ModalBody>
@@ -237,10 +236,10 @@ function Answer({ session }) {
                 <Button
                   className="text-white"
                   color="primary"
-                  onPress={()=>{
-                    saveAnswer();
-                    handleSendMail();
+                  onPress={() => {
                     onClose();
+                    handleSendMail();
+                    onOpen2();
                   }}
                 >
                   메일송부
@@ -250,10 +249,32 @@ function Answer({ session }) {
                   color="primary"
                   onPress={() => {
                     saveAnswer();
-                    onClose();
                   }}
                 >
                   저장하기
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal size={"lg"} isOpen={isOpen2} onOpenChange={onOpenChange2}>
+        <ModalContent>
+          {(onClose2) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Result</ModalHeader>
+              <ModalBody>
+                <p>Send Email Successfully</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="text-white"
+                  color="primary"
+                  onPress={() => {
+                    onClose2();
+                  }}
+                >
+                  닫기
                 </Button>
               </ModalFooter>
             </>
