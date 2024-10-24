@@ -44,13 +44,18 @@ function Role({ session }) {
   const [responseData, setResponseData] = useState(null);
   const [productData, setProductData] = useState(null);
   const [selectData, setSelectData] = useState(null);
-  const [searchCategory, setSearchCategory] = useState("name");
+  const [searchCategory, setSearchCategory] = useState("title");
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
   const itemsPerPage = 5;
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
+  console.log("searchCategory:", searchCategory);
   const getData = async () => {
+
+
+
+
     let query = supabase
       .from("cardata")
       .select("*", { count: "exact" })
@@ -144,6 +149,7 @@ function Role({ session }) {
   const handleDelete = async (itemId) => {
 
 
+
     const { error } = await supabase.from("cardata").delete().eq("id", itemId);
     if (error) {
       console.log("삭제 실패")
@@ -153,6 +159,7 @@ function Role({ session }) {
     }
   };
 
+  console.log("data:", data);
   return (
     <>
       {isLoading ? (
@@ -178,17 +185,11 @@ function Role({ session }) {
               <Select
                 placeholder="category"
                 className="max-w-xs w-1/2 md:w-1/4"
-                defaultSelectedKeys={["name"]}
+                defaultSelectedKeys={["title"]}
                 onChange={(e) => setSearchCategory(e.target.value)}
               >
-                <SelectItem key="name" value="name">
-                  name
-                </SelectItem>
-                <SelectItem key="email" value="email">
-                  email
-                </SelectItem>
-                <SelectItem key="phone" value="phone">
-                  phone
+                <SelectItem key="title" value="title">
+                  제목
                 </SelectItem>
               </Select>
               <Input
@@ -206,7 +207,7 @@ function Role({ session }) {
             <Table aria-label="Example static collection table text-center">
               <TableHeader>
                 <TableColumn className="text-center w-1/4">
-                  페이지리스트
+                  제목
                 </TableColumn>
                 <TableColumn className="text-center w-1/4">
                   진행상황
@@ -262,6 +263,7 @@ function Role({ session }) {
                         color="danger"
                         variant="bordered"
                         onPress={() => {onOpen2(); setSelectedItem(item)}}
+                        isDisabled={item.isRequest}
                       >
                         삭제하기
                       </Button>

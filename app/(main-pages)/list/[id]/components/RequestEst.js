@@ -17,6 +17,18 @@ function RequestEst({title, description, thumbImage, productId, id, userId}) {
   const supabase = createClient();
 
   const handleRequestEst = async () => {
+
+    const { data: carData, error: carError } = await supabase
+      .from("cardata")
+      .update({ isRequest: true })
+      .eq("id", id);
+
+    if (carError) {
+      console.error("Error updating car data:", carError);
+      return;
+    }
+    
+
     const { data: existingData, error: existingError } = await supabase
       .from("requests")
       .select("*")
