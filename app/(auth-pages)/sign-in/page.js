@@ -15,8 +15,13 @@ import Image from "next/image";
 import { headers } from "next/headers";
 import { Button } from "@/components/ui/button";
 import ToastBox from "./components/ToastBox";
+import { dictionary } from "../dictionary/dictionary";
+import { cookies } from "next/headers"; // Import the cookies module
+
 export default function Login({ searchParams }) {
-  
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
+  console.log("language:",language);
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -36,13 +41,12 @@ export default function Login({ searchParams }) {
 
           <div>
             <h2 className="text-2xl font-semibold mb-1.5">
-              {" "}
-              Sign in to your account{" "}
+              {dictionary.signIn.title[language]}
             </h2>
             <p className="text-medium text-gray-700 font-normal">
-              If you haven’t signed up yet.{" "}
-              <a href="/sign-up" className="text-blue-700 font-bold">
-                Register here!
+              {dictionary.signIn.subtitle[language]}
+              <a href="/sign-up" className="text-blue-700 font-bold ml-2">
+                {dictionary.signIn.register[language]}
               </a>
             </p>
           </div>
@@ -55,7 +59,7 @@ export default function Login({ searchParams }) {
           >
             <div>
               <label for="email" className="">
-                Email address
+                {dictionary.signIn.email[language]}
               </label>
               <div className="mt-2.5">
                 <input
@@ -63,7 +67,7 @@ export default function Login({ searchParams }) {
                   name="email"
                   type="email"
                   autofocus=""
-                  placeholder="Email"
+                  placeholder={dictionary.signIn.email[language]}
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
@@ -71,14 +75,14 @@ export default function Login({ searchParams }) {
             </div>
             <div>
               <label for="email" className="">
-                Password
+                {dictionary.signIn.password[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder={dictionary.signIn.password[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
@@ -92,7 +96,7 @@ export default function Login({ searchParams }) {
                 </label>
               </div> */}
               <a href="#" className="text-blue-700 font-bold">
-                Forgot password{" "}
+                {dictionary.signIn.forgotPassword[language]}
               </a>
             </div>
 
@@ -110,13 +114,13 @@ export default function Login({ searchParams }) {
                 className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signInAction}
               >
-                Sign in
+                {dictionary.signIn.signin[language]}
               </SubmitButton>
             </div>
 
             <div className="text-center flex items-center gap-6">
               <hr className="flex-1 border-slate-200 " />
-              Or continue with
+              {dictionary.signIn.orcontinuewith[language]}
               <hr className="flex-1 border-slate-200 " />
             </div>
 
@@ -129,14 +133,14 @@ export default function Login({ searchParams }) {
                 className="button items-center gap-2 bg-primary text-white text-sm flex-1"
               >
                 <RiKakaoTalkFill />
-                Kakao
+                {dictionary.signIn.kakao[language]}
               </div>
               <a
                 href="#"
                 className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
               >
                 <FaFacebook />
-                facebook{" "}
+                {dictionary.signIn.facebook[language]}
               </a>
 
               <a
@@ -144,7 +148,7 @@ export default function Login({ searchParams }) {
                 className="button  items-center gap-2 bg-sky-600 text-white text-sm flex-1"
               >
                 <RiAppleFill></RiAppleFill>
-                Apple
+                {dictionary.signIn.apple[language]}
               </a>
             </div>
           </form>

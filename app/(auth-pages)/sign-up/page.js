@@ -15,8 +15,11 @@ import Image from "next/image";
 import { headers } from "next/headers";
 import ToastBox from "./components/ToastBox";
 import { Button } from "@/components/ui/button";
-
+import {dictionary} from "../dictionary/dictionary";
+import { cookies } from "next/headers";
 export default function SignUp({ searchParams }) {
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';  
   return (
     <div className="w-full flex">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -36,7 +39,7 @@ export default function SignUp({ searchParams }) {
 
           <div>
             <h2 className="text-2xl font-semibold mb-1.5">
-              Sign Up for the Sincar
+              {dictionary.signUp.title[language]}
             </h2>
           </div>
 
@@ -48,7 +51,7 @@ export default function SignUp({ searchParams }) {
           >
             <div>
               <label for="email" className="">
-                Email
+                {dictionary.signUp.email[language]}
               </label>
               <div className="mt-2.5">
                 <input
@@ -56,7 +59,7 @@ export default function SignUp({ searchParams }) {
                   name="email"
                   type="email"
                   autofocus=""
-                  placeholder="Please enter your email address"
+                  placeholder={dictionary.signUp.email[language]}
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
@@ -64,68 +67,67 @@ export default function SignUp({ searchParams }) {
             </div>
             <div>
               <label for="password" className="">
-                Password
+                {dictionary.signUp.password[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Please enter your Password"
+                  placeholder={dictionary.signUp.password[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
-              <p>* Please enter at least 8 characters</p>
+              <p>*{dictionary.signUp.condition1[language]}</p>
               <p>
-                * Combination of two or more of English upper and lower cast
-                letters / number / special characters
+                *{dictionary.signUp.condition2[language]}
               </p>
             </div>
             <div>
               <label for="confirm password" className="">
-                Confirm Password
+                {dictionary.signUp.confirmPassword[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="confirm password"
                   name="confirm password"
                   type="password"
-                  placeholder="your password again"
+                  placeholder={dictionary.signUp.confirmPassword[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
               <label for="confirm password" className="">
-                Name
+                {dictionary.signUp.name[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="Please enter your name"
+                  placeholder={dictionary.signUp.name[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
               <label for="phone" className="">
-                Mobile Number
+                {dictionary.signUp.mobile[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="phone"
                   name="phone"
                   type="text"
-                  placeholder="Please enter your mobile number"
+                  placeholder={dictionary.signUp.mobile[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
               <label for="confirm password" className="">
-                Region
+                {dictionary.signUp.region[language]}
               </label>
               <div className="mt-2.5">
                 <select
@@ -135,42 +137,41 @@ export default function SignUp({ searchParams }) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="" disabled>
-                    Choose a country
+                    {dictionary.signUp.chooseacountry[language]}
                   </option>
-                  <option value="KOREA">KOREA</option>
-                  <option value="UNITED STATES">UNITED STATES</option>
-                  <option value="RUSSIA">RUSSIA</option>
-                  <option value="UNITED ARAB EMIRATES">
-                    UNITED ARAB EMIRATES
-                  </option>
-                  <option value="CHINA">CHINA</option>
+                  <option value="KOREA">{dictionary.signUp.korea[language]}</option>
+                  <option value="UNITED STATES">{dictionary.signUp.unitedstates[language]}</option>
+                  <option value="RUSSIA">{dictionary.signUp.russia[language]}</option>
+                  <option value="UNITED ARAB EMIRATES">{dictionary.signUp.unitedarabemirates[language]}</option>
+                  <option value="CHINA">{dictionary.signUp.china[language]}</option>
+                  
                 </select>
               </div>
             </div>
             <div>
               <label for="confirm password" className="">
-                Recommender Email
+                {dictionary.signUp.recommenderEmail[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="recommenderEmail"
                   name="recommenderEmail"
                   type="email"
-                  placeholder="Please enter your recommender email"
+                  placeholder={dictionary.signUp.recommenderEmail[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
               <label for="Recommender Phone" className="">
-                Recommender Phone
+                {dictionary.signUp.recommenderPhone[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="recommenderPhone"
                   name="recommenderPhone"
                   type="text"
-                  placeholder="Please enter your recommender phone"
+                  placeholder={dictionary.signUp.recommenderPhone[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
@@ -180,10 +181,10 @@ export default function SignUp({ searchParams }) {
                 className="h-full w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signUpFirstAction}
               >
-                Next
+                {dictionary.signUp.next[language]}
               </Button>
               <div className="w-full h-full flex justify-center items-center">
-              <Link href="/sign-in">Go to Sign In Page</Link>
+              <Link href="/sign-in">{dictionary.signUp.gotosigninpage[language]}</Link>
               </div>
               
             </div>

@@ -16,8 +16,14 @@ import { headers } from "next/headers";
 import ToastBox from "./components/ToastBox";
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
-
+import {cookies} from "next/headers";
+import { dictionary } from "../dictionary/dictionary";
 export default function Login({ searchParams }) {
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
+
+
+
   const formAction = async (formData) => {
     "use server";
     const email = formData.get("email");
@@ -116,7 +122,7 @@ export default function Login({ searchParams }) {
 
           <div>
             <h2 className="text-2xl font-semibold mb-1.5">
-              Sign Up for the Sincar
+              {dictionary.signUp2.title[language]}
             </h2>
           </div>
 
@@ -167,7 +173,7 @@ export default function Login({ searchParams }) {
                 value={searchParams.region || ""}
               />
               <label for="email" className="">
-                Business name
+                {dictionary.signUp2.businessName[language]}
               </label>
               <div className="mt-2.5">
                 <input
@@ -175,7 +181,7 @@ export default function Login({ searchParams }) {
                   name="businessName"
                   type="text"
                   autofocus=""
-                  placeholder="Please enter your business name"
+                  placeholder={dictionary.signUp2.businessName[language]}
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
@@ -183,21 +189,21 @@ export default function Login({ searchParams }) {
             </div>
             <div>
               <label for="password" className="">
-                Business registration number
+                {dictionary.signUp2.businessRegistrationNumber[language]}
               </label>
               <div className="mt-2.5">
                 <input
                   id="businessRegistrationNumber"
                   name="businessRegistrationNumber"
                   type="text"
-                  placeholder="Please enter your business registration number"
+                  placeholder={dictionary.signUp2.businessRegistrationNumber[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
             <div>
               <label for="confirm password" className="">
-                Attach business registration certificate
+                {dictionary.signUp2.attach[language]}
               </label>
               <div className="mt-2.5">
                 <input
@@ -210,9 +216,9 @@ export default function Login({ searchParams }) {
             </div>
 
             <div>
-              <SubmitButton>Sign Up</SubmitButton>
+              <SubmitButton>{dictionary.signUp2.signUp[language]}</SubmitButton>
               <div className="w-full h-12 flex justify-center items-center">
-                <Link href="/sign-in">Go to Sign In Page</Link>
+                <Link href="/sign-in">{dictionary.signUp2.gotosigninpage[language]}</Link>
               </div>
             </div>
           </form>
