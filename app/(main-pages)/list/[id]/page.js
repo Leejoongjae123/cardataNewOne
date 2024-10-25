@@ -17,7 +17,7 @@ import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import Exchanger from "./components/Exchanger";
 import RequestEst from "./components/RequestEst";
 import { redirect } from "next/navigation";
-
+import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
 async function page({ params }) {
   const { id } = params;
 
@@ -76,22 +76,28 @@ async function page({ params }) {
         <div className="flex flex-col 2xl:gap-6 gap-6 md:p-4 rounded-lg box">
           <div className="w-full">
             <div className="flex flex-col gap-y-3 mx-5 my-5 px-5">
-              <div className="flex space-x-5 justify-start items-center ">
-                <div className="">
-                  <Chip
-                    className="mx-5"
-                    variant="bordered"
-                    color={carData.sellType === "렌트" ? "danger" : "primary"}
-                  >
-                    {carData.sellType}
-                  </Chip>
+              <div className="flex flex-col lg:flex-row space-x-5 justify-between items-center ">
+                <div className="flex justify-end items-center md:hidden w-full mb-3">
+                  <LanguageSelect />
                 </div>
+                <div className="flex justify-start items-center w-full space-x-3">
+                  <div className="flex justify-start items-center">
+                    <Chip
+                      className="mx-5"
+                      variant="bordered"
+                      color={carData.sellType === "렌트" ? "danger" : "primary"}
+                    >
+                      {carData.sellType}
+                    </Chip>
+                  </div>
 
-                <div className="block text-lg font-semibold">
-                  {carData.title}
+                  <div className="block text-lg font-semibold">
+                    {carData.title}
+                  </div>
                 </div>
-                {/* <div className="">123</div>
-                <div className="">454</div> */}
+                <div className="hidden md:block">
+                  <LanguageSelect />
+                </div>
               </div>
               <div>
                 <p className="text-medium">{carSpec}</p>

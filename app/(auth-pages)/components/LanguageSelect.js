@@ -26,6 +26,8 @@ export default function LanguageSelect() {
   console.log(get('lan'));
 
   return (
+    <div className="flex items-center">
+    <p className="mr-2 text-black text-sm">Language</p>
     <select
       className="bg-white text-black"
       name="language"
@@ -38,5 +40,6 @@ export default function LanguageSelect() {
       <option className="text-black" value="ru">русский язык</option>
       <option className="text-black" value="ar">العربية</option>
     </select>
+    </div>
   );
 }

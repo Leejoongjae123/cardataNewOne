@@ -8,7 +8,7 @@ import IonIcon from "@reacticons/ionicons";
 import { Pagination } from "@nextui-org/react";
 import Link from "next/link";
 import { Chip } from "@nextui-org/react";
-
+import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
 function NewOne() {
   const [data, setData] = useState([]);
   const [selectedPlatform,setSelectedPlatform]=useState("SKEncar")
@@ -39,7 +39,11 @@ function NewOne() {
   return (
     <div className="mt-10">
       <div className="page-heading">
+        <div className="flex items-center justify-between">
         <h1 className="page-title test"> New </h1>
+        <LanguageSelect />
+        </div>
+        
 
         <nav className="nav__underline">
           <ul

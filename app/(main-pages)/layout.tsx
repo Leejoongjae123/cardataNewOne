@@ -47,7 +47,9 @@ export default function RootLayout({
               >
                 <div className="flex w-full h-full justify-center items-start ">
                   <div className="w-[90vw] md:w-[50vw] ">
-                    <NextUIProvider>{children}</NextUIProvider>
+                    <NextUIProvider>
+                      {children}
+                      </NextUIProvider>
                   </div>
                 </div>
               </div>

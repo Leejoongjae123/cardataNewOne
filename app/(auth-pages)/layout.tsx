@@ -9,12 +9,12 @@ export default async function Layout({
   return (
     <>
       <div className="">
-        <div className="flex items-center absolute top-0 right-0 p-4 z-50">
-          <p className="mr-2 font-bold text-black">Language</p>
+        <div className="flex items-center absolute top-0 left-0 md:right-0 p-4 z-50">
           <LanguageSelect />
         </div>
-
-        {children}
+        <div className="pt-5">
+          {children}
+        </div>
       </div>
       <Script src="/js/uikit.min.js"></Script>
       <Script src="/js/simplebar.js"></Script>
