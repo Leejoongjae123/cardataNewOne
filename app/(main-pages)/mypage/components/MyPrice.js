@@ -26,7 +26,7 @@ function MyPrice({ session }) {
   const getData = async () => {
     const { data, error, count } = await supabase
       .from("requests")
-      .select("*, answerId(*),productId(*)", { count: "exact" })
+      .select("*, productId(*)", { count: "exact" })
       .eq("userId", session.user.email)
       .order("created_at", { ascending: false })
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
@@ -126,7 +126,7 @@ function MyPrice({ session }) {
                 <hr  className=""/>
                 <h2>Result</h2>
                 <p>
-                  {responseData.answerId.description}
+                  {responseData.answer}
                 </p>
               </ModalBody>
               <ModalFooter>
