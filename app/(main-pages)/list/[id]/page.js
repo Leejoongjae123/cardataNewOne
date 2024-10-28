@@ -687,7 +687,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceSpecial}
                       </h3>
-                      <p>{dictionary.detail.issue6[language]}</p>
+                      <p>특별이력</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -702,7 +702,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceChange}
                       </h3>
-                      <p>{dictionary.detail.issue7[language]}</p>
+                      <p>용도변경</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -717,7 +717,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceColor}
                       </h3>
-                      <p>{dictionary.detail.issue8[language]}</p>
+                      <p>색상</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -732,7 +732,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceOption}
                       </h3>
-                      <p>{dictionary.detail.issue9[language]}</p>
+                      <p>주요옵션</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -747,7 +747,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceRecall}
                       </h3>
-                      <p>{dictionary.detail.issue10[language]}</p>
+                      <p>리콜대상</p>
                     </div>
                   </div>
                 </div>

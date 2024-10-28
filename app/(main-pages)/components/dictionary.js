@@ -30,6 +30,24 @@ export const dictionary = {
       ru: "Группа Моделей",
       ar: "مجموعة الموديلات",
     },
+    mileage:{
+      kr: "주행거리",
+      en: "Mileage",
+      ru: "Пробег",
+      ar: "المسافة",
+    },
+    year:{
+      kr: "연식",
+      en: "Year",
+      ru: "Год",
+      ar: "السنة",
+    },
+    accident:{
+      kr: "사고이력",
+      en: "Accident History",
+      ru: "История аварий",
+      ar: "تاريخ الحوادث",
+    },
 
   },
   mypage:{

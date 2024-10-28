@@ -232,16 +232,16 @@ function AllOne({language, dictionary}) {
             <div className="card-body flex justify-between">
               <div className="flex-1">
                 <p className="card-text text-black font-medium line-clamp-2">
-                  {item.title}
+                  {item.title[language]}
                 </p>
                 <div className="text-xs line-clamp-1 mt-1 text-right">
-                  Mileage:{parseInt(item.mileage)}km{" "}
+                  {dictionary.list.mileage[language]}:{parseInt(item.mileage)}km{" "}
                 </div>
                 <div className="text-xs line-clamp-1 mt-1 text-right">
-                  Year:{parseInt(item.year)}{" "}
+                  {dictionary.list.year[language]}:{parseInt(item.year)}{" "}
                 </div>
                 <div className="text-xs line-clamp-1 mt-1 text-right">
-                  Accident:{item.accidentSelf}{" "}
+                  {dictionary.list.accident[language]}:{item.accidentSelf}{" "}
                 </div>
               </div>
             </div>
