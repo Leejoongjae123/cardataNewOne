@@ -5,7 +5,7 @@ import axios from 'axios'
 import {Select, SelectItem, Avatar} from "@nextui-org/react";
 
 
-function Exchanger() {
+function Exchanger({language,dictionary}) {
   const [country1, setCountry1] = useState("KR");
   const [country2, setCountry2] = useState("US");
   const [amount1,setAmount1]=useState(0)
@@ -58,13 +58,11 @@ function Exchanger() {
     return () => debouncedHandleSubmit.cancel();
   }, [debouncedHandleSubmit]);
 
-  console.log("country1:", country1);
-  console.log("country2:", country2);
 
   return (
     <div>
       <div>
-        <h1 className="text-medium font-bold mb-2 ">환율 계산</h1>
+        <h1 className="text-medium font-bold mb-2 ">{dictionary.detail.exchangeRate[language]}</h1>
 
         <div className="flex space-x-5">
           <select

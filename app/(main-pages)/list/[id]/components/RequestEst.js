@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import {createClient} from "@/utils/supabase/client";
 
-function RequestEst({title, description, thumbImage, productId, id, userId}) {
+function RequestEst({title, description, thumbImage, productId, id, userId, language, dictionary}) {
   const { isOpen:isOpen1, onOpen:onOpen1, onOpenChange:onOpenChange1 } = useDisclosure();
   const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
   const supabase = createClient();
@@ -81,7 +81,7 @@ function RequestEst({title, description, thumbImage, productId, id, userId}) {
         }}
         size='sm'
       >
-        견적 신청하기
+        {dictionary.detail.applyEstimate[language]}
       </Button>
 
       <Modal isOpen={isOpen1} onOpenChange={onOpenChange1}>

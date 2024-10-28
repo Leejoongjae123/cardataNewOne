@@ -246,14 +246,14 @@ export default function Login({ searchParams }) {
                     className="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 600,0,0"
                   >
-                    Find Your Perfect Used Car Today!
+                    {dictionary.signIn.mainText1[language]}
                   </h4>
                   <p
                     className="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-                    We handpick only the safest and most reliable used cars.
-                    Search and compare effortlessly to find your ideal vehicle!
+                    {dictionary.signIn.subText1[language]}
+                    
                   </p>
                 </div>
               </div>
@@ -274,16 +274,13 @@ export default function Login({ searchParams }) {
                     className="!text-white text-2xl font-semibold mt-7"
                     uk-slideshow-parallax="y: 800,0,0"
                   >
-                    Reliable Used Cars at the Best Prices!{" "}
+                    {dictionary.signIn.mainText2[language]}
                   </h4>
                   <p
                     className="!text-white text-lg mt-7 leading-8"
                     uk-slideshow-parallax="y: 800,0,0;"
                   >
-                    {" "}
-                    This phrase is more casual and playful. It suggests that you
-                    are keeping your friends updated on what’s happening in your
-                    life.
+                    {dictionary.signIn.subText2[language]}
                   </p>
                 </div>
               </div>

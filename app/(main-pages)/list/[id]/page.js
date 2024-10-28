@@ -18,7 +18,12 @@ import Exchanger from "./components/Exchanger";
 import RequestEst from "./components/RequestEst";
 import { redirect } from "next/navigation";
 import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
+import {cookies} from "next/headers";
+import {dictionary} from "@/app/(main-pages)/components/dictionary";
 async function page({ params }) {
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
+
   const { id } = params;
 
   const supabase = createClient();
@@ -28,8 +33,6 @@ async function page({ params }) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  console.log("params:", params);
-  // Fetch car data from Supabase
   // Fetch car data from Supabase
   const { data: profiles, error: error1 } = await supabase
     .from("profiles")
@@ -40,7 +43,6 @@ async function page({ params }) {
     console.error("Error fetching car data1:", error1);
     // Handle the error appropriately
   }
-  console.log("profiles:", profiles);
 
   // Fetch car data from Supabase
   const { data: carData, error: error2 } = await supabase
@@ -173,21 +175,21 @@ async function page({ params }) {
               </div>
               <div className="w-full lg:w-1/2 ">
                 <div className="md:space-y-5 space-y-3 ">
-                  <h1 className="text-medium font-bold mb-2 ">주요정보</h1>
+                  <h1 className="text-medium font-bold mb-2 ">{dictionary.detail.mainInfo[language]}</h1>
                   <div>
                     <div className="flex w-full justify-around items-center">
                       {carData.sellType === "리스" ? (
                         <>
                           <div className="text-sm border-r pr-2 text-center">
-                            <p>월리스료</p>
+                            <p>{dictionary.detail.monthlyLease[language]}</p>
                             <p>{parseInt(carData.monthlyPrice)}만원/월</p>
                           </div>
                           <div className="text-sm border-r pr-2 text-center">
-                            <p>인수금</p>
+                            <p>{dictionary.detail.receivePrice[language]}</p>
                             <p>{parseInt(carData.leaseReceivePrice)}만원</p>
                           </div>
                           <div className="text-sm text-center">
-                            <p>차량가격</p>
+                            <p>{dictionary.detail.carPrice[language]}</p>
                             <p>{parseInt(carData.carPrice)}만원</p>
                           </div>
                         </>
@@ -219,11 +221,13 @@ async function page({ params }) {
                       productId={carData.productId}
                       id={id}
                       userId={session.user.email}
+                      language={language}
+                      dictionary={dictionary}
                     ></RequestEst>
                   </div>
                   {profiles.role === "master" ? (
                     <div>
-                      <h1 className="text-medium font-bold mb-2 ">판매자</h1>
+                      <h1 className="text-medium font-bold mb-2 ">{dictionary.detail.seller[language]}</h1>
                       <div className="flex justify-center items-center gap-3 py-2 text-sm font-medium mt-2">
                         <div className="flex flex-col justify-center items-start gap-y-1 w-full">
                           <h4 className="text-black ">
@@ -250,7 +254,7 @@ async function page({ params }) {
                     </div>
                   )}
 
-                  <Exchanger></Exchanger>
+                  <Exchanger language={language} dictionary={dictionary}></Exchanger>
 
                   {/* <Card className="w-full">
                     <CardHeader className="flex gap-3">
@@ -278,7 +282,7 @@ async function page({ params }) {
                     uk-tooltip="title: Chat; offset: 8"
                   >
                     <IoChatbubbleEllipsesOutline className="w-5 h-5 text-gray-500"></IoChatbubbleEllipsesOutline>
-                    Chat
+                    {dictionary.detail.chat[language]}
                   </button>
                 </div>
               </div>
@@ -295,7 +299,7 @@ async function page({ params }) {
             >
               <div className="box p-5 px-6 ,">
                 <h3 className="font-semibold text-lg text-black dark:text-white">
-                  Option
+                  {dictionary.detail.option[language]}
                 </h3>
 
                 <ul
@@ -307,7 +311,7 @@ async function page({ params }) {
                       class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
-                      Ext/Int
+                      {dictionary.detail.extint[language]}
                       <svg
                         class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +342,7 @@ async function page({ params }) {
                       class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
-                      Safety
+                      {dictionary.detail.safety[language]}
                       <svg
                         class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +373,7 @@ async function page({ params }) {
                       class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
-                      Convenience
+                      {dictionary.detail.convenience[language]}
                       <svg
                         class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -400,7 +404,7 @@ async function page({ params }) {
                       class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
-                      Seat
+                      {dictionary.detail.seat[language]}
                       <svg
                         class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -431,7 +435,7 @@ async function page({ params }) {
                       class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
-                      Etc
+                      {dictionary.detail.etc[language]}
                       <svg
                         class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -462,7 +466,7 @@ async function page({ params }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="box p-5 px-6 pr-0 col-span-1">
                   <h3 className="font-semibold text-lg text-black dark:text-white">
-                    Insurance
+                    {dictionary.detail.insurance[language]}
                   </h3>
                   <div className="grid grid-cols-2 gap-2 text-sm mt-4">
                     <div className="flex gap-3">
@@ -476,7 +480,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.history}
                         </h3>
-                        <p>자동차 용도이력</p>
+                        <p>{dictionary.detail.insurance1[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -490,7 +494,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.changeCount}
                         </h3>
-                        <p>번호/소유자 변경횟수</p>
+                        <p>{dictionary.detail.insurance2[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -504,7 +508,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.accidentSelf}
                         </h3>
-                        <p>사고이력:내차 피해</p>
+                        <p>{dictionary.detail.insurance3[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -518,7 +522,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.accidentOther}
                         </h3>
-                        <p>사고이력:타차 가해</p>
+                        <p>{dictionary.detail.insurance4[language]}</p>
                       </div>
                     </div>
                   </div>
@@ -526,7 +530,7 @@ async function page({ params }) {
 
                 <div className="box p-5 px-6 pr-0 cols-span-1">
                   <h3 className="font-semibold text-lg text-black dark:text-white">
-                    Price
+                    {dictionary.detail.price[language]}
                   </h3>
                   <div className="grid grid-cols-2 gap-2 text-sm mt-4">
                     <div className="flex gap-3">
@@ -541,7 +545,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.leaseReceivePrice} KRW
                         </h3>
-                        <p>인수금</p>
+                        <p>{dictionary.detail.price1[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -556,7 +560,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.leasePriceIn} KRW
                         </h3>
-                        <p>기간 내 금액</p>
+                        <p>{dictionary.detail.price2[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -571,7 +575,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.leasePriceOut} KRW
                         </h3>
-                        <p>기간 외 금액</p>
+                        <p>{dictionary.detail.price3[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -586,7 +590,7 @@ async function page({ params }) {
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                           {carData.leasePriceAll} KRW
                         </h3>
-                        <p>전체 금액</p>
+                        <p>{dictionary.detail.price4[language]}</p>
                       </div>
                     </div>
                   </div>
@@ -594,7 +598,7 @@ async function page({ params }) {
               </div>
               <div className="box p-5 px-6 pr-0">
                 <h3 className="font-semibold text-lg text-black dark:text-white">
-                  Issues
+                  {dictionary.detail.issues[language]}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
                   <div className="flex gap-3">
@@ -608,7 +612,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceDashboard}
                       </h3>
-                      <p>주행거리 계기상태</p>
+                      <p>{dictionary.detail.issue1[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -623,7 +627,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceDistance}
                       </h3>
-                      <p>주행거리</p>
+                      <p>{dictionary.detail.issue2[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -638,7 +642,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceVIN}
                       </h3>
-                      <p>차대번호</p>
+                      <p>{dictionary.detail.issue3[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -653,7 +657,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceEmit}
                       </h3>
-                      <p>배출가스</p>
+                      <p>{dictionary.detail.issue4[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -668,7 +672,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceTuning}
                       </h3>
-                      <p>튜닝</p>
+                      <p>{dictionary.detail.issue5[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -683,7 +687,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceSpecial}
                       </h3>
-                      <p>특별이력</p>
+                      <p>{dictionary.detail.issue6[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -698,7 +702,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceChange}
                       </h3>
-                      <p>용도변경</p>
+                      <p>{dictionary.detail.issue7[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -713,7 +717,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceColor}
                       </h3>
-                      <p>색상</p>
+                      <p>{dictionary.detail.issue8[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -728,7 +732,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceOption}
                       </h3>
-                      <p>주요옵션</p>
+                      <p>{dictionary.detail.issue9[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -743,7 +747,7 @@ async function page({ params }) {
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
                         {carData.performanceRecall}
                       </h3>
-                      <p>리콜대상</p>
+                      <p>{dictionary.detail.issue10[language]}</p>
                     </div>
                   </div>
                 </div>
