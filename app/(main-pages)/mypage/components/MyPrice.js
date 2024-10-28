@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-function MyPrice({ session }) {
+function MyPrice({ session, language, dictionary }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const supabase = createClient();
   const [data, setData] = useState([]);
@@ -68,10 +68,10 @@ function MyPrice({ session }) {
                         setResponseData(item);
                         onOpen();
                       }}>
-                        회신완료
+                        {dictionary.mypage.reviewComplete[language]}
                       </Button>
                     ) : (
-                      <Button className="text-white">검토중</Button>
+                      <Button className="text-white">{dictionary.mypage.underreview[language]}</Button>
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
@@ -103,7 +103,7 @@ function MyPrice({ session }) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Contents
+                {dictionary.mypage.contents[language]}
               </ModalHeader>
               <ModalBody>
                 <p>
@@ -111,7 +111,7 @@ function MyPrice({ session }) {
                   vehicle appraisal value for the vehicle you requested on {formatDateToWords(responseData.response_at)}.
                 </p>
                 <hr  className=""/>
-                <h2>Spec</h2>
+                <h2>{dictionary.mypage.specification[language]}</h2>
                 <ul>
 
                   <li>Name:{responseData.productId.title}</li>
@@ -124,7 +124,7 @@ function MyPrice({ session }) {
 
                 </ul>
                 <hr  className=""/>
-                <h2>Result</h2>
+                <h2>{dictionary.mypage.result[language]}</h2>
                 <p>
                   {responseData.answer}
                 </p>

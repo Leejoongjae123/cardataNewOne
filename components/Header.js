@@ -7,6 +7,8 @@ import { Link } from "@nextui-org/react";
 import MobileMenu from "@/components/MobileMenu";
 import { headers } from "next/headers";
 import {createClient} from "@/utils/supabase/server";
+import {cookies} from "next/headers";
+import { dictionary } from "@/components/dictionary";
 async function Header() {
   const supabase = createClient();
   const {
@@ -19,9 +21,9 @@ async function Header() {
     .eq("id", session.user.id)
     .single();
   
-  console.log("profiles:",profiles)
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
 
-  console.log("session:",session)
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[10vh] fixed top-0 left-0 right-0 z-50 bg-white">
       <div className="w-full md:w-[50vw] flex justify-between items-center p-3 px-5 text-sm font-bold">
@@ -56,14 +58,14 @@ async function Header() {
 
         <div className="hidden md:flex w-full flex-row justify-center items-center">
           <div className="px-2 md:px-10">
-            <Link href={"/list"}>LIST</Link>
+            <Link href={"/list"}>{dictionary.header.list[language]}</Link>
           </div>
           <div className="px-2 md:px-10">
-            <Link href={"/mypage"}>MY PAGE</Link>
+            <Link href={"/mypage"}>{dictionary.header.mypage[language]}</Link>
           </div>
           {profiles.role === 'master' && (
             <div className="px-2 md:px-10">
-              <Link href={"/admin"}>ADMIN</Link>
+              <Link href={"/admin"}>{dictionary.header.admin[language]}</Link>
             </div>
           )}
         </div>

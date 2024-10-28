@@ -7,7 +7,7 @@ import { animals } from "./data";
 import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
 import {Chip} from "@nextui-org/react";
-function AllOne() {
+function AllOne({language, dictionary}) {
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
 
   const [manufacturer, setManufacturer] = useState([]);
@@ -134,7 +134,7 @@ function AllOne() {
   return (
     <div>
       <div className="page-heading">
-        <h1 className="page-title test"> All </h1>
+        <h1 className="page-title test"> {dictionary.list.all[language]} </h1>
 
         <nav className="nav__underline">
           <ul
@@ -161,7 +161,7 @@ function AllOne() {
           <div className="col-span-1">
             <Select
               items={manufacturer}
-              label="Manufacturer"
+              label={dictionary.list.manufacturer[language]}
               placeholder="Select"
               className="max-w-xs"
               onChange={(e) => {
@@ -176,7 +176,7 @@ function AllOne() {
           <div className="col-span-1">
             <Select
               items={model}
-              label="Model"
+              label={dictionary.list.model[language]}
               placeholder="Select"
               className="max-w-xs"
               onChange={(e) => {
@@ -190,7 +190,7 @@ function AllOne() {
           <div className="col-span-1">
             <Select
               items={modelGroup}
-              label="Model Group"
+              label={dictionary.list.modelGroup[language]}
               placeholder="Select"
               className="max-w-xs"
               onChange={(e) => setSelectedModelGroup(e.target.value)}

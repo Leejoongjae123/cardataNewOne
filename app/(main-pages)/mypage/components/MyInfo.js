@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@nextui-org/react";
 import {Link} from '@nextui-org/react'
-function MyInfo({ session }) {
+function MyInfo({ session, language, dictionary }) {
   const supabase = createClient();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -126,7 +126,7 @@ function MyInfo({ session }) {
           <div className="w-full">
             <div class="space-y-6">
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Name </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.name[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -141,7 +141,7 @@ function MyInfo({ session }) {
               </div>
 
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Phone </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.phone[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -155,7 +155,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Email </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.email[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -169,7 +169,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Recommender Email </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.recommenderEmail[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -183,7 +183,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Recommender Phone </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.recommenderPhone[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -200,7 +200,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Business Name </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.businessName[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -217,7 +217,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Business Registration Number </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.businessRegistrationNumber[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
@@ -234,7 +234,7 @@ function MyInfo({ session }) {
                 </div>
               </div>
               <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> Business Certificate </label>
+                <label class="md:w-32 text-right"> {dictionary.mypage.businessCertificate[language]} </label>
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="file"
@@ -257,7 +257,7 @@ function MyInfo({ session }) {
                   {profile?.businessCertificate && (
                     <p class="mt-2 text-sm text-gray-600">
                       <Link target="_blank" href={profile.businessCertificate}>
-                        View Business Certificate
+                        {dictionary.mypage.viewBusinessCertificate[language]}
                       </Link>
                     </p>
                   )}

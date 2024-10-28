@@ -1,0 +1,163 @@
+export const dictionary = {
+  list: {
+    new: {
+      kr: "신규",
+      en: "New",
+      ru: "Новый",
+      ar: "جديد",
+    },
+    all: {
+      kr: "전체",
+      en: "All",
+      ru: "Все",
+      ar: "الكل",
+    },
+    manufacturer: {
+      kr: "제조사",
+      en: "Manufacturer",
+      ru: "Производитель",
+      ar: "المصنع",
+    },
+    model: {
+      kr: "모델",
+      en: "Model",
+      ru: "Модель",
+      ar: "الموديل",
+    },
+    modelGroup: {
+      kr: "모델그룹",
+      en: "Model Group",
+      ru: "Группа Моделей",
+      ar: "مجموعة الموديلات",
+    },
+
+  },
+  mypage:{
+    estimates: {
+      kr: "견적",
+      en: "Estimates",
+      ru: "Оценки",
+      ar: "تقديرات",
+    },
+    auth:{
+      kr: "인증",
+      en: "Auth",
+      ru: "Авторизация",
+      ar: "المصنع",
+    },
+    info:{
+      kr: "정보",
+      en: "Info",
+      ru: "Информация",
+      ar: "المعلومات",
+    },
+    chat:{
+      kr: "채팅",
+      en: "Chat",
+      ru: "Чат",
+      ar: "الدردشة",
+    },
+    underreview:{
+      kr: "검토중",
+      en: "Under Review",
+      ru: "На рассмотрении",
+      ar: "قيد المعاينة",
+    },
+    reviewComplete:{
+      kr: "검토완료",
+      en: "Review Complete",
+      ru: "Просмотр завершен",
+      ar: "معاينة منجزة",
+    },
+    currentPassword:{
+      kr: "현재 비밀번호",
+      en: "Current Password",
+      ru: "Текущий пароль",
+      ar: "كلمة المرور الحالية",
+    },
+    newPassword:{
+      kr: "새로운 비밀번호",
+      en: "New Password",
+      ru: "Новый пароль",
+      ar: "كلمة المرور الجديدة",
+    },
+    confirmPassword:{
+      kr: "비밀번호 확인",
+      en: "Confirm Password",
+      ru: "Подтвердить пароль",
+      ar: "تأكيد كلمة المرور",
+    },
+    name:{
+      kr: "이름",
+      en: "Name",
+      ru: "Имя",
+      ar: "الاسم",
+    },
+    phone:{
+      kr: "전화번호",
+      en: "Phone",
+      ru: "Телефон",
+      ar: "الهاتف",
+    },
+    email:{
+      kr: "이메일",
+      en: "Email",
+      ru: "Электронная почта",
+      ar: "البريد الإلكتروني",
+    },
+    recommenderEmail:{
+      kr: "추천인 이메일",
+      en: "Recommender Email",
+      ru: "Электронная почта рекоммендера",
+      ar: "البريد الإلكتروني للموصى به",
+    },
+    recommenderPhone:{
+      kr: "추천인 전화번호",
+      en: "Recommender Phone",
+      ru: "Телефон рекоммендера",
+      ar: "الهاتف للموصى به",
+    },
+    businessName:{
+      kr: "사업자명",
+      en: "Business Name",
+      ru: "Название бизнеса",
+      ar: "اسم الشركة",
+    },
+    businessRegistrationNumber:{
+      kr: "사업자등록번호",
+      en: "Business Registration Number",
+      ru: "Номер регистрации бизнеса",
+      ar: "رقم التسجيل التجاري",
+    },
+    businessCertificate:{
+      kr: "사업자 등록증",
+      en: "Business Certificate",
+      ru: "Сертификат предприятия",
+      ar: "شهادة تجارية",
+    },
+    viewBusinessCertificate:{
+      kr: "사업자 등록증 보기",
+      en: "View Business Certificate",
+      ru: "Посмотреть сертификат предприятия",
+      ar: "عرض شهادة التجارة",
+    },
+    contents:{
+      kr: "내용",
+      en: "Contents",
+      ru: "Содержание",
+      ar: "المحتويات",
+    },
+    specification:{
+      kr: "사양",
+      en: "Specification",
+      ru: "Спецификация",
+      ar: "المواصفات",
+    },
+    result:{
+      kr: "결과",
+      en: "Result",
+      ru: "Результат",
+      ar: "النتيجة",
+    },
+  },
+};

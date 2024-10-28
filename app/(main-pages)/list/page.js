@@ -5,9 +5,13 @@ import { redirect } from "next/navigation";
 import IonIcon from "@reacticons/ionicons";
 import NewOne from "./components/NewOne";
 import AllOne from './components/AllOne'
+import { dictionary } from "@/app/(main-pages)/components/dictionary";
+import { cookies } from "next/headers";
 export default async function ProtectedPage() {
   const supabase = createClient();
-
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
+  
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -18,8 +22,8 @@ export default async function ProtectedPage() {
 
   return (
     <>
-      <NewOne></NewOne>
-      <AllOne></AllOne>
+      <NewOne language={language} dictionary={dictionary}></NewOne>
+      <AllOne language={language} dictionary={dictionary}></AllOne>
     </>
   );
 }

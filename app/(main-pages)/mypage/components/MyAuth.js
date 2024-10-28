@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-function MyInfo({ session }) {
+function MyInfo({ session, language, dictionary }) {
   const supabase = createClient();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -92,7 +92,7 @@ function MyInfo({ session }) {
         <div>
           <div class="space-y-6">
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Current Password </label>
+              <label class="md:w-32 text-right"> {dictionary.mypage.currentPassword[language]} </label>
               <div class="flex-1 max-md:mt-4">
                 <input
                   type="password"
@@ -104,7 +104,7 @@ function MyInfo({ session }) {
             </div>
 
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> New Password </label>
+              <label class="md:w-32 text-right"> {dictionary.mypage.newPassword[language]} </label>
               <div class="flex-1 max-md:mt-4">
                 <input
                   type="password"
@@ -115,7 +115,7 @@ function MyInfo({ session }) {
               </div>
             </div>
             <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> Confirm Password </label>
+              <label class="md:w-32 text-right"> {dictionary.mypage.confirmPassword[language]} </label>
               <div class="flex-1 max-md:mt-4">
                 <input
                   type="password"
