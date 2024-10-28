@@ -29,7 +29,7 @@ async function Header() {
       <div className="w-full md:w-[50vw] flex justify-between items-center p-3 px-5 text-sm font-bold">
         <div className="flex justify-center items-center">
           <div className="block md:hidden">
-          <MobileMenu />
+          <MobileMenu language={language} dictionary={dictionary} />
           </div>
           <div className="header-logo">
             <div className="block md:hidden">
