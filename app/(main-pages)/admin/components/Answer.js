@@ -92,11 +92,11 @@ function Answer({ session }) {
       {
         receiver: responseData.userId,
         responsedatetime: formatDateToWords(new Date()),
-        name: responseData.productId.title,
+        name: responseData.productId.title[language],
         number: responseData.productId.inqCrrgsnb,
         modelyear: responseData.productId.year,
         mileage: responseData.productId.mileage,
-        fuel: responseData.productId.fuelType,
+        fuel: responseData.productId.fuelType[language],
         color: responseData.productId.clr,
         accidenthistory: responseData.productId.accidentSelf,
         result: responseData.answer,
@@ -164,7 +164,7 @@ function Answer({ session }) {
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
-                    {item.title}
+                    {item.title[language]}
                   </h1>
                 </div>
                 <p class="card-list-text">{item.description}</p>
@@ -207,7 +207,7 @@ function Answer({ session }) {
                   <li>Number:{responseData.productId.inqCrrgsnb}</li>
                   <li>Model Year:{responseData.productId.year}</li>
                   <li>Mileage:{responseData.productId.mileage}</li>
-                  <li>Fuel:{responseData.productId.fuelType}</li>
+                  <li>Fuel:{responseData.productId.fuelType[language]}</li>
                   <li>Color:{responseData.productId.clr}</li>
                   <li>
                     Accident History:{responseData.productId.accidentSelf}

@@ -89,20 +89,20 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                견적 신청완료
+                {dictionary.applyModalTitle[language]}
               </ModalHeader>
               <ModalBody>
                 <p className="text-lg font-semibold">
-                  견적 신청이 완료되었습니다.
+                  {dictionary.applyModalContents1[language]}
                 </p>
                 <p className="text-medium ">
-                담당자가 빠른 시일 내에 파악하여 가입하신 메일 주소로 회신 드리겠습니다.
+                  {dictionary.applyModalContents2[language]}
                 </p>
                 
               </ModalBody>
               <ModalFooter>
                 <Button className="text-white" color="primary" onPress={onClose}>
-                  확인
+                  {dictionary.detail.applyModalButton[language]}
                 </Button>
               </ModalFooter>
             </>
@@ -114,20 +114,20 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                견적 신청완료
+                {dictionary.detail.applyModalTitle[language]}
               </ModalHeader>
               <ModalBody>
                 <p className="text-lg font-semibold">
-                  이미 견적신청을 완료하였습니다.
+                  {dictionary.detail.applyModalContents1_1[language]}
                 </p>
                 <p className="text-medium ">
-                담당자가 빠른 시일 내에 파악하여 가입하신 메일 주소로 회신 드리겠습니다.
+                  {dictionary.detail.applyModalContents2[language]}
                 </p>
                 
               </ModalBody>
               <ModalFooter>
                 <Button className="text-white" color="primary" onPress={onClose}>
-                  확인
+                  {dictionary.detail.applyModalButton[language]}
                 </Button>
               </ModalFooter>
             </>

@@ -400,7 +400,45 @@ export const dictionary = {
       en:"Recall Target",
       ru:"Цель ремонта",
       ar:"هدف الإصلاح",
+    },
+    monthlyRent:{
+      kr:"월렌트료",
+      en:"Monthly Rent",
+      ru:"Ежемесячная аренда",
+      ar:"الإيجار الشهري",
+    },
+    applyModalTitle:{
+      kr:"견적 신청완료",
+      en:"Estimate Application Complete",
+      ru:"Применение оценки завершено",
+      ar:"تطبيق التقدير منجز",
+    },
+    applyModalContents1:{
+      kr:"견적 신청이 완료되었습니다.",
+      en:"The estimate application has been completed.",
+      ru:"Применение оценки завершено",
+      ar:"تطبيق التقدير منجز",
+    },
+    applyModalContents2:{
+      kr:'담당자가 빠른 시일 내에 파악하여 가입하신 메일 주소로 회신 드리겠습니다.',
+      en:'The manager will reply to the email address you registered as soon as possible.',
+      ru:'Менеджер ответит на вашу электронную почту в ближайшее время.',
+      ar:'سيتم الرد على بريدك الإلكتروني المسجل في أقرب وقت.',
+    },
+    applyModalButton:{
+      kr:"확인",
+      en:"Confirm",
+      ru:"Подтвердить",
+      ar:"تأكيد",
+    },
+    applyModalContents1_1:{
+      kr:"이미 견적신청을 완료하였습니다.",
+      en:"You have already completed the estimate application.",
+      ru:"Вы уже завершили заявку на оценку.",
+      ar:"لقد قمت بالفعل بطلب تقدير.",
     }
+
+    
     
 
   }

@@ -63,11 +63,11 @@ async function page({ params }) {
   const carSpec = [
     parseInt(carData.mileage).toString() + "km",
     parseInt(carData.year),
-    carData.fuelType,
+    carData.fuelType[language],
     carData.carCategory,
     carData.dsp,
     carData.trns,
-    carData.clr,
+    carData.clr[language],
     carData.inqCrrgsnb,
   ].join(" • ");
 
@@ -94,7 +94,7 @@ async function page({ params }) {
                   </div>
 
                   <div className="block text-lg font-semibold">
-                    {carData.title}
+                    {carData.title[language]}
                   </div>
                 </div>
                 <div className="hidden md:block">
@@ -196,15 +196,15 @@ async function page({ params }) {
                       ) : (
                         <>
                           <div className="text-sm">
-                            <p>월렌트료</p>
+                            <p>{dictionary.detail.monthlyRent[language]}</p>
                             <p>{parseInt(carData.monthlyPrice)}만원/월</p>
                           </div>
                           <div className="text-sm">
-                            <p>인수금</p>
+                            <p>{dictionary.detail.receivePrice[language]}</p>
                             <p>{parseInt(carData.leaseReceivePrice)}만원</p>
                           </div>
                           <div className="text-sm">
-                            <p>차량가격</p>
+                            <p>{dictionary.detail.carPrice[language]}</p>
                             <p>{parseInt(carData.carPrice)}만원</p>
                           </div>
                         </>

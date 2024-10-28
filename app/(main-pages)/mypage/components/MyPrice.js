@@ -75,7 +75,7 @@ function MyPrice({ session, language, dictionary }) {
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
-                    {item.title}
+                    {item.title[language]}
                   </h1>
                 </div>
                 <p class="card-list-text">{item.description}</p>
@@ -114,7 +114,7 @@ function MyPrice({ session, language, dictionary }) {
                 <h2>{dictionary.mypage.specification[language]}</h2>
                 <ul>
 
-                  <li>Name:{responseData.productId.title}</li>
+                  <li>Name:{responseData.productId.title[language]}</li>
                   <li>Number:{responseData.productId.inqCrrgsnb}</li>
                   <li>Model Year:{responseData.productId.year}</li>
                   <li>Mileage:{responseData.productId.mileage}</li>

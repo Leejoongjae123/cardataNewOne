@@ -35,7 +35,7 @@ async function page({ params }) {
   const carSpec = [
     parseInt(carData.mileage).toString() + "km",
     parseInt(carData.year),
-    carData.fuelType,
+    carData.fuelType[language],
     carData.carCategory,
     carData.dsp,
     carData.trns,

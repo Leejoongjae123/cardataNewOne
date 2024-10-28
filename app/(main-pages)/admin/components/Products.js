@@ -227,7 +227,7 @@ function Role({ session }) {
                           setSelectData(item);
                         }}
                       >
-                        {item.title}
+                        {item.title[language]}
                       </Link>
                     </TableCell>
                     <TableCell className="text-center">
