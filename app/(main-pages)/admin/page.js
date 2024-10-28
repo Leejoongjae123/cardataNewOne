@@ -15,10 +15,10 @@ export default async function Page() {
 
         <nav className="nav__underline">
           <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
-            <li><a href="#"> Role</a></li>
-            <li><a href="#"> Answer</a></li>
-            <li><a href="#"> Products</a></li>
-            <li><a href="#"> Chat</a></li>
+            <li><a href="#"> 권한</a></li>
+            <li><a href="#"> 답변</a></li>
+            <li><a href="#"> 상품목록</a></li>
+            <li><a href="#"> 채팅</a></li>
             
           </ul>
         </nav>
