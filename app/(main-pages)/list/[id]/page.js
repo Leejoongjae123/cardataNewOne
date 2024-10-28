@@ -66,7 +66,7 @@ async function page({ params }) {
     carData.fuelType[language],
     carData.carCategory,
     carData.dsp,
-    carData.trns,
+    carData.trns[language],
     carData.clr[language],
     carData.inqCrrgsnb,
   ].join(" • ");
@@ -330,7 +330,7 @@ async function page({ params }) {
                         {carData.optionExtInt.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName}
+                              {elem.optionName[language]}
                             </li>
                           );
                         })}
@@ -361,7 +361,7 @@ async function page({ params }) {
                         {carData.optionSafety.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName}
+                              {elem.optionName[language]}
                             </li>
                           );
                         })}
@@ -392,7 +392,7 @@ async function page({ params }) {
                         {carData.optionConvenience.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName}
+                              {elem.optionName[language]}
                             </li>
                           );
                         })}
@@ -423,7 +423,7 @@ async function page({ params }) {
                         {carData.optionSeat.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName}
+                              {elem.optionName[language]}
                             </li>
                           );
                         })}
@@ -454,7 +454,7 @@ async function page({ params }) {
                         {carData.optionEtc.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName}
+                              {elem.optionName[language]}
                             </li>
                           );
                         })}

@@ -89,14 +89,14 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {dictionary.applyModalTitle[language]}
+                {dictionary.detail.applyModalTitle[language]}
               </ModalHeader>
               <ModalBody>
                 <p className="text-lg font-semibold">
-                  {dictionary.applyModalContents1[language]}
+                  {dictionary.detail.applyModalContents1[language]}
                 </p>
                 <p className="text-medium ">
-                  {dictionary.applyModalContents2[language]}
+                  {dictionary.detail.applyModalContents2[language]}
                 </p>
                 
               </ModalBody>
