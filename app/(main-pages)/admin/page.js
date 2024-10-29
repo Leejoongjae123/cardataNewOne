@@ -3,10 +3,12 @@ import { createClient } from "@/utils/supabase/server";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TabContent from "./components/TabContent";
-
+import { cookies } from "next/headers";
 export default async function Page() {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
+  const languageCookie = cookies().get('language');
+  const language = languageCookie ? languageCookie.value : 'kr';
 
   return (
     <div className="mt-10">
@@ -23,7 +25,7 @@ export default async function Page() {
           </ul>
         </nav>
       </div>
-      <TabContent session={session} />
+      <TabContent session={session} language={language} />
     </div>
   );
 }

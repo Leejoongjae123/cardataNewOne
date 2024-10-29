@@ -16,7 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "@nextui-org/react";
 import axios from "axios";
-function Answer({ session }) {
+
+function Answer({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isOpen2,
@@ -37,7 +38,7 @@ function Answer({ session }) {
   const getData = async () => {
     const { data, error, count } = await supabase
       .from("requests")
-      .select("*, productId(*)", { count: "exact" })
+      .select("*, productId(*),userId(*)", { count: "exact" })
       .order("created_at", { ascending: false })
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
@@ -164,7 +165,7 @@ function Answer({ session }) {
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
-                    {item.title[language]}
+                    {item.productId.title[language]}
                   </h1>
                 </div>
                 <p class="card-list-text">{item.description}</p>
@@ -195,22 +196,36 @@ function Answer({ session }) {
                 Contents
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Hello, this is Sincar. I am sending this email to provide the
-                  vehicle appraisal value for the vehicle you requested on{" "}
-                  {formatDateToWords(responseData.responseDate)}.
-                </p>
+                <div>
+                  <h1>Sender</h1>
+                  <ul>
+                    <li>Name:{responseData.userId.name}</li>
+                    <li>Email:{responseData.userId.email}</li>
+                    <li>Phone:{responseData.userId.phone}</li>
+                  </ul>
+                </div>
+                <hr />
+                <div>
+                  <h1>Title</h1>
+                  <p>
+                    Hello, this is Sincar. I am sending this email to provide
+                    the vehicle appraisal value for the vehicle you requested on{" "}
+                    {formatDateToWords(responseData.responseDate)}.
+                  </p>
+                </div>
+
                 <hr className="" />
                 <h2>Spec</h2>
                 <ul>
-                  <li>Name:{responseData.productId.title}</li>
+                  <li>Name:{responseData.productId.title[language]}</li>
                   <li>Number:{responseData.productId.inqCrrgsnb}</li>
                   <li>Model Year:{responseData.productId.year}</li>
                   <li>Mileage:{responseData.productId.mileage}</li>
                   <li>Fuel:{responseData.productId.fuelType[language]}</li>
-                  <li>Color:{responseData.productId.clr}</li>
+                  <li>Color:{responseData.productId.clr[language]}</li>
                   <li>
-                    Accident History:{responseData.productId.accidentSelf}
+                    Accident History:
+                    {responseData.productId.accidentSelf[language]}
                   </li>
                 </ul>
                 <hr className="" />

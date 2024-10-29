@@ -28,7 +28,7 @@ import debounce from "lodash/debounce";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "@nextui-org/react";
-function Role({ session }) {
+function Role({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const supabase = createClient();
   const [data, setData] = useState([]);
@@ -146,13 +146,13 @@ function Role({ session }) {
               onChange={(e) => setSearchCategory(e.target.value)}
             >
               <SelectItem key="name" value="name">
-                name
+                이름
               </SelectItem>
               <SelectItem key="email" value="email">
-                email
+                이메일
               </SelectItem>
               <SelectItem key="phone" value="phone">
-                phone
+                연락처
               </SelectItem>
             </Select>
             <Input
@@ -169,14 +169,14 @@ function Role({ session }) {
 
           <Table aria-label="Example static collection table text-center">
             <TableHeader>
-              <TableColumn className="text-center w-1/6">NAME</TableColumn>
-              <TableColumn className="text-center w-1/6">EMAIL</TableColumn>
-              <TableColumn className="text-center w-1/6">PHONE</TableColumn>
-              <TableColumn className="text-center w-1/6">ROLE</TableColumn>
+              <TableColumn className="text-center w-1/6">이름</TableColumn>
+              <TableColumn className="text-center w-1/6">이메일</TableColumn>
+              <TableColumn className="text-center w-1/6">연락처</TableColumn>
+              <TableColumn className="text-center w-1/6">권한</TableColumn>
               <TableColumn className="text-center w-1/6">
                 CERTIFICATION
               </TableColumn>
-              <TableColumn className="text-center w-1/6">EDIT</TableColumn>
+              <TableColumn className="text-center w-1/6">비고</TableColumn>
             </TableHeader>
             <TableBody>
               {data.map((item, index) => (

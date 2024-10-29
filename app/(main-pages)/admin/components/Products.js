@@ -31,7 +31,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
-function Role({ session }) {
+function Role({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
   const supabase = createClient();
@@ -292,7 +292,7 @@ function Role({ session }) {
                   <ModalBody className="grid grid-cols-2">
                     <div className="flex flex-col">
                       <h1 className="text-medium">물품명</h1>
-                      <p className="text-sm">{selectData.title}</p>
+                      <p className="text-sm">{selectData.title[language]}</p>
                     </div>
                     <div>
                       <h1 className="text-medium">판매가격</h1>
@@ -312,7 +312,7 @@ function Role({ session }) {
                     </div>
                     <div>
                       <h1 className="text-medium">사고유무</h1>
-                      <p className="text-sm">{selectData.accidentSelf}</p>
+                      <p className="text-sm">{selectData.accidentSelf[language]}</p>
                     </div>
                     <div>
                       <h1 className="text-medium">차량번호</h1>
