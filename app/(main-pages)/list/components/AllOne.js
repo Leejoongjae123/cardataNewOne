@@ -149,9 +149,11 @@ function AllOne({language, dictionary}) {
             </li>
             <li>
               
-              <a onClick={()=>{
-                setSelectedPlatform("Other")
-              }}> Other car</a>{" "}
+              <a 
+              // onClick={()=>{
+              //   setSelectedPlatform("Other")
+              // }}
+              > Other car</a>{" "}
             </li>
           </ul>
         </nav>
@@ -241,7 +243,7 @@ function AllOne({language, dictionary}) {
                   {dictionary.list.year[language]}:{parseInt(item.year)}{" "}
                 </div>
                 <div className="text-xs line-clamp-1 mt-1 text-right">
-                  {dictionary.list.accident[language]}:{item.accidentSelf}{" "}
+                  {dictionary.list.accident[language]}:{item.accidentSelf[language]}{" "}
                 </div>
               </div>
             </div>

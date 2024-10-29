@@ -12,7 +12,7 @@ export default async function Layout({
         <div className="flex items-center absolute top-0 left-0 md:right-0 p-4 z-50">
           <LanguageSelect />
         </div>
-        <div className="pt-5">
+        <div className="mt-5">
           {children}
         </div>
       </div>

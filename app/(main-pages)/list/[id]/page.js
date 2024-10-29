@@ -64,7 +64,7 @@ async function page({ params }) {
     parseInt(carData.mileage).toString() + "km",
     parseInt(carData.year),
     carData.fuelType[language],
-    carData.carCategory,
+    carData.carCategory[language],
     carData.dsp,
     carData.trns[language],
     carData.clr[language],
@@ -89,7 +89,7 @@ async function page({ params }) {
                       variant="bordered"
                       color={carData.sellType === "렌트" ? "danger" : "primary"}
                     >
-                      {carData.sellType}
+                      {carData.sellType === "렌트" ? dictionary.detail.cartypeRent[language] : dictionary.detail.cartypeLease[language]}
                     </Chip>
                   </div>
 
@@ -182,30 +182,36 @@ async function page({ params }) {
                         <>
                           <div className="text-sm border-r pr-2 text-center">
                             <p>{dictionary.detail.monthlyLease[language]}</p>
-                            <p>{parseInt(carData.monthlyPrice)}만원/월</p>
+                            <p>{formatNumber(carData.monthlyPrice)}</p>
+                            <p>KRW/MONTH</p>
                           </div>
                           <div className="text-sm border-r pr-2 text-center">
                             <p>{dictionary.detail.receivePrice[language]}</p>
-                            <p>{parseInt(carData.leaseReceivePrice)}만원</p>
+                            <p>{formatNumber(carData.leaseReceivePrice)}</p>
+                            <p>KRW</p>
                           </div>
                           <div className="text-sm text-center">
                             <p>{dictionary.detail.carPrice[language]}</p>
-                            <p>{parseInt(carData.carPrice)}만원</p>
+                            <p>{formatNumber(carData.carPrice)}</p>
+                            <p>KRW</p>
                           </div>
                         </>
                       ) : (
                         <>
-                          <div className="text-sm">
-                            <p>{dictionary.detail.monthlyRent[language]}</p>
-                            <p>{parseInt(carData.monthlyPrice)}만원/월</p>
+                          <div className="text-sm border-r pr-2 text-center">
+                          <p>{dictionary.detail.monthlyRent[language]}</p>
+                            <p>{formatNumber(carData.monthlyPrice)}</p>
+                            <p>KRW/MONTH</p>
                           </div>
-                          <div className="text-sm">
+                          <div className="text-sm border-r pr-2 text-center">
                             <p>{dictionary.detail.receivePrice[language]}</p>
-                            <p>{parseInt(carData.leaseReceivePrice)}만원</p>
+                            <p>{formatNumber(carData.leaseReceivePrice)}</p>
+                            <p>KRW</p>
                           </div>
-                          <div className="text-sm">
+                          <div className="text-sm text-center">
                             <p>{dictionary.detail.carPrice[language]}</p>
-                            <p>{parseInt(carData.carPrice)}만원</p>
+                            <p>{formatNumber(carData.carPrice)}</p>
+                            <p>KRW</p>
                           </div>
                         </>
                       )}
@@ -246,11 +252,9 @@ async function page({ params }) {
                   ) : (
                     <div>
                       <p className="text-sm text-black font-light text-center">
-                        판매자 연락처는 관리자만
+                        {dictionary.detail.onlyfor1[language]}
                       </p>
-                      <p className="text-sm text-black font-light text-center">
-                        확인할 수 있습니다.
-                      </p>
+                      
                     </div>
                   )}
 
@@ -478,7 +482,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.history}
+                          {carData.history[language]}
                         </h3>
                         <p>{dictionary.detail.insurance1[language]}</p>
                       </div>
@@ -492,7 +496,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.changeCount}
+                          {carData.changeCount[language]}
                         </h3>
                         <p>{dictionary.detail.insurance2[language]}</p>
                       </div>
@@ -506,7 +510,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.accidentSelf}
+                          {carData.accidentSelf[language]}
                         </h3>
                         <p>{dictionary.detail.insurance3[language]}</p>
                       </div>
@@ -520,7 +524,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.accidentOther}
+                          {carData.accidentOther[language]}
                         </h3>
                         <p>{dictionary.detail.insurance4[language]}</p>
                       </div>
@@ -543,7 +547,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.leaseReceivePrice} KRW
+                          {formatNumber(carData.leaseReceivePrice)} KRW
                         </h3>
                         <p>{dictionary.detail.price1[language]}</p>
                       </div>
@@ -558,7 +562,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.leasePriceIn} KRW
+                          {formatNumber(carData.leasePriceIn)} KRW
                         </h3>
                         <p>{dictionary.detail.price2[language]}</p>
                       </div>
@@ -573,7 +577,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.leasePriceOut} KRW
+                          {formatNumber(carData.leasePriceOut)} KRW
                         </h3>
                         <p>{dictionary.detail.price3[language]}</p>
                       </div>
@@ -588,7 +592,7 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                          {carData.leasePriceAll} KRW
+                          {formatNumber(carData.leasePriceAll)} KRW
                         </h3>
                         <p>{dictionary.detail.price4[language]}</p>
                       </div>
@@ -610,7 +614,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceDashboard}
+                        {carData.performanceDashboard[language]}
                       </h3>
                       <p>{dictionary.detail.issue1[language]}</p>
                     </div>
@@ -625,7 +629,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceDistance}
+                        {carData.performanceDistance[language]}
                       </h3>
                       <p>{dictionary.detail.issue2[language]}</p>
                     </div>
@@ -640,7 +644,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceVIN}
+                        {carData.performanceVIN[language]}
                       </h3>
                       <p>{dictionary.detail.issue3[language]}</p>
                     </div>
@@ -655,7 +659,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceEmit}
+                        {carData.performanceEmit[language]}
                       </h3>
                       <p>{dictionary.detail.issue4[language]}</p>
                     </div>
@@ -670,7 +674,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceTuning}
+                        {carData.performanceTuning[language]}
                       </h3>
                       <p>{dictionary.detail.issue5[language]}</p>
                     </div>
@@ -685,9 +689,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceSpecial}
+                        {carData.performanceSpecial[language]}
                       </h3>
-                      <p>특별이력</p>
+                      <p>{dictionary.detail.issue6[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -700,9 +704,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceChange}
+                        {carData.performanceChange[language]}
                       </h3>
-                      <p>용도변경</p>
+                      <p>{dictionary.detail.issue7[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -715,9 +719,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceColor}
+                        {carData.performanceColor[language]}
                       </h3>
-                      <p>색상</p>
+                      <p>{dictionary.detail.issue8[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -730,9 +734,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceOption}
+                        {carData.performanceOption[language]}
                       </h3>
-                      <p>주요옵션</p>
+                      <p>{dictionary.detail.issue9[language]}</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -745,9 +749,9 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
-                        {carData.performanceRecall}
+                        {carData.performanceRecall[language]}
                       </h3>
-                      <p>리콜대상</p>
+                      <p>{dictionary.detail.issue10[language]}</p>
                     </div>
                   </div>
                 </div>
@@ -761,3 +765,14 @@ async function page({ params }) {
 }
 
 export default page;
+
+function formatNumber(value) {
+  // Extract only the digits from the value
+  const numericValue = value.replace(/\D/g, '');
+  
+  // Convert the extracted digits to a number and multiply by 10,000
+  const multipliedValue = parseInt(numericValue) * 1000;
+  
+  // Format the number with commas as thousand separators
+  return multipliedValue.toLocaleString();
+}

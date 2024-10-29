@@ -436,7 +436,26 @@ export const dictionary = {
       en:"You have already completed the estimate application.",
       ru:"Вы уже завершили заявку на оценку.",
       ar:"لقد قمت بالفعل بطلب تقدير.",
-    }
+    },
+    onlyfor1:{
+      kr:"판매자 연락처는 관리자만 확인할 수 있습니다.",
+      en:"The seller's contact information is only available to administrators.",
+      ru:"Контактная информация продавца доступна только администраторам.",
+      ar:"معلومات الاتصال بالبائع متاحة فقط للمشرفين.",
+    },
+    cartypeRent:{
+      kr:"렌트",
+      en:"Rent",
+      ru:"Аренда",
+      ar:"الإيجار",
+    },
+    cartypeLease:{
+      kr:"리스",
+      en:"Lease",
+      ru:"Лизинг",
+      ar:"التأجير",
+    },
+
 
     
     

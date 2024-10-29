@@ -11,9 +11,9 @@ import { Chip } from "@nextui-org/react";
 import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
 import { dictionary } from "@/app/(main-pages)/components/dictionary";
 
-function NewOne({language, dictionary}) {
+function NewOne({ language, dictionary }) {
   const [data, setData] = useState([]);
-  const [selectedPlatform,setSelectedPlatform]=useState("SKEncar")
+  const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
 
   const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`);
 
@@ -23,7 +23,7 @@ function NewOne({language, dictionary}) {
       .from("cardata")
       .select("*")
       .order("created_at", { ascending: false })
-      .eq('like', false)  // Add this line to filter for like = false
+      .eq("like", false) // Add this line to filter for like = false
       .limit(10);
 
     const { data, error } = await query;
@@ -43,10 +43,9 @@ function NewOne({language, dictionary}) {
     <div className="mt-10">
       <div className="page-heading">
         <div className="flex items-center justify-between">
-        <h1 className="page-title test"> {dictionary.list.new[language]} </h1>
-        <LanguageSelect />
+          <h1 className="page-title test"> {dictionary.list.new[language]} </h1>
+          <LanguageSelect />
         </div>
-        
 
         <nav className="nav__underline mb-5">
           <ul
@@ -54,20 +53,22 @@ function NewOne({language, dictionary}) {
             uk-switcher="connect: #group-tabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
           >
             <li>
-              
-              <a onClick={()=>{
-                setSelectedPlatform("SKEncar")
-              }}>
-                
-                 SK Encar
-                 </a>
+              <a
+                onClick={() => {
+                  setSelectedPlatform("SKEncar");
+                }}
+              >
+                SK Encar
+              </a>
             </li>
             <li>
-              
-            <a onClick={()=>{
-                setSelectedPlatform("Other")
-              }}>
-                 Other car</a>
+              <a
+                // onClick={() => {
+                //   setSelectedPlatform("Other");
+                // }}
+              >
+                Other car
+              </a>
             </li>
           </ul>
         </nav>
@@ -90,7 +91,14 @@ function NewOne({language, dictionary}) {
               >
                 <div className="card">
                   <div className="absolute top-2 right-2 z-10">
-                    <Chip size="sm" color={selectedPlatform === "SKEncar" ? "danger" : "success"}>{selectedPlatform}</Chip>
+                    <Chip
+                      size="sm"
+                      color={
+                        selectedPlatform === "SKEncar" ? "danger" : "success"
+                      }
+                    >
+                      {selectedPlatform}
+                    </Chip>
                   </div>
 
                   <Link href={`/list/${item.id}`}>
@@ -105,13 +113,15 @@ function NewOne({language, dictionary}) {
                         {item.title[language]}
                       </p>
                       <div className="text-xs line-clamp-1 mt-1 text-right">
-                        {dictionary.list.mileage[language]}:{parseInt(item.mileage)}km{" "}
+                        {dictionary.list.mileage[language]}:
+                        {parseInt(item.mileage)}km{" "}
                       </div>
                       <div className="text-xs line-clamp-1 mt-1 text-right">
                         {dictionary.list.year[language]}:{parseInt(item.year)}{" "}
                       </div>
                       <div className="text-xs line-clamp-1 mt-1 text-right">
-                        {dictionary.list.accident[language]}:{item.accidentSelf}{" "}
+                        {dictionary.list.accident[language]}:
+                        {item.accidentSelf[language]}{" "}
                       </div>
                     </div>
                   </div>
