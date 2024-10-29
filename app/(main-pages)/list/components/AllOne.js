@@ -145,7 +145,7 @@ function AllOne({language, dictionary}) {
               {" "}
               <a onClick={()=>{
                 setSelectedPlatform("SKEncar")
-              }}> SK Encar</a>
+              }}> {dictionary.list.skencar[language]}</a>
             </li>
             <li>
               
@@ -153,7 +153,7 @@ function AllOne({language, dictionary}) {
               // onClick={()=>{
               //   setSelectedPlatform("Other")
               // }}
-              > Other car</a>{" "}
+              > {dictionary.list.othercar[language]}</a>{" "}
             </li>
           </ul>
         </nav>
@@ -164,7 +164,7 @@ function AllOne({language, dictionary}) {
             <Select
               items={manufacturer}
               label={dictionary.list.manufacturer[language]}
-              placeholder="Select"
+              placeholder={dictionary.list.select[language]}
               className="max-w-xs"
               onChange={(e) => {
                 setSelectedManufacturer(e.target.value);
@@ -179,7 +179,7 @@ function AllOne({language, dictionary}) {
             <Select
               items={model}
               label={dictionary.list.model[language]}
-              placeholder="Select"
+              placeholder={dictionary.list.select[language]}
               className="max-w-xs"
               onChange={(e) => {
                 setSelectedModel(e.target.value);
@@ -193,7 +193,7 @@ function AllOne({language, dictionary}) {
             <Select
               items={modelGroup}
               label={dictionary.list.modelGroup[language]}
-              placeholder="Select"
+              placeholder={dictionary.list.select[language]}
               className="max-w-xs"
               onChange={(e) => setSelectedModelGroup(e.target.value)}
             >

@@ -5,11 +5,13 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
 import {SubmitButton} from "@/components/submit-button";
-
+import { dictionary } from "@/app/(auth-pages)/dictionary/dictionary";
+import { cookies } from "next/headers";
 export default async function AuthButton() {
   const {
     data: { user },
   } = await createClient().auth.getUser();
+  const language = cookies().get("language")?.value || "kr";
 
   if (!hasEnvVars) {
     return (
@@ -56,7 +58,7 @@ export default async function AuthButton() {
         {/* <Button formAction={signOutAction} type="submit" variant={"outline"}>
           Sign out
         </Button> */}
-        <SubmitButton formAction={signOutAction}>Sign out</SubmitButton>
+        <SubmitButton formAction={signOutAction}>{dictionary.signOut.signOut[language]}</SubmitButton>
       </form>
     </div>
   ) : (

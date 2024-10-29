@@ -46,7 +46,7 @@ function MyPrice({ session, language, dictionary }) {
   useEffect(() => {
     getData();
   }, [currentPage]);
-  console.log("data1111:", data);
+  
   return (
     <div>
       <div class="box p-5 mt-4">
@@ -75,7 +75,7 @@ function MyPrice({ session, language, dictionary }) {
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
-                    {item.title[language]}
+                    {item.title}
                   </h1>
                 </div>
                 <p class="card-list-text">{item.description}</p>

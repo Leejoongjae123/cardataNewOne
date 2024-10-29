@@ -182,6 +182,7 @@ async function page({ params }) {
                         <>
                           <div className="text-sm border-r pr-2 text-center">
                             <p>{dictionary.detail.monthlyLease[language]}</p>
+                            
                             <p>{formatNumber(carData.monthlyPrice)}</p>
                             <p>KRW/MONTH</p>
                           </div>
@@ -218,10 +219,10 @@ async function page({ params }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-1 py-2 justify-between items-center">
+                  <div className="flex flex-col gap-1 py-2 justify-between items-center">
                     <RequestEst
                       description={carSpec}
-                      title={carData.title}
+                      title={carData.title[language]}
                       desc={carData.description}
                       thumbImage={carData.uploadedImageUrls[0].url}
                       productId={carData.productId}
@@ -230,6 +231,12 @@ async function page({ params }) {
                       language={language}
                       dictionary={dictionary}
                     ></RequestEst>
+                    
+                    {profiles.role === "master" && (
+                      <Link className="text-center text-xs" href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`} target="_blank">
+                        http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}
+                      </Link>
+                    )}
                   </div>
                   {profiles.role === "master" ? (
                     <div>
@@ -767,11 +774,11 @@ async function page({ params }) {
 export default page;
 
 function formatNumber(value) {
-  // Extract only the digits from the value
-  const numericValue = value.replace(/\D/g, '');
+  // Remove any non-numeric characters except the decimal point
+  const numericValue = value.replace(/[^\d.]/g, '');
   
-  // Convert the extracted digits to a number and multiply by 10,000
-  const multipliedValue = parseInt(numericValue) * 1000;
+  // Convert the extracted value to a number and multiply by 10,000
+  const multipliedValue = parseFloat(numericValue) * 10000;
   
   // Format the number with commas as thousand separators
   return multipliedValue.toLocaleString();

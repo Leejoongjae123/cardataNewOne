@@ -58,7 +58,7 @@ function NewOne({ language, dictionary }) {
                   setSelectedPlatform("SKEncar");
                 }}
               >
-                SK Encar
+                {dictionary.list.skencar[language]}
               </a>
             </li>
             <li>
@@ -67,7 +67,7 @@ function NewOne({ language, dictionary }) {
                 //   setSelectedPlatform("Other");
                 // }}
               >
-                Other car
+                {dictionary.list.othercar[language]}
               </a>
             </li>
           </ul>

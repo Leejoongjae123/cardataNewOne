@@ -4,11 +4,9 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import {supabaseAdmin} from "@/utils/supabase/admin";
 
-export const signUpAction = async (formData) => {
-
-
-  
+export const signUpAction = async (formData) => {  
   const password = searchParams.get("password");
   const confirmPassword = searchParams.get("confirmPassword");
   const name = searchParams.get("name");
@@ -45,6 +43,46 @@ export const signUpAction = async (formData) => {
     );
   }
 };
+
+export async function checkPhoneNumber(formData){
+  const email = formData.get("email")?.toString();
+  const phoneNumber = formData.get("phoneNumber")?.toString();
+
+  const supabase = createClient();
+  const { data, error } = await supabase.from('profiles').select('*').eq('phone', phoneNumber).eq('email', email);
+  console.log('data:',data)
+  console.log('error:',error)
+  if(error){
+    return encodedRedirect("error", "/forgot-password", error.message);
+  }
+  if(data.length===0){
+    return encodedRedirect("error", "/forgot-password", 'no account found');
+  }
+  else{
+    return encodedRedirect("account", "/change-password", email);
+  }
+}
+
+export async function changePassword(formData){
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
+  const confirmPassword = formData.get("confirmPassword")?.toString();
+  const supabase = createClient();
+  const { data:data1, error:error1 } = await supabase.from('profiles').select('id').eq('email', email)
+  console.log('data1:',data1)
+  const { data:data2, error:error2 } = await supabaseAdmin.auth.admin.updateUserById(data1[0].id, {
+    password: password
+  })
+  if(error1 || error2){
+    return encodedRedirect("error", "/forgot-password", error.message);
+  }
+  if(password !== confirmPassword){
+    return encodedRedirect("error", "/forgot-password", 'passwords do not match');
+  }
+  else{
+    return redirect("/sign-in");
+  }
+}
 
 export async function signUpFirstAction(formData) {
   

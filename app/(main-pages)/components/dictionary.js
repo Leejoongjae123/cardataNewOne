@@ -1,5 +1,23 @@
 export const dictionary = {
   list: {
+    skencar:{
+      kr:"SK엔카",
+      en:"SKencar",
+      ru:"СКэнкар",
+      ar:"سكانكار",
+    },
+    othercar:{
+      kr:"타업체",
+      en:"Other",
+      ru:"Другое",
+      ar:"أخرى",
+    },
+    select:{
+      kr:"선택",
+      en:"Select",
+      ru:"Выбрать",
+      ar:"اختر",
+    },
     new: {
       kr: "신규",
       en: "New",
@@ -179,6 +197,12 @@ export const dictionary = {
     },
   },
   detail:{
+    country:{
+      kr: "국가",
+      en: "Country",
+      ru: "Страна",
+      ar: "البلد",
+    },
     lease:{
       kr: "리스",
       en: "Lease",

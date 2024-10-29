@@ -1,4 +1,5 @@
 import { signInAction } from "@/app/actions.js";
+import { checkPhoneNumber } from "@/app/actions.js";
 import { FormMessage, Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +23,8 @@ export default function Login({ searchParams }) {
   const languageCookie = cookies().get('language');
   const language = languageCookie ? languageCookie.value : 'kr';
   console.log("language:",language);
+  
+
   return (
     <div className="w-full flex ">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -40,15 +43,9 @@ export default function Login({ searchParams }) {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-1.5">
-              {dictionary.signIn.title[language]}
+            <h2 className="text-2xl font-semibold mb-1.5 text-center">
+              {dictionary.forgotPassword.title[language]}
             </h2>
-            <p className="text-medium text-gray-700 font-normal">
-              {dictionary.signIn.subtitle[language]}
-              <a href="/sign-up" className="text-blue-700 font-bold ml-2">
-                {dictionary.signIn.register[language]}
-              </a>
-            </p>
           </div>
 
           <form
@@ -74,30 +71,18 @@ export default function Login({ searchParams }) {
               </div>
             </div>
             <div>
-              <label for="email" className="">
-                {dictionary.signIn.password[language]}
+              <label for="phoneNumber" className="">
+                {dictionary.forgotPassword.phoneNumber[language]}
               </label>
               <div className="mt-2.5">
                 <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder={dictionary.signIn.password[language]}
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="text"
+                  placeholder={dictionary.forgotPassword.phoneNumber[language]}
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
-            </div>
-
-            <div className="flex items-center justify-end">
-              {/* <div className="flex items-center gap-2.5">
-                <input id="rememberme" name="rememberme" type="checkbox" />
-                <label for="rememberme" className="font-normal">
-                  Remember me
-                </label>
-              </div> */}
-              <a href="/forgot-password" className="text-blue-700 font-bold">
-                {dictionary.signIn.forgotPassword[language]}
-              </a>
             </div>
 
             <div>
@@ -112,45 +97,15 @@ export default function Login({ searchParams }) {
               <SubmitButton
                 type="submit"
                 className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
-                formAction={signInAction}
+                formAction={checkPhoneNumber}
               >
-                {dictionary.signIn.signin[language]}
+                {dictionary.forgotPassword.confirmInformation[language]}
               </SubmitButton>
             </div>
 
-            <div className="text-center flex items-center gap-6">
-              <hr className="flex-1 border-slate-200 " />
-              {dictionary.signIn.orcontinuewith[language]}
-              <hr className="flex-1 border-slate-200 " />
-            </div>
 
-            <div
-              className="flex gap-2 flex-wrap"
-              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
-            >
-              <div
-                href="#"
-                className="button items-center gap-2 bg-primary text-white text-sm flex-1"
-              >
-                <RiKakaoTalkFill />
-                {dictionary.signIn.kakao[language]}
-              </div>
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
-              >
-                <FaFacebook />
-                {dictionary.signIn.facebook[language]}
-              </a>
 
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-sky-600 text-white text-sm flex-1"
-              >
-                <RiAppleFill></RiAppleFill>
-                {dictionary.signIn.apple[language]}
-              </a>
-            </div>
+            
           </form>
         </div>
       </div>

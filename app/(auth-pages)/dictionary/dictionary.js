@@ -1,4 +1,58 @@
 export const dictionary={
+  signOut:{
+    signOut:{
+      kr:"로그아웃",
+      en:"Sign out",
+      ru:"Выйти",
+      ar:"تسجيل الخروج",
+    }
+  },
+  forgotPassword:{
+    title:{
+      kr:"가입정보 확인",
+      en:"Check your account",
+      ru:"Проверьте свою учетную запись",
+      ar:"تحقق من حسابك",
+    },
+    phoneNumber:{
+      kr:"휴대폰 번호",
+      en:"Phone number",
+      ru:"Номер телефона",
+      ar:"رقم الهاتف المحمول",
+    },
+    confirmInformation:{
+      kr:"가입정보 확인",
+      en:"Confirm information",
+      ru:"Подтвердите информацию",
+      ar:"تأكيد المعلومات",
+    }
+  },
+  changePassword:{
+    title:{
+      kr:"비밀번호 재설정하기",
+      en:"Reset password",
+      ru:"Сбросить пароль",
+      ar:"إعادة تعيين كلمة المرور",
+    },
+    password:{
+      kr:"새로운 비밀번호",
+      en:"New password",
+      ru:"Новый пароль",
+      ar:"كلمة المرور الجديدة",
+    },
+    confirmPassword:{
+      kr:"비밀번호 확인",
+      en:"Confirm password",
+      ru:"Подтвердите пароль",
+      ar:"تأكيد كلمة المرور",
+    },
+    changePassword:{
+      kr:"비밀번호 변경하기",
+      en:"Change password",
+      ru:"Изменить пароль",
+      ar:"تغيير كلمة المرور",
+    }
+  },
   signIn: {
     title: {
       kr: "당신의 계정으로 로그인 하세요",
@@ -31,7 +85,7 @@ export const dictionary={
       ar:"كلمة المرور",
     },
     forgotPassword: {
-      kr:"비밀번호를 까먹었나요?",
+      kr:"비밀번호를 잊어버리셨나요?",
       en:"Forgot your password?",
       ru:"Забыли пароль?",
       ar:"هل نسيت كلمة المرور؟",
