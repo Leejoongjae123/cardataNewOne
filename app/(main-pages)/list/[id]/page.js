@@ -18,11 +18,13 @@ import Exchanger from "./components/Exchanger";
 import RequestEst from "./components/RequestEst";
 import { redirect } from "next/navigation";
 import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
-import {cookies} from "next/headers";
-import {dictionary} from "@/app/(main-pages)/components/dictionary";
+import { cookies } from "next/headers";
+import { dictionary } from "@/app/(main-pages)/components/dictionary";
+import { Accordion, AccordionItem } from "@nextui-org/react";
+import AccordionComponent from "./components/AccordionComponent";
 async function page({ params }) {
-  const languageCookie = cookies().get('language');
-  const language = languageCookie ? languageCookie.value : 'kr';
+  const languageCookie = cookies().get("language");
+  const language = languageCookie ? languageCookie.value : "kr";
 
   const { id } = params;
 
@@ -89,7 +91,9 @@ async function page({ params }) {
                       variant="bordered"
                       color={carData.sellType === "렌트" ? "danger" : "primary"}
                     >
-                      {carData.sellType === "렌트" ? dictionary.detail.cartypeRent[language] : dictionary.detail.cartypeLease[language]}
+                      {carData.sellType === "렌트"
+                        ? dictionary.detail.cartypeRent[language]
+                        : dictionary.detail.cartypeLease[language]}
                     </Chip>
                   </div>
 
@@ -175,14 +179,16 @@ async function page({ params }) {
               </div>
               <div className="w-full lg:w-1/2 ">
                 <div className="md:space-y-5 space-y-3 ">
-                  <h1 className="text-medium font-bold mb-2 ">{dictionary.detail.mainInfo[language]}</h1>
+                  <h1 className="text-medium font-bold mb-2 ">
+                    {dictionary.detail.mainInfo[language]}
+                  </h1>
                   <div>
                     <div className="flex w-full justify-around items-center">
                       {carData.sellType === "리스" ? (
                         <>
                           <div className="text-sm border-r pr-2 text-center">
                             <p>{dictionary.detail.monthlyLease[language]}</p>
-                            
+
                             <p>{formatNumber(carData.monthlyPrice)}</p>
                             <p>KRW/MONTH</p>
                           </div>
@@ -200,7 +206,7 @@ async function page({ params }) {
                       ) : (
                         <>
                           <div className="text-sm border-r pr-2 text-center">
-                          <p>{dictionary.detail.monthlyRent[language]}</p>
+                            <p>{dictionary.detail.monthlyRent[language]}</p>
                             <p>{formatNumber(carData.monthlyPrice)}</p>
                             <p>KRW/MONTH</p>
                           </div>
@@ -231,18 +237,25 @@ async function page({ params }) {
                       language={language}
                       dictionary={dictionary}
                       profiles={profiles}
-                      titlekr={carData.title['kr']}
+                      titlekr={carData.title["kr"]}
                     ></RequestEst>
-                    
+
                     {profiles.role === "master" && (
-                      <Link className="text-center text-xs" href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`} target="_blank">
-                        http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}
+                      <Link
+                        className="text-center text-xs"
+                        href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`}
+                        target="_blank"
+                      >
+                        http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
+                        {carData.productId}
                       </Link>
                     )}
                   </div>
                   {profiles.role === "master" ? (
                     <div>
-                      <h1 className="text-medium font-bold mb-2 ">{dictionary.detail.seller[language]}</h1>
+                      <h1 className="text-medium font-bold mb-2 ">
+                        {dictionary.detail.seller[language]}
+                      </h1>
                       <div className="flex justify-center items-center gap-3 py-2 text-sm font-medium mt-2">
                         <div className="flex flex-col justify-center items-start gap-y-1 w-full">
                           <h4 className="text-black ">
@@ -263,11 +276,13 @@ async function page({ params }) {
                       <p className="text-sm text-black font-light text-center">
                         {dictionary.detail.onlyfor1[language]}
                       </p>
-                      
                     </div>
                   )}
 
-                  <Exchanger language={language} dictionary={dictionary}></Exchanger>
+                  <Exchanger
+                    language={language}
+                    dictionary={dictionary}
+                  ></Exchanger>
 
                   {/* <Card className="w-full">
                     <CardHeader className="flex gap-3">
@@ -311,11 +326,12 @@ async function page({ params }) {
               uk-sticky="media: 1024; end: #js-oversized; offset: 80"
             >
               <div className="box p-5 px-6 ,">
+              
                 <h3 className="font-semibold text-lg text-black ">
                   {dictionary.detail.option[language]}
                 </h3>
-
-                <ul
+                <AccordionComponent carData={carData} dictionary={dictionary} language={language}></AccordionComponent>
+                {/* <ul
                   className="relative space-y-3 uk-accordion my-3"
                   uk-accordion="active: 1; multiple: true"
                 >
@@ -474,7 +490,7 @@ async function page({ params }) {
                       </ul>
                     </div>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="box p-5 px-6 pr-0 col-span-1">
@@ -777,11 +793,11 @@ export default page;
 
 function formatNumber(value) {
   // Remove any non-numeric characters except the decimal point
-  const numericValue = value.replace(/[^\d.]/g, '');
-  
+  const numericValue = value.replace(/[^\d.]/g, "");
+
   // Convert the extracted value to a number and multiply by 10,000
   const multipliedValue = parseFloat(numericValue) * 10000;
-  
+
   // Format the number with commas as thousand separators
   return multipliedValue.toLocaleString();
 }
