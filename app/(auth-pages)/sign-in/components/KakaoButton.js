@@ -12,7 +12,7 @@ export default function KakaoButton({ dictionary, language }) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/callback`,
         queryParams: {
           scope: "account_email", // 카카오 이메일 정보 요청
         },
