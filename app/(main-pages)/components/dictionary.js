@@ -197,6 +197,24 @@ export const dictionary = {
     },
   },
   detail:{
+    error:{
+      kr: "에러",
+      en: "Error",
+      ru: "Ошибка",
+      ar: "الأخطاء",
+    },
+    noinfo:{
+      kr: "추천인 정보가 없습니다. 추천인 이메일 주소를 기재 후 요청해주세요.",
+      en: "No recommender information. Please enter the recommender's email address and request again.",
+      ru: "Нет информации о рекоммендере. Пожалуйста, введите адрес электронной почты рекоммендера и повторите запрос.",
+      ar: "لا يوجد معلومات عن الموصى به. يرجى إدخال عنوان البريد الإلكتروني للموصى به وإعادة الطلب.",
+    },
+    confirm:{
+      kr: "확인",
+      en: "Confirm",
+      ru: "Подтвердить",
+      ar: "تأكيد",
+    },
     country:{
       kr: "국가",
       en: "Country",

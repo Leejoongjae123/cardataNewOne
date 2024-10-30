@@ -145,7 +145,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.phone}
                     onChange={(e) =>
@@ -159,7 +159,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.email}
                     onChange={(e) =>
@@ -173,7 +173,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.recommenderEmail}
                     onChange={(e) =>
@@ -187,7 +187,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.recommenderPhone}
                     onChange={(e) =>
@@ -204,7 +204,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.businessName}
                     onChange={(e) =>
@@ -221,7 +221,7 @@ function MyInfo({ session, language, dictionary }) {
                 <div class="flex-1 max-md:mt-4">
                   <input
                     type="text"
-                    placeholder="info@mydomain.com"
+                    placeholder=""
                     class="w-full"
                     value={profile?.businessRegistrationNumber}
                     onChange={(e) =>

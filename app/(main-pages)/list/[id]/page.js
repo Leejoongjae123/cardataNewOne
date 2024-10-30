@@ -230,6 +230,7 @@ async function page({ params }) {
                       userId={session.user.email}
                       language={language}
                       dictionary={dictionary}
+                      profiles={profiles}
                     ></RequestEst>
                     
                     {profiles.role === "master" && (

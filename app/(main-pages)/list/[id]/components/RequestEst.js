@@ -9,14 +9,43 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import {createClient} from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
-function RequestEst({title, description, thumbImage, productId, id, userId, language, dictionary}) {
-  const { isOpen:isOpen1, onOpen:onOpen1, onOpenChange:onOpenChange1 } = useDisclosure();
-  const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
+function RequestEst({
+  title,
+  description,
+  thumbImage,
+  productId,
+  id,
+  userId,
+  language,
+  dictionary,
+  profiles,
+}) {
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onOpenChange: onOpenChange1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onOpenChange: onOpenChange2,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen3,
+    onOpen: onOpen3,
+    onOpenChange: onOpenChange3,
+  } = useDisclosure();
   const supabase = createClient();
 
   const handleRequestEst = async () => {
+    console.log("profiles:", profiles);
+    if (!profiles.recommenderEmail) {
+      onOpen3();
+      return;
+    }
 
     const { data: carData, error: carError } = await supabase
       .from("cardata")
@@ -27,7 +56,6 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
       console.error("Error updating car data:", carError);
       return;
     }
-    
 
     const { data: existingData, error: existingError } = await supabase
       .from("requests")
@@ -63,23 +91,17 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
       onOpen2();
     }
   };
+  const router = useRouter();
 
   return (
     <>
-      {/* <button
-        className="button bg-primary px-3 text-white w-full"
-        uk-tooltip="title: Ask; offset: 8"      
-        onPress={onOpen}
-        >
-        견적 요청하기
-      </button> */}
       <Button
         className="button bg-primary px-3 text-white w-full"
         uk-tooltip="title: Ask; offset: 8"
         onPress={() => {
           handleRequestEst();
         }}
-        size='sm'
+        size="sm"
       >
         {dictionary.detail.applyEstimate[language]}
       </Button>
@@ -98,10 +120,13 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
                 <p className="text-medium ">
                   {dictionary.detail.applyModalContents2[language]}
                 </p>
-                
               </ModalBody>
               <ModalFooter>
-                <Button className="text-white" color="primary" onPress={onClose}>
+                <Button
+                  className="text-white"
+                  color="primary"
+                  onPress={onClose}
+                >
                   {dictionary.detail.applyModalButton[language]}
                 </Button>
               </ModalFooter>
@@ -123,11 +148,40 @@ function RequestEst({title, description, thumbImage, productId, id, userId, lang
                 <p className="text-medium ">
                   {dictionary.detail.applyModalContents2[language]}
                 </p>
-                
               </ModalBody>
               <ModalFooter>
-                <Button className="text-white" color="primary" onPress={onClose}>
+                <Button
+                  className="text-white"
+                  color="primary"
+                  onPress={onClose}
+                >
                   {dictionary.detail.applyModalButton[language]}
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen3} onOpenChange={onOpenChange3}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                {dictionary.detail.error[language]}
+              </ModalHeader>
+              <ModalBody>
+                <p>{dictionary.detail.noinfo[language]}</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="text-white"
+                  color="primary"
+                  onPress={() => {
+                    onClose();
+                    router.push("/mypage");
+                  }}
+                >
+                  {dictionary.detail.confirm[language]}
                 </Button>
               </ModalFooter>
             </>

@@ -23,7 +23,7 @@ export default async function Page() {
           <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
             <li><a href="#"> {dictionary.mypage.estimates[language]}</a></li>
             <li><a href="#"> {dictionary.mypage.auth[language]}</a></li>
-            <li><a href="#"> {dictionary.mypage.info[language]}</a></li>
+            <li className="uk-active"><a href="#"> {dictionary.mypage.info[language]}</a></li>
             <li><a href="#"> {dictionary.mypage.chat[language]}</a></li>
           </ul>
         </nav>

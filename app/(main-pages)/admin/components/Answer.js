@@ -33,6 +33,7 @@ function Answer({ session, language }) {
   const [responseData, setResponseData] = useState(null);
   const [productData, setProductData] = useState(null);
   const [answer, setAnswer] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const itemsPerPage = 5;
   const getData = async () => {
@@ -91,17 +92,17 @@ function Answer({ session, language }) {
     const response = await axios.post(
       "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
       {
-        receiver: responseData.userId,
+        receiver: responseData.userId.email,
         responsedatetime: formatDateToWords(new Date()),
         name: responseData.productId.title[language],
         number: responseData.productId.inqCrrgsnb,
-        modelyear: responseData.productId.year,
-        mileage: responseData.productId.mileage,
+        modelyear: parseInt(responseData.productId.year),
+        mileage: parseInt(responseData.productId.mileage),
         fuel: responseData.productId.fuelType[language],
-        color: responseData.productId.clr,
-        accidenthistory: responseData.productId.accidentSelf,
+        color: responseData.productId.clr[language],
+        accidenthistory: responseData.productId.accidentSelf[language],
         result: responseData.answer,
-        id: responseData.id.toString(),
+        id: responseData.productId.id.toString(),
       },
       {
         headers: {
@@ -110,8 +111,38 @@ function Answer({ session, language }) {
         },
       }
     );
+    const response2 = await axios.post(
+      "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
+      {
+        receiver: responseData.userId.recommenderEmail,
+        responsedatetime: formatDateToWords(new Date()),
+        name: responseData.productId.title[language],
+        number: responseData.productId.inqCrrgsnb,
+        modelyear: parseInt(responseData.productId.year),
+        mileage: parseInt(responseData.productId.mileage),
+        fuel: responseData.productId.fuelType[language],
+        color: responseData.productId.clr[language],
+        accidenthistory: responseData.productId.accidentSelf[language],
+        result: responseData.answer,
+        id: responseData.productId.id.toString(),
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 200) {
+      setMessage("메일 송부 완료");
+      onOpen2();
+    } else {
+      setMessage("메일 송부 실패");
+      onOpen2()
+    }
   };
   console.log("responseData:", responseData);
+
   return (
     <div>
       <ToastContainer
@@ -254,7 +285,6 @@ function Answer({ session, language }) {
                   onPress={() => {
                     onClose();
                     handleSendMail();
-                    onOpen2();
                   }}
                 >
                   메일송부
@@ -277,9 +307,9 @@ function Answer({ session, language }) {
         <ModalContent>
           {(onClose2) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Result</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">결과</ModalHeader>
               <ModalBody>
-                <p>Send Email Successfully</p>
+                <p>{message}</p>
               </ModalBody>
               <ModalFooter>
                 <Button

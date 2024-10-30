@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TabContent from "./components/TabContent";
 import { cookies } from "next/headers";
+import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
 export default async function Page() {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
@@ -14,7 +15,9 @@ export default async function Page() {
     <div className="mt-10">
       <div className="page-heading flex flex-col justify-start items-start">
         {/* <h1 className="page-title test"> My Page </h1> */}
-
+        <div className="flex flex-row justify-start items-start w-full">
+          <LanguageSelect />
+        </div>
         <nav className="nav__underline">
           <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
             <li><a href="#"> 권한</a></li>
