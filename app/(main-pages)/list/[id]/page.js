@@ -120,7 +120,7 @@ async function page({ params }) {
                         <a
                           className="inline"
                           href={elem.url}
-                          data-caption="Caption 1"
+                          data-caption={carData.title[language]}
                         >
                           <img
                             src={elem.url}
