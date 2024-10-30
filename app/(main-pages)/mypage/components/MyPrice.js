@@ -46,6 +46,8 @@ function MyPrice({ session, language, dictionary }) {
   useEffect(() => {
     getData();
   }, [currentPage]);
+
+  console.log('language:',language);
   
   return (
     <div>
@@ -106,28 +108,30 @@ function MyPrice({ session, language, dictionary }) {
                 {dictionary.mypage.contents[language]}
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Hello, this is Sincar. I am sending this email to provide the
-                  vehicle appraisal value for the vehicle you requested on {formatDateToWords(responseData.response_at)}.
-                </p>
-                <hr  className=""/>
-                <h2>{dictionary.mypage.specification[language]}</h2>
-                <ul>
-
-                  <li>Name:{responseData.productId.title[language]}</li>
-                  <li>Number:{responseData.productId.inqCrrgsnb}</li>
-                  <li>Model Year:{responseData.productId.year}</li>
-                  <li>Mileage:{responseData.productId.mileage}</li>
-                  <li>Fuel:{responseData.productId.fuelType}</li>
-                  <li>Color:{responseData.productId.clr}</li>
-                  <li>Accident History:{responseData.productId.accidentSelf}</li>
-
-                </ul>
-                <hr  className=""/>
-                <h2>{dictionary.mypage.result[language]}</h2>
-                <p>
-                  {responseData.answer}
-                </p>
+                {responseData && (
+                  <>
+                    <p>
+                      Hello, this is Sincar. I am sending this email to provide the
+                      vehicle appraisal value for the vehicle you requested on {formatDateToWords(responseData.response_at)}.
+                    </p>
+                    <hr className=""/>
+                    <h2>{dictionary.mypage.specification[language]}</h2>
+                    <ul>
+                      <li>Name:{responseData.productId?.title[language]}</li>
+                      <li>Number:{responseData.productId?.inqCrrgsnb}</li>
+                      <li>Model Year:{responseData.productId?.year}</li>
+                      <li>Mileage:{responseData.productId?.mileage}</li>
+                      <li>Fuel:{responseData.productId?.fuelType[language]}</li>
+                      <li>Color:{responseData.productId?.clr[language]}</li>
+                      <li>Accident History:{responseData.productId?.accidentSelf[language]}</li>
+                    </ul>
+                    <hr className=""/>
+                    <h2>{dictionary.mypage.result[language]}</h2>
+                    <p>
+                      {responseData.answer}
+                    </p>
+                  </>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button
