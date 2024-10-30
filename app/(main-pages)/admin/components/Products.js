@@ -187,6 +187,7 @@ function Role({ session, language }) {
                 className="max-w-xs w-1/2 md:w-1/4"
                 defaultSelectedKeys={["title"]}
                 onChange={(e) => setSearchCategory(e.target.value)}
+                isDisabled
               >
                 <SelectItem key="title" value="title">
                   제목

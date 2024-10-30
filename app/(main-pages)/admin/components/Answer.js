@@ -53,10 +53,10 @@ function Answer({ session, language }) {
 
     // searchValue가 있을 경우 title 검색 조건 추가
     if (searchValue) {
-      query = query.ilike('titlekr', `%${searchValue}%`);
+      query = query.ilike("titlekr", `%${searchValue}%`);
     }
     if (isUnanswered) {
-      query = query.is('response', false);
+      query = query.is("response", false);
     }
 
     const { data, error, count } = await query.range(
@@ -178,28 +178,36 @@ function Answer({ session, language }) {
 
   return (
     <div>
-      <div className="flex justify-end gap-3">
-        <Select
-          placeholder="category"
-          className="max-w-xs w-1/2 md:w-1/4"
-          defaultSelectedKeys={["title"]}
-          onChange={(e) => setSearchCategory(e.target.value)}
+      <div className="flex flex-col lg:flex-row justify-end gap-3 items-center my-5 md:my-0">
+        <div className="flex  w-full justify-end items-center">
+          <Select
+            placeholder="category"
+            className="w-full md:w-1/4"
+            defaultSelectedKeys={["title"]}
+            onChange={(e) => setSearchCategory(e.target.value)}
+            isDisabled
+          >
+            <SelectItem key="title" value="title">
+              제목
+            </SelectItem>
+          </Select>
+          <Input
+            startContent={
+              <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+            }
+            onChange={handleSearchChange}
+            value={searchValue}
+            className="w-full md:w-1/4"
+            type="text"
+            variant="bordered"
+          />
+        </div>
+
+        <Checkbox
+          className="w-full"
+          isSelected={isUnanswered}
+          onValueChange={setIsUnanswered}
         >
-          <SelectItem key="title" value="title">
-            제목
-          </SelectItem>
-        </Select>
-        <Input
-          startContent={
-            <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
-          }
-          onChange={handleSearchChange}
-          value={searchValue}
-          className="w-1/2 md:w-1/4"
-          type="text"
-          variant="bordered"
-        />
-        <Checkbox isSelected={isUnanswered} onValueChange={setIsUnanswered}>
           미회신
         </Checkbox>
       </div>
