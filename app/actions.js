@@ -4,9 +4,9 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import {supabaseAdmin} from "@/utils/supabase/admin";
+import { supabaseAdmin } from "@/utils/supabase/admin";
 
-export const signUpAction = async (formData) => {  
+export const signUpAction = async (formData) => {
   const password = searchParams.get("password");
   const confirmPassword = searchParams.get("confirmPassword");
   const name = searchParams.get("name");
@@ -15,7 +15,9 @@ export const signUpAction = async (formData) => {
   const recommenderPhone = searchParams.get("recommenderPhone");
   const region = searchParams.get("region");
   const businessName = formData.get("businessName")?.toString();
-  const businessRegistrationNumber = formData.get("businessRegistrationNumber")?.toString();
+  const businessRegistrationNumber = formData
+    .get("businessRegistrationNumber")
+    ?.toString();
   const businessCertificate = formData.get("businessCertificate")?.toString();
   const supabase = createClient();
   const origin = headers().get("origin");
@@ -39,63 +41,70 @@ export const signUpAction = async (formData) => {
     return encodedRedirect(
       "success",
       "/sign-up",
-      "Thanks for signing up! Please check your email for a verification link.",
+      "Thanks for signing up! Please check your email for a verification link."
     );
   }
 };
 
-
-
-export async function checkPhoneNumber(formData){
+export async function checkPhoneNumber(formData) {
   const email = formData.get("email")?.toString();
   const phoneNumber = formData.get("phoneNumber")?.toString();
 
   const supabase = createClient();
-  const { data, error } = await supabase.from('profiles').select('*').eq('phone', phoneNumber).eq('email', email);
-  console.log('data:',data)
-  console.log('error:',error)
-  if(error){
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("phone", phoneNumber)
+    .eq("email", email);
+  console.log("data:", data);
+  console.log("error:", error);
+  if (error) {
     return encodedRedirect("error", "/forgot-password", error.message);
   }
-  if(data.length===0){
-    return encodedRedirect("error", "/forgot-password", 'no account found');
-  }
-  else{
+  if (data.length === 0) {
+    return encodedRedirect("error", "/forgot-password", "no account found");
+  } else {
     return encodedRedirect("account", "/change-password", email);
   }
 }
 
-export async function changePassword(formData){
+export async function changePassword(formData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
   const confirmPassword = formData.get("confirmPassword")?.toString();
   const supabase = createClient();
-  const { data:data1, error:error1 } = await supabase.from('profiles').select('id').eq('email', email)
-  console.log('data1:',data1)
-  const { data:data2, error:error2 } = await supabaseAdmin.auth.admin.updateUserById(data1[0].id, {
-    password: password
-  })
-  if(error1 || error2){
+  const { data: data1, error: error1 } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("email", email);
+  console.log("data1:", data1);
+  const { data: data2, error: error2 } =
+    await supabaseAdmin.auth.admin.updateUserById(data1[0].id, {
+      password: password,
+    });
+  if (error1 || error2) {
     return encodedRedirect("error", "/forgot-password", error.message);
   }
-  if(password !== confirmPassword){
-    return encodedRedirect("error", "/forgot-password", 'passwords do not match');
-  }
-  else{
+  if (password !== confirmPassword) {
+    return encodedRedirect(
+      "error",
+      "/forgot-password",
+      "passwords do not match"
+    );
+  } else {
     return redirect("/sign-in");
   }
 }
 
 export async function signUpFirstAction(formData) {
-  
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
   const confirmPassword = formData.get("confirm password")?.toString();
   const name = formData.get("name")?.toString();
   const phone = formData.get("phone")?.toString();
   const region = formData.get("region")?.toString();
-  const recommenderEmail = formData.get("recommenderEmail")?.toString() || '';
-  const recommenderPhone = formData.get("recommenderPhone")?.toString() || '';
+  const recommenderEmail = formData.get("recommenderEmail")?.toString() || "";
+  const recommenderPhone = formData.get("recommenderPhone")?.toString() || "";
   if (!password) {
     return encodedRedirect("error", "/sign-up", "Password is required");
   }
@@ -117,31 +126,32 @@ export async function signUpFirstAction(formData) {
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
   if (!password || !passwordRegex.test(password)) {
-    return encodedRedirect("error", "/sign-up", "Password must be at least 8 characters long and include at least one number and one special character");
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Password must be at least 8 characters long and include at least one number and one special character"
+    );
   }
-  
+
   if (password !== confirmPassword) {
     return encodedRedirect("error", "/sign-up", "Passwords do not match");
   }
 
   const params = {
     email: email,
-    password: password ,
+    password: password,
     confirmPassword: confirmPassword,
     name: name,
     phone: phone,
     recommenderEmail: recommenderEmail,
     recommenderPhone: recommenderPhone,
-    region: region ?? '', // 널 병합 연산자 사용
+    region: region ?? "", // 널 병합 연산자 사용
   };
 
-  
-  
   const searchParams = new URLSearchParams(params);
 
-
   return redirect(`/sign-up2?${searchParams.toString()}`);
-};
+}
 
 export const signInAction = async (formData) => {
   const email = formData.get("email");
@@ -152,7 +162,7 @@ export const signInAction = async (formData) => {
     email,
     password,
   });
-
+  console.log("일반로그인")
   if (error) {
     return encodedRedirect("error", "/sign-in", error.message);
   }
@@ -161,17 +171,25 @@ export const signInAction = async (formData) => {
 };
 
 export const signInWithKakao = async () => {
-  console.log('signInWithKakao')
+
   const supabase = createClient();
+  console.log("소셜로그인");
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
-        : "http://localhost:3000/auth/callback",
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
+      queryParams: {
+        redirect_to: '/list'  // 인증 후 /list로 리다이렉트
+      }
     },
   });
-}
+  console.log("로그인완료1")
+
+  if (error) {
+    console.error("Kakao login error:", error.message);
+    return encodedRedirect("error", "/sign-in", error.message);
+  }
+};
 
 export const forgotPasswordAction = async (formData) => {
   const email = formData.get("email")?.toString();
@@ -192,7 +210,7 @@ export const forgotPasswordAction = async (formData) => {
     return encodedRedirect(
       "error",
       "/forgot-password",
-      "Could not reset password",
+      "Could not reset password"
     );
   }
 
@@ -203,7 +221,7 @@ export const forgotPasswordAction = async (formData) => {
   return encodedRedirect(
     "success",
     "/forgot-password",
-    "Check your email for a link to reset your password.",
+    "Check your email for a link to reset your password."
   );
 };
 
@@ -217,7 +235,7 @@ export const resetPasswordAction = async (formData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password and confirm password are required",
+      "Password and confirm password are required"
     );
   }
 
@@ -225,7 +243,7 @@ export const resetPasswordAction = async (formData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Passwords do not match",
+      "Passwords do not match"
     );
   }
 
@@ -237,7 +255,7 @@ export const resetPasswordAction = async (formData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password update failed",
+      "Password update failed"
     );
   }
 

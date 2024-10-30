@@ -56,8 +56,8 @@ export default function Login({ searchParams }) {
           </div>
 
           <form
-            method="#"
-            action="#"
+            // method="#"
+            // action="#"
             className="space-y-7 text-sm text-black font-medium "
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
@@ -136,7 +136,7 @@ export default function Login({ searchParams }) {
               className="flex gap-2 flex-wrap"
               uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
             >
-              <KakaoButton dictionary={dictionary} language={language} signInWithKakao={signInWithKakao}></KakaoButton>
+              <KakaoButton dictionary={dictionary} language={language}></KakaoButton>
               {/* <Button
                 className="w-full"
                 startContent={
@@ -162,28 +162,7 @@ export default function Login({ searchParams }) {
                 {dictionary.signIn.facebook[language]}
               </Button>
 
-              {/* <a
-                href="#"
-                className="button items-center gap-2 bg-primary text-white text-sm flex-1"
-              >
-                <RiKakaoTalkFill />
-                {dictionary.signIn.kakao[language]}
-              </a>
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
-              >
-                <FaFacebook />
-                {dictionary.signIn.facebook[language]}
-              </a>
-
-              <a
-                href="#"
-                className="button  items-center gap-2 bg-sky-600 text-white text-sm flex-1"
-              >
-                <RiAppleFill></RiAppleFill>
-                {dictionary.signIn.apple[language]}
-              </a> */}
+              
             </div>
           </form>
         </div>

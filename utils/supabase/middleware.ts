@@ -55,12 +55,13 @@ export const updateSession = async (request: NextRequest) => {
         .select('*')
         .eq('id', user.data.user.id)
         .single();
-      
+        
       if (!error && data) {
         userRole = data.role;
         certificated=data.certificated
       }
     }
+    
 if (request.nextUrl.pathname.startsWith("/list")) {
   if (user.error) {
     return NextResponse.redirect(new URL("/sign-in", request.url));

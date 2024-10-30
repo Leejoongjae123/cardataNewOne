@@ -62,6 +62,7 @@ function RequestEst({
       .from("requests")
       .select("*")
       .eq("productId", id)
+      .eq("userId", userId)
       .single();
 
     if (existingError && existingError.code !== "PGRST116") {
