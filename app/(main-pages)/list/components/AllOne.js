@@ -92,13 +92,13 @@ function AllOne({language, dictionary}) {
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
     if (selectedManufacturer) {
-      query = query.eq("manufacturer", selectedManufacturer);
+      query = query.eq("manufacturerEN", selectedManufacturer);
     }
     if (selectedModel) {
-      query = query.eq("model", selectedModel);
+      query = query.eq("modelEN", selectedModel);
     }
     if (selectedModelGroup) {
-      query = query.eq("modelGroup", selectedModelGroup);
+      query = query.eq("modelGroupEN", selectedModelGroup);
     }
 
     const { data, error, count } = await query;
@@ -128,9 +128,6 @@ function AllOne({language, dictionary}) {
     getModelGroup();
   }, [selectedModel]);
 
-  console.log("manufacturer:", manufacturer);
-  console.log("model:", model);
-  console.log("data:", data);
   return (
     <div>
       <div className="page-heading">
