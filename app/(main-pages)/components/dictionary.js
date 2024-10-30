@@ -69,6 +69,18 @@ export const dictionary = {
 
   },
   mypage:{
+    confirm:{
+      kr:"확인",
+      en:"Confirm",
+      ru:"Подтвердить",
+      ar:"تأكيد",
+    },
+    notyet:{
+      kr:"요청하신 내용에 대해서 확인중입니다. 빠른 시일 내에 회신 드리겠습니다.",
+      en:"We are checking the contents you requested. We will reply to you as soon as possible.",
+      ru:"Мы проверяем содержимое, которое вы запросили. Мы ответим вам в ближайшее время.",
+      ar:"نحن نتحقق من المحتويات التي طلبتها. سنستجب لك في أقرب وقت.",
+    },
     estimates: {
       kr: "견적",
       en: "Estimates",

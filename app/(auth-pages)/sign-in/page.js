@@ -13,15 +13,17 @@ import { Spinner } from "@nextui-org/spinner";
 import { SubmitButton } from "@/components/submit-button";
 import Image from "next/image";
 import { headers } from "next/headers";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import ToastBox from "./components/ToastBox";
 import { dictionary } from "../dictionary/dictionary";
 import { cookies } from "next/headers"; // Import the cookies module
-
+import { Button } from "@nextui-org/react";
+import SignInButton from "./components/SignInButton";
+import { FcGoogle } from "react-icons/fc";
 export default function Login({ searchParams }) {
-  const languageCookie = cookies().get('language');
-  const language = languageCookie ? languageCookie.value : 'kr';
-  console.log("language:",language);
+  const languageCookie = cookies().get("language");
+  const language = languageCookie ? languageCookie.value : "kr";
+  console.log("language:", language);
   return (
     <div className="w-full flex ">
       <ToastBox searchParams={searchParams}></ToastBox>
@@ -109,13 +111,18 @@ export default function Login({ searchParams }) {
                 <Spinner size="sm" />
                 Sign in
               </button> */}
-              <SubmitButton
+              {/* <SubmitButton
                 type="submit"
                 className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
                 formAction={signInAction}
               >
                 {dictionary.signIn.signin[language]}
-              </SubmitButton>
+              </SubmitButton> */}
+              <SignInButton
+                signInAction={signInAction}
+                dictionary={dictionary}
+                language={language}
+              />
             </div>
 
             <div className="text-center flex items-center gap-6">
@@ -128,13 +135,37 @@ export default function Login({ searchParams }) {
               className="flex gap-2 flex-wrap"
               uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
             >
-              <div
+              <Button
+                className="w-full"
+                startContent={
+                  <RiKakaoTalkFill className="text-2xl text-yellow-400" />
+                }
+                variant="bordered"
+              >
+                {dictionary.signIn.kakao[language]}
+              </Button>
+              <Button
+                className="w-full"
+                startContent={<FcGoogle className="text-2xl " />}
+                variant="bordered"
+              >
+                {dictionary.signIn.google[language]}
+              </Button>
+              <Button
+                className="w-full"
+                startContent={<FaFacebook className="text-xl text-blue-600" />}
+                variant="bordered"
+              >
+                {dictionary.signIn.facebook[language]}
+              </Button>
+
+              {/* <a
                 href="#"
                 className="button items-center gap-2 bg-primary text-white text-sm flex-1"
               >
                 <RiKakaoTalkFill />
                 {dictionary.signIn.kakao[language]}
-              </div>
+              </a>
               <a
                 href="#"
                 className="button  items-center gap-2 bg-primary text-white text-sm flex-1"
@@ -149,7 +180,7 @@ export default function Login({ searchParams }) {
               >
                 <RiAppleFill></RiAppleFill>
                 {dictionary.signIn.apple[language]}
-              </a>
+              </a> */}
             </div>
           </form>
         </div>

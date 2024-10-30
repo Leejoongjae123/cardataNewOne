@@ -14,7 +14,8 @@ import {
 } from "@nextui-org/react";
 
 function MyPrice({ session, language, dictionary }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen:isOpen1, onOpen:onOpen1, onOpenChange:onOpenChange1 } = useDisclosure();
+  const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
   const supabase = createClient();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -68,12 +69,15 @@ function MyPrice({ session, language, dictionary }) {
                     {item.response ? (
                       <Button className="text-white" onPress={() => {
                         setResponseData(item);
-                        onOpen();
+                        onOpen1();
                       }}>
                         {dictionary.mypage.reviewComplete[language]}
                       </Button>
                     ) : (
-                      <Button className="text-white">{dictionary.mypage.underreview[language]}</Button>
+                      <Button onPress={() => {
+                        setResponseData(item);
+                        onOpen2();
+                      }} className="text-white">{dictionary.mypage.underreview[language]}</Button>
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
@@ -100,7 +104,7 @@ function MyPrice({ session, language, dictionary }) {
           className="text-white"
         />
       </div>
-      <Modal size={'2xl'} isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size={'2xl'} isOpen={isOpen1} onOpenChange={onOpenChange1}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -139,7 +143,30 @@ function MyPrice({ session, language, dictionary }) {
                   color="primary"
                   onPress={onClose}
                 >
-                  확인
+                  {dictionary.mypage.confirm[language]}
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal size={'2xl'} isOpen={isOpen2} onOpenChange={onOpenChange2}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                {dictionary.mypage.contents[language]}
+              </ModalHeader>
+              <ModalBody>
+                {dictionary.mypage.notyet[language]}
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="text-white"
+                  color="primary"
+                  onPress={onClose}
+                >
+                  {dictionary.mypage.confirm[language]}
                 </Button>
               </ModalFooter>
             </>
