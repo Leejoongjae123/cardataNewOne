@@ -16,7 +16,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         <ul className="my-5 grid grid-cols-3 space-y-4 text-gray-600 dark:text-gray-600 text-sm ">
           {carData.optionExtInt.map((elem, index) => {
             return (
-              <li className="flex items-center gap-3 col-span-1 text-center justify-center">
+              <li className="flex items-center gap-3 col-span-1 text-center justify-center px-2 overflow-hidden break-words min-h-[40px]">
                 {elem.optionName[language]}
               </li>
             );
@@ -32,7 +32,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         <ul className="my-5 grid grid-cols-3 space-y-4 text-gray-600 dark:text-gray-600 text-sm ">
           {carData.optionSafety.map((elem, index) => {
             return (
-              <li className="flex items-center gap-3 col-span-1 text-center justify-center">
+              <li className="flex items-center gap-3 col-span-1 text-center justify-center px-2 overflow-hidden break-words min-h-[40px]">
                 {elem.optionName[language]}
               </li>
             );
@@ -48,7 +48,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         <ul className="my-5 grid grid-cols-3 space-y-4 text-gray-600 dark:text-gray-600 text-sm ">
           {carData.optionConvenience.map((elem, index) => {
             return (
-              <li className="flex items-center gap-3 col-span-1 text-center justify-center">
+              <li className="flex items-center gap-3 col-span-1 text-center justify-center px-2 overflow-hidden break-words min-h-[40px]">
                 {elem.optionName[language]}
               </li>
             );
@@ -64,7 +64,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         <ul className="my-5 grid grid-cols-3 space-y-4 text-gray-600 dark:text-gray-600 text-sm ">
           {carData.optionSeat.map((elem, index) => {
             return (
-              <li className="flex items-center gap-3 col-span-1 text-center justify-center">
+              <li className="flex items-center gap-3 col-span-1 text-center justify-center px-2 overflow-hidden break-words min-h-[40px]">
                 {elem.optionName[language]}
               </li>
             );
@@ -80,7 +80,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         <ul className="my-5 grid grid-cols-3 space-y-4 text-gray-600 dark:text-gray-600 text-sm ">
           {carData.optionEtc.map((elem, index) => {
             return (
-              <li className="flex items-center gap-3 col-span-1 text-center justify-center">
+              <li className="flex items-center gap-3 col-span-1 text-center justify-center px-2 overflow-hidden break-words min-h-[40px]">
                 {elem.optionName[language]}
               </li>
             );
