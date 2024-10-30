@@ -274,6 +274,7 @@ function Role({ session, language }) {
                       }
                       selectedKeys={selectData?.role ? [selectData.role] : []}
                       className="w-full "
+                      isDisabled={session?.id==='hellfir2@naver.com'}
                     >
                       <SelectItem key="master" value="master">
                         Master

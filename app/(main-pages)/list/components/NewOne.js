@@ -14,7 +14,7 @@ import { dictionary } from "@/app/(main-pages)/components/dictionary";
 function NewOne({ language, dictionary }) {
   const [data, setData] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
-
+  
   const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`);
 
   const getData = async () => {
