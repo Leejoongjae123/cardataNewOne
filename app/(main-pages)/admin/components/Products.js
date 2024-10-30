@@ -207,21 +207,21 @@ function Role({ session, language }) {
 
             <Table aria-label="Example static collection table text-center">
               <TableHeader>
-                <TableColumn className="text-center w-1/4">
+                <TableColumn className="text-center w-1/4 whitespace-nowrap">
                   제목
                 </TableColumn>
-                <TableColumn className="text-center w-1/4">
+                <TableColumn className="text-center w-1/4 whitespace-nowrap">
                   진행상황
                 </TableColumn>
-                <TableColumn className="text-center w-1/4">찜하기</TableColumn>
-                <TableColumn className="text-center w-1/4">
+                <TableColumn className="text-center w-1/4 whitespace-nowrap">찜하기</TableColumn>
+                <TableColumn className="text-center w-1/4 whitespace-nowrap">
                   삭제하기
                 </TableColumn>
               </TableHeader>
               <TableBody>
                 {data.map((item, index) => (
                   <TableRow key={item.id}>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center whitespace-nowrap">
                       <Link
                         onClick={() => {
                           onOpen();
@@ -231,20 +231,25 @@ function Role({ session, language }) {
                         {item.title[language]}
                       </Link>
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="flex justify-center text-center whitespace-nowrap">
                       <Select
+                        className="w-32 whitespace-nowrap"
                         defaultSelectedKeys={[item.status]}
                         onChange={(e) =>
                           handleStatusChange(item.id, e.target.value)
                         }
+                        classNames={{
+                          listbox: "w-32",
+                          popover: "w-32"
+                        }}
                       >
-                        <SelectItem key="in" value="in">
+                        <SelectItem key="in" value="in" className="w-full">
                           판매 중
                         </SelectItem>
-                        <SelectItem key="out" value="out">
+                        <SelectItem key="out" value="out" className="w-full">
                           판매 완료
                         </SelectItem>
-                        <SelectItem key="ing" value="ing">
+                        <SelectItem key="ing" value="ing" className="w-full">
                           판매 진행 중
                         </SelectItem>
                       </Select>

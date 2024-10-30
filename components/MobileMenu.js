@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@nextui-org/react";
 
-const MobileMenu = ({language, dictionary}) => {
+const MobileMenu = ({profiles, language, dictionary}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -30,7 +30,7 @@ const MobileMenu = ({language, dictionary}) => {
           <div className="p-4">
             <Link href={"/list"} className="block py-2">{dictionary.header.list[language]}</Link>
             <Link href={"/mypage"} className="block py-2">{dictionary.header.mypage[language]}</Link>
-            <Link href={"/admin"} className="block py-2">{dictionary.header.admin[language]}</Link>
+            {profiles.role === 'master' && <Link href={"/admin"} className="block py-2">{dictionary.header.admin[language]}</Link>}
           </div>
         </div>
       )}

@@ -166,44 +166,44 @@ function Role({ session, language }) {
             />
           </div>
 
-          <Table aria-label="Example static collection table text-center">
-            <TableHeader>
-              <TableColumn className="text-center w-1/6">이름</TableColumn>
-              <TableColumn className="text-center w-1/6">이메일</TableColumn>
-              <TableColumn className="text-center w-1/6">연락처</TableColumn>
-              <TableColumn className="text-center w-1/6">권한</TableColumn>
-              <TableColumn className="text-center w-1/6">
-                CERTIFICATION
-              </TableColumn>
-              <TableColumn className="text-center w-1/6">비고</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {data.map((item, index) => (
-                <TableRow key={item.id}>
-                  <TableCell className="text-center">{item.name}</TableCell>
-                  <TableCell className="text-center">{item.email}</TableCell>
-                  <TableCell className="text-center">{item.phone}</TableCell>
-                  <TableCell className="text-center">{item.role}</TableCell>
-                  <TableCell className="text-center">
-                    {item.certificated.toString()}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Button
-                      onPress={() => {
-                        onOpen();
-                        setSelectData(item);
-                      }}
-                      className=""
-                      variant="bordered"
-                      color="danger"
-                    >
-                      수정
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="w-full overflow-x-auto">
+            <Table aria-label="Example static collection table text-center" className="min-w-[800px]">
+              <TableHeader>
+                <TableColumn className="text-center whitespace-nowrap">이름</TableColumn>
+                <TableColumn className="text-center whitespace-nowrap">이메일</TableColumn>
+                <TableColumn className="text-center whitespace-nowrap">연락처</TableColumn>
+                <TableColumn className="text-center whitespace-nowrap">권한</TableColumn>
+                <TableColumn className="text-center whitespace-nowrap">CERTIFICATION</TableColumn>
+                <TableColumn className="text-center whitespace-nowrap">비고</TableColumn>
+              </TableHeader>
+              <TableBody>
+                {data.map((item, index) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="text-center whitespace-nowrap">{item.name}</TableCell>
+                    <TableCell className="text-center whitespace-nowrap">{item.email}</TableCell>
+                    <TableCell className="text-center whitespace-nowrap">{item.phone}</TableCell>
+                    <TableCell className="text-center whitespace-nowrap">{item.role}</TableCell>
+                    <TableCell className="text-center whitespace-nowrap">
+                      {item.certificated.toString()}
+                    </TableCell>
+                    <TableCell className="text-center whitespace-nowrap">
+                      <Button
+                        onPress={() => {
+                          onOpen();
+                          setSelectData(item);
+                        }}
+                        className=""
+                        variant="bordered"
+                        color="danger"
+                      >
+                        수정
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
         <div className="flex w-full justify-center items-center py-5">
           <Pagination
