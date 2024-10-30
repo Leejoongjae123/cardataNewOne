@@ -3,7 +3,7 @@ const {nextui} = require("@nextui-org/react");
 import type { Config } from "tailwindcss";
 
 const config = {
-  darkMode: "media",
+  // darkMode: false,
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
