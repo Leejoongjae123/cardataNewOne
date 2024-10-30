@@ -22,6 +22,8 @@ import SignInButton from "./components/SignInButton";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithKakao } from "@/app/actions";
 import KakaoButton from "./components/KakaoButton";
+import FacebookButton from "./components/FacebookButton";
+import GoogleButton from "./components/GoogleButton";
 export default function Login({ searchParams }) {
   const languageCookie = cookies().get("language");
   const language = languageCookie ? languageCookie.value : "kr";
@@ -147,20 +149,24 @@ export default function Login({ searchParams }) {
               >
                 {dictionary.signIn.kakao[language]}
               </Button> */}
-              <Button
+              <GoogleButton dictionary={dictionary} language={language}></GoogleButton>
+              {/* <Button
                 className="w-full"
                 startContent={<FcGoogle className="text-2xl " />}
                 variant="bordered"
               >
                 {dictionary.signIn.google[language]}
-              </Button>
-              <Button
+              </Button> */}
+              
+              {/* <FacebookButton dictionary={dictionary} language={language}></FacebookButton> */}
+              
+              {/* <Button
                 className="w-full"
                 startContent={<FaFacebook className="text-xl text-blue-600" />}
                 variant="bordered"
               >
                 {dictionary.signIn.facebook[language]}
-              </Button>
+              </Button> */}
 
               
             </div>
