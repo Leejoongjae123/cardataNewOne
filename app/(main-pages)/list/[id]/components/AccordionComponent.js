@@ -8,7 +8,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
   return (
     <Accordion variant="splitted" className="my-5" defaultExpandedKeys={["1"]}>
       <AccordionItem
-        className="shadow-none border border-gray-200"
+        className="shadow-sm border border-gray-200"
         key="1"
         aria-label={dictionary.detail.extint[language]}
         title={dictionary.detail.extint[language]}
@@ -24,7 +24,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         </ul>
       </AccordionItem>
       <AccordionItem
-        className="shadow-none border border-gray-200"
+        className="shadow-sm border border-gray-200"
         key="2"
         aria-label={dictionary.detail.safety[language]}
         title={dictionary.detail.safety[language]}
@@ -40,7 +40,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         </ul>
       </AccordionItem>
       <AccordionItem
-        className="shadow-none border border-gray-200"
+        className="shadow-sm border border-gray-200"
         key="3"
         aria-label={dictionary.detail.convenience[language]}
         title={dictionary.detail.convenience[language]}
@@ -56,7 +56,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         </ul>
       </AccordionItem>
       <AccordionItem
-        className="shadow-none border border-gray-200"
+        className="shadow-sm border border-gray-200"
         key="4"
         aria-label={dictionary.detail.seat[language]}
         title={dictionary.detail.seat[language]}
@@ -72,7 +72,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
         </ul>
       </AccordionItem>
       <AccordionItem
-        className="shadow-none border border-gray-200"
+        className="shadow-sm border border-gray-200"
         key="5"
         aria-label={dictionary.detail.etc[language]}
         title={dictionary.detail.etc[language]}
