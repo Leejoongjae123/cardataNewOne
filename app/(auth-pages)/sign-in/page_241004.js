@@ -42,7 +42,7 @@ export default function Login({ searchParams }) {
           <form
             method="#"
             action="#"
-            className="w-1/2 flex flex-col space-y-7 text-sm text-black font-medium dark:text-white"
+            className="w-1/2 flex flex-col space-y-7 text-sm text-black font-medium "
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
@@ -56,7 +56,7 @@ export default function Login({ searchParams }) {
                   type="email"
                   placeholder="Email"
                   required=""
-                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function Login({ searchParams }) {
                   name="password"
                   type="password"
                   placeholder="***"
-                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
+                  className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
             </div>

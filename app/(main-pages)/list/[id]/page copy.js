@@ -265,7 +265,7 @@ async function page({ params }) {
             <div className="box p-5 px-6 relative">
               <h3 className="font-semibold text-lg text-black "> About </h3>
 
-              <div className="space-y-4 leading-7 tracking-wide mt-4 text-black text-sm dark:text-white">
+              <div className="space-y-4 leading-7 tracking-wide mt-4 text-black text-sm ">
                 <p>
                   {" "}
                   Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
@@ -286,7 +286,7 @@ async function page({ params }) {
             </div>
 
             <div className="box p-5 px-6 relative">
-              <h3 className="font-semibold text-lg text-black dark:text-white">
+              <h3 className="font-semibold text-lg text-black ">
                 {" "}
                 Discussions{" "}
               </h3>
@@ -304,7 +304,7 @@ async function page({ params }) {
                   <div className="flex-1">
                     <a
                       href="timeline.html"
-                      className="text-black font-medium inline-block dark:text-white"
+                      className="text-black font-medium inline-block "
                     >
                       {" "}
                       Monroe Parker{" "}
@@ -326,7 +326,7 @@ async function page({ params }) {
                   <div className="flex-1">
                     <a
                       href="timeline.html"
-                      className="text-black font-medium inline-block dark:text-white"
+                      className="text-black font-medium inline-block "
                     >
                       {" "}
                       John Michael{" "}
@@ -346,7 +346,7 @@ async function page({ params }) {
                   <div className="flex-1">
                     <a
                       href="timeline.html"
-                      className="text-black font-medium inline-block dark:text-white"
+                      className="text-black font-medium inline-block "
                     >
                       {" "}
                       James Lewis{" "}
@@ -368,7 +368,7 @@ async function page({ params }) {
                   <div className="flex-1">
                     <a
                       href="timeline.html"
-                      className="text-black font-medium inline-block dark:text-white"
+                      className="text-black font-medium inline-block "
                     >
                       {" "}
                       Martin Gray{" "}
@@ -386,7 +386,7 @@ async function page({ params }) {
               uk-sticky="media: 1024; end: #js-oversized; offset: 80"
             >
               <div className="box p-5 px-6 pr-0">
-                <h3 className="font-semibold text-lg text-black dark:text-white">
+                <h3 className="font-semibold text-lg text-black ">
                   {" "}
                   Status{" "}
                 </h3>
@@ -401,7 +401,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         162
                       </h3>
                       <p>Intersted</p>

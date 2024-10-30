@@ -15,7 +15,10 @@
   -Transitions
   -Simplebar
 
-*/
+/* 파일 최상단에 추가 */
+:root {
+  color-scheme: light;
+}
  
 
 [hidden] {

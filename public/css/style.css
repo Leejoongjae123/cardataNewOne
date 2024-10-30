@@ -122,11 +122,7 @@ input:checked + .switch-button:before {
    Ripple Effect
  ========================================================================== */
  
-.ripple-effect-dark {
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
+
 
 .ripple-effect {
   overflow: hidden;
@@ -147,20 +143,7 @@ input:checked + .switch-button:before {
   pointer-events: none;
 }
 
-.ripple-effect-dark span.ripple-overlay {
-  -webkit-animation: ripple 0.9s;
-  animation: ripple 0.9s;
-  border-radius: 100%;
-  background: #fff;
-  height: 12px;
-  position: absolute;
-  width: 12px;
-  line-height: 12px;
-  opacity: 0.1;
-  pointer-events: none;
-  background: #000;
-  opacity: 0.07;
-}
+
 
 @-webkit-keyframes ripple {
   0% {

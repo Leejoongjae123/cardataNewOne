@@ -156,7 +156,7 @@ function Role({ session, language }) {
             </Select>
             <Input
               startContent={
-                <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+                <SearchIcon className="text-black/50 mb-0.5  text-slate-400 pointer-events-none flex-shrink-0" />
               }
               onChange={handleSearchChange}
               value={searchValue}
