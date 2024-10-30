@@ -8,7 +8,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
   return (
     <Accordion variant="splitted" className="my-5 dark:bg-white dark:text-black" defaultExpandedKeys={["1"]}>
       <AccordionItem
-        className="shadow-sm border border-gray-200 dark:bg-white dark:text-black"
+        className="shadow-sm border border-gray-200 bg-white"
         key="1"
         aria-label={dictionary.detail.extint[language]}
         title={dictionary.detail.extint[language]}
