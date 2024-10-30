@@ -8,42 +8,41 @@ import { RiKakaoTalkFill } from "react-icons/ri";
 export default function KakaoButton({ dictionary, language }) {
   const signInWithKakao = async () => {
     const supabase = createClient();
-
+  
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_URL}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback`,
         queryParams: {
-          scope: "account_email", // 카카오 이메일 정보 요청
+          scope: "account_email",
         },
       },
     });
-
-
-
+  
     if (error) {
       console.error("Login error:", error);
       return;
     }
-
+  
     // 로그인 성공 후 사용자 정보 가져오기
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
-    console.log("user:", user);
-
+  
     if (user?.email) {
       // profiles 테이블 업데이트
       const { error: updateError } = await supabase
         .from("profiles")
         .update({ email: user.email, name: user.name })
         .eq("id", user.id);
-
+  
       if (updateError) {
         console.error("Profile update error:", updateError);
       }
     }
+    
+    // 로그인 성공 후 /list 페이지로 리다이렉션
+    window.location.href = '/list';
   };
 
   // return <Button onClick={signInWithKakao}>카카오 로그인</Button>;
