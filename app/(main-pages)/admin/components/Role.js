@@ -136,7 +136,7 @@ function Role({ session, language }) {
           pauseOnHover
           theme="light"
         />
-        <div class="flex flex-col gap-y-5">
+        <div className="flex flex-col gap-y-5">
           <div className="flex justify-end gap-3">
             <Select
               placeholder="category"

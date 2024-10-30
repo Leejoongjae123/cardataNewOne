@@ -316,17 +316,17 @@ async function page({ params }) {
                 </h3>
 
                 <ul
-                  class="relative space-y-3 uk-accordion my-3"
+                  className="relative space-y-3 uk-accordion my-3"
                   uk-accordion="active: 1; multiple: true"
                 >
-                  <li class="uk-open">
+                  <li className="uk-open">
                     <a
-                      class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
                       {dictionary.detail.extint[language]}
                       <svg
-                        class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
+                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -338,7 +338,7 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div class="p-2 dark:text-white/80 uk-accordion-content">
+                    <div className="p-2 dark:text-white/80 uk-accordion-content">
                       <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
                         {carData.optionExtInt.map((elem, index) => {
                           return (
@@ -352,12 +352,12 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
                       {dictionary.detail.safety[language]}
                       <svg
-                        class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
+                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -369,7 +369,7 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div class="p-2 dark:text-white/80 uk-accordion-content">
+                    <div className="p-2 dark:text-white/80 uk-accordion-content">
                       <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
                         {carData.optionSafety.map((elem, index) => {
                           return (
@@ -383,12 +383,12 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
                       {dictionary.detail.convenience[language]}
                       <svg
-                        class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
+                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -400,7 +400,7 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div class="p-2 dark:text-white/80 uk-accordion-content">
+                    <div className="p-2 dark:text-white/80 uk-accordion-content">
                       <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
                         {carData.optionConvenience.map((elem, index) => {
                           return (
@@ -414,12 +414,12 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
                       {dictionary.detail.seat[language]}
                       <svg
-                        class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
+                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -431,7 +431,7 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div class="p-2 dark:text-white/80 uk-accordion-content">
+                    <div className="p-2 dark:text-white/80 uk-accordion-content">
                       <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
                         {carData.optionSeat.map((elem, index) => {
                           return (
@@ -445,12 +445,12 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      class="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
                       href="#"
                     >
                       {dictionary.detail.etc[language]}
                       <svg
-                        class="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
+                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -462,7 +462,7 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div class="p-2 dark:text-white/80 uk-accordion-content">
+                    <div className="p-2 dark:text-white/80 uk-accordion-content">
                       <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
                         {carData.optionEtc.map((elem, index) => {
                           return (

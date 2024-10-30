@@ -172,7 +172,7 @@ export default function Login({ searchParams }) {
                 name="region"
                 value={searchParams.region || ""}
               />
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 {dictionary.signUp2.businessName[language]}
               </label>
               <div className="mt-2.5">
@@ -180,7 +180,6 @@ export default function Login({ searchParams }) {
                   id="businessName"
                   name="businessName"
                   type="text"
-                  autofocus=""
                   placeholder={dictionary.signUp2.businessName[language]}
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
@@ -188,7 +187,7 @@ export default function Login({ searchParams }) {
               </div>
             </div>
             <div>
-              <label for="password" className="">
+              <label htmlFor="password" className="">
                 {dictionary.signUp2.businessRegistrationNumber[language]}
               </label>
               <div className="mt-2.5">
@@ -202,7 +201,7 @@ export default function Login({ searchParams }) {
               </div>
             </div>
             <div>
-              <label for="confirm password" className="">
+              <label htmlFor="confirm password" className="">
                 {dictionary.signUp2.attach[language]}
               </label>
               <div className="mt-2.5">
@@ -227,7 +226,7 @@ export default function Login({ searchParams }) {
       <div className="w-full relative bg-primary max-md:hidden">
         <div
           className="relative w-full h-full"
-          tabindex="-1"
+          tabIndex="-1"
           uk-slideshow="animation: slide; autoplay: true"
         >
           <ul className="uk-slideshow-items w-full h-full">

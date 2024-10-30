@@ -90,37 +90,37 @@ function MyInfo({ session, language, dictionary }) {
       />
       <div>
         <div>
-          <div class="space-y-6">
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> {dictionary.mypage.currentPassword[language]} </label>
-              <div class="flex-1 max-md:mt-4">
+          <div className="space-y-6">
+            <div className="md:flex items-center gap-10">
+              <label className="md:w-32 text-right"> {dictionary.mypage.currentPassword[language]} </label>
+              <div className="flex-1 max-md:mt-4">
                 <input
                   type="password"
                   placeholder=""
-                  class="w-full"
+                  className="w-full"
                   onChange={(e) => setCurrentPassword(e.target.value)}
                 />
               </div>
             </div>
 
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> {dictionary.mypage.newPassword[language]} </label>
-              <div class="flex-1 max-md:mt-4">
+            <div className="md:flex items-center gap-10">
+              <label className="md:w-32 text-right"> {dictionary.mypage.newPassword[language]} </label>
+              <div className="flex-1 max-md:mt-4">
                 <input
                   type="password"
                   placeholder=""
-                  class="w-full"
+                  className="w-full"
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
             </div>
-            <div class="md:flex items-center gap-10">
-              <label class="md:w-32 text-right"> {dictionary.mypage.confirmPassword[language]} </label>
-              <div class="flex-1 max-md:mt-4">
+            <div className="md:flex items-center gap-10">
+              <label className="md:w-32 text-right"> {dictionary.mypage.confirmPassword[language]} </label>
+              <div className="flex-1 max-md:mt-4">
                 <input
                   type="password"
                   placeholder=""
-                  class="w-full"
+                  className="w-full"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
@@ -128,17 +128,17 @@ function MyInfo({ session, language, dictionary }) {
 
 
 
-            <div class="md:flex items-start gap-10 " hidden>
-              <label class="md:w-32 text-right"> Avatar </label>
-              <div class="flex-1 flex items-center gap-5 max-md:mt-4">
+            <div className="md:flex items-start gap-10 " hidden>
+              <label className="md:w-32 text-right"> Avatar </label>
+              <div className="flex-1 flex items-center gap-5 max-md:mt-4">
                 {/* <img
                   src="assets/images/avatars/avatar-3.jpg"
                   alt=""
-                  class="w-10 h-10 rounded-full"
+                  className="w-10 h-10 rounded-full"
                 /> */}
                 <button
                   type="submit"
-                  class="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                  className="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                 >
                   {" "}
                   Change
@@ -147,13 +147,13 @@ function MyInfo({ session, language, dictionary }) {
             </div>
           </div>
 
-          <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
+          <div className="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
             <button
               type="button"
-              class="button lg:px-10 bg-primary text-white max-md:flex-1"
+              className="button lg:px-10 bg-primary text-white max-md:flex-1"
               onClick={changePassword}
             >
-              Save <span class="ripple-overlay"></span>
+              Save <span className="ripple-overlay"></span>
             </button>
           </div>
         </div>

@@ -46,7 +46,7 @@ export default function Login({ searchParams }) {
             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true"
           >
             <div>
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 Email address
               </label>
               <div className="mt-2.5">
@@ -54,7 +54,6 @@ export default function Login({ searchParams }) {
                   id="email"
                   name="email"
                   type="email"
-                  autofocus=""
                   placeholder="Email"
                   required=""
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5"
@@ -62,7 +61,7 @@ export default function Login({ searchParams }) {
               </div>
             </div>
             <div>
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 Password
               </label>
               <div className="mt-2.5">
@@ -79,7 +78,7 @@ export default function Login({ searchParams }) {
             <div className="flex items-center justify-between">
               {/* <div className="flex items-center gap-2.5">
                 <input id="rememberme" name="rememberme" type="checkbox" />
-                <label for="rememberme" className="font-normal">
+                <label htmlFor="rememberme" className="font-normal">
                   Remember me
                 </label>
               </div> */}

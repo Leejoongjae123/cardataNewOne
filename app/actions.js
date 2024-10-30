@@ -44,6 +44,8 @@ export const signUpAction = async (formData) => {
   }
 };
 
+
+
 export async function checkPhoneNumber(formData){
   const email = formData.get("email")?.toString();
   const phoneNumber = formData.get("phoneNumber")?.toString();
@@ -157,6 +159,19 @@ export const signInAction = async (formData) => {
 
   return redirect("/list");
 };
+
+export const signInWithKakao = async () => {
+  console.log('signInWithKakao')
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "kakao",
+    options: {
+      redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
+        : "http://localhost:3000/auth/callback",
+    },
+  });
+}
 
 export const forgotPasswordAction = async (formData) => {
   const email = formData.get("email")?.toString();

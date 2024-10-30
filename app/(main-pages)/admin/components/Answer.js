@@ -224,15 +224,15 @@ function Answer({ session, language }) {
         pauseOnHover
         theme="light"
       />
-      <div class="box p-5 mt-4">
+      <div className="box p-5 mt-4">
         {data.map((item, index) => (
           <>
-            <div class="card-list">
-              <div class="card-list-media h-32">
+            <div className="card-list">
+              <div className="card-list-media h-32">
                 <img src={item.thumbImage} alt="" />
               </div>
 
-              <div class="card-list-body flex flex-col justify-center items-start">
+              <div className="card-list-body flex flex-col justify-center items-start">
                 <div className="w-full flex justify-start items-center">
                   <Chip
                     className="mx-2 text-white"
@@ -266,14 +266,14 @@ function Answer({ session, language }) {
                     {item.productId.title[language]}
                   </h1>
                 </div>
-                <p class="card-list-text">{item.description}</p>
-                <div class="card-list-link">
+                <p className="card-list-text">{item.description}</p>
+                <div className="card-list-link">
                   {" "}
                   {formatTimestamp(item.created_at)}{" "}
                 </div>{" "}
               </div>
             </div>
-            {index !== data.length - 1 && <hr class="card-list-divider" />}
+            {index !== data.length - 1 && <hr className="card-list-divider" />}
           </>
         ))}
       </div>

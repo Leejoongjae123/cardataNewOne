@@ -124,14 +124,14 @@ function MyInfo({ session, language, dictionary }) {
           </div>
         ) : (
           <div className="w-full">
-            <div class="space-y-6">
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.name[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+            <div className="space-y-6">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.name[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder="Monroe"
-                    class="w-full"
+                    className="w-full"
                     value={profile?.name}
                     onChange={(e) =>
                       setProfile({ ...profile, name: e.target.value })
@@ -140,13 +140,13 @@ function MyInfo({ session, language, dictionary }) {
                 </div>
               </div>
 
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.phone[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.phone[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.phone}
                     onChange={(e) =>
                       setProfile({ ...profile, phone: e.target.value })
@@ -154,13 +154,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.email[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.email[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.email}
                     onChange={(e) =>
                       setProfile({ ...profile, email: e.target.value })
@@ -168,13 +168,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.recommenderEmail[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.recommenderEmail[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.recommenderEmail}
                     onChange={(e) =>
                       setProfile({ ...profile, recommenderEmail: e.target.value })
@@ -182,13 +182,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.recommenderPhone[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.recommenderPhone[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.recommenderPhone}
                     onChange={(e) =>
                       setProfile({
@@ -199,13 +199,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.businessName[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.businessName[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.businessName}
                     onChange={(e) =>
                       setProfile({
@@ -216,13 +216,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.businessRegistrationNumber[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.businessRegistrationNumber[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="text"
                     placeholder=""
-                    class="w-full"
+                    className="w-full"
                     value={profile?.businessRegistrationNumber}
                     onChange={(e) =>
                       setProfile({
@@ -233,13 +233,13 @@ function MyInfo({ session, language, dictionary }) {
                   />
                 </div>
               </div>
-              <div class="md:flex items-center gap-10">
-                <label class="md:w-32 text-right"> {dictionary.mypage.businessCertificate[language]} </label>
-                <div class="flex-1 max-md:mt-4">
+              <div className="md:flex items-center gap-10">
+                <label className="md:w-32 text-right"> {dictionary.mypage.businessCertificate[language]} </label>
+                <div className="flex-1 max-md:mt-4">
                   <input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
-                    class="w-full"
+                    className="w-full"
                     onChange={async (e) => {
                       const file = e.target.files[0];
                       if (file) {
@@ -255,7 +255,7 @@ function MyInfo({ session, language, dictionary }) {
                   />
                   {isUploading && <p>Uploading...</p>}
                   {profile?.businessCertificate && (
-                    <p class="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-sm text-gray-600">
                       <Link target="_blank" href={profile.businessCertificate}>
                         {dictionary.mypage.viewBusinessCertificate[language]}
                       </Link>
@@ -264,17 +264,17 @@ function MyInfo({ session, language, dictionary }) {
                 </div>
               </div>
 
-              <div class="md:flex items-start gap-10 " hidden>
-                <label class="md:w-32 text-right"> Avatar </label>
-                <div class="flex-1 flex items-center gap-5 max-md:mt-4">
+              <div className="md:flex items-start gap-10 " hidden>
+                <label className="md:w-32 text-right"> Avatar </label>
+                <div className="flex-1 flex items-center gap-5 max-md:mt-4">
                   {/* <img
                     src="assets/images/avatars/avatar-3.jpg"
                     alt=""
-                    class="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full"
                   /> */}
                   <button
                     type="submit"
-                    class="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                    className="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                   >
                     {" "}
                     Change
@@ -283,14 +283,14 @@ function MyInfo({ session, language, dictionary }) {
               </div>
             </div>
 
-            <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
+            <div className="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
               <button
                 type="button"
-                class="button lg:px-10 bg-primary text-white max-md:flex-1"
+                className="button lg:px-10 bg-primary text-white max-md:flex-1"
                 onClick={changeInfo}
               >
                 {" "}
-                Save <span class="ripple-overlay"></span>
+                Save <span className="ripple-overlay"></span>
               </button>
             </div>
           </div>
