@@ -19,12 +19,12 @@ export default async function Page() {
         <div className="flex flex-row justify-start items-start w-full">
           <LanguageSelect />
         </div>
-        <nav className="nav__underline">
-          <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
-            <li><a href="#"> {dictionary.mypage.estimates[language]}</a></li>
-            <li><a href="#"> {dictionary.mypage.auth[language]}</a></li>
-            <li className="uk-active"><a href="#"> {dictionary.mypage.info[language]}</a></li>
-            <li><a href="#"> {dictionary.mypage.chat[language]}</a></li>
+        <nav className="nav__underline w-full">
+          <ul className="group w-full" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
+            <li className="col-span-1"><a href="#"> {dictionary.mypage.estimates[language]}</a></li>
+            <li className="col-span-1"><a href="#"> {dictionary.mypage.auth[language]}</a></li>
+            <li className="col-span-1"><a href="#"> {dictionary.mypage.info[language]}</a></li>
+            <li className="col-span-1"><a href="#"> {dictionary.mypage.chat[language]}</a></li>
           </ul>
         </nav>
       </div>

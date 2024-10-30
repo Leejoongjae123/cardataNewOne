@@ -18,7 +18,7 @@ export default async function Page() {
         <div className="flex flex-row justify-start items-start w-full">
           <LanguageSelect />
         </div>
-        <nav className="nav__underline">
+        <nav className="nav__underline w-full">
           <ul className="group" uk-switcher="connect: #group-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
             <li><a href="#"> 권한</a></li>
             <li><a href="#"> 답변</a></li>
