@@ -1629,6 +1629,11 @@ select {
   color-scheme:light only;
 }
 
+.dark  {
+  --color-bgbody:             15 23 42;
+  --color-secondery:          51 65 80;
+  --color-primary-soft:       51 65 80;
+}
 
 html {
   font-family: inter, system-ui, sans-serif;
@@ -1644,7 +1649,12 @@ body {
   color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  body {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+}
 
 /* Basic */
 
@@ -1685,7 +1695,33 @@ input[type='text']::placeholder,
   color: rgb(75 85 99 / var(--tw-text-opacity)) !important;
 }
 
+@media (prefers-color-scheme: dark) {
+  input[type='text'],
+    input[type='password'],
+    input[type='email'], 
+    input[type='number'],
+    input[type='url'],
+    input[type='date'],
+    select, 
+    textarea {
+    color: rgb(255 255 255 / 0.9) !important;
+  }
 
+  input[type='text']::-moz-placeholder, input[type='password']::-moz-placeholder, input[type='email']::-moz-placeholder, input[type='number']::-moz-placeholder, input[type='url']::-moz-placeholder, input[type='date']::-moz-placeholder, select::-moz-placeholder, textarea::-moz-placeholder {
+    color: rgb(255 255 255 / 0.9) !important;
+  }
+
+  input[type='text']::placeholder,
+    input[type='password']::placeholder,
+    input[type='email']::placeholder, 
+    input[type='number']::placeholder,
+    input[type='url']::placeholder,
+    input[type='date']::placeholder,
+    select::placeholder, 
+    textarea::placeholder {
+    color: rgb(255 255 255 / 0.9) !important;
+  }
+}
 
 input[type='text'],
     input[type='password'],
@@ -1709,7 +1745,28 @@ input[type='text'],
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  input[type='text'],
+    input[type='password'],
+    input[type='email'],
+    input[type='number'],
+    input[type='url'],
+    input[type='date'],
+    input[type='datetime-local'],
+    input[type='month'],
+    input[type='week'],
+    input[type='time'],
+    input[type='search'],
+    input[type='tel'],
+    input[type='checkbox'],
+    input[type='radio'],
+    select,
+    select[multiple],
+    textarea {
+    --tw-bg-opacity: 1;
+    background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+  }
+}
 .button {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -1780,14 +1837,29 @@ input[type='radio']:focus,
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .switch-button:before {
+    --tw-bg-opacity: 1;
+    background-color: rgb(2 132 199 / var(--tw-bg-opacity));
+  }
+}
 
 input:checked + .switch-button {
   --tw-bg-opacity: 1;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
+@media (prefers-color-scheme: dark) {
+  input:checked + .switch-button {
+    --tw-bg-opacity: 1;
+    background-color: rgb(147 197 253 / var(--tw-bg-opacity));
+  }
 
+  input:checked + .switch-button:before {
+    --tw-bg-opacity: 1;
+    background-color: rgb(2 132 199 / var(--tw-bg-opacity));
+  }
+}
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -1989,7 +2061,13 @@ input:checked + .switch-button {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .uk-dropdown {
+    --tw-bg-opacity: 1;
+    background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+    border-color: rgb(51 65 85 / 0.4);
+  }
+}
 
 .uk-dropdown.uk-open {
   display: block !important;
@@ -2003,7 +2081,12 @@ input:checked + .switch-button {
   color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .uk-dropdown nav {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+}
 
 .uk-dropdown nav > a {
   display: flex;
@@ -2030,7 +2113,11 @@ input:checked + .switch-button {
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .uk-dropdown nav > hr {
+    border-color: rgb(51 65 85 / 0.4);
+  }
+}
 
 /* dotnav */
 
@@ -2054,6 +2141,11 @@ input:checked + .switch-button {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+@media (prefers-color-scheme: dark) {
+  .uk-dotnav > * > * {
+    background-color: rgb(255 255 255 / 0.3);
+  }
+}
 
 .uk-dotnav > * > :hover ,   
     .uk-dotnav > * > :active ,
@@ -2062,7 +2154,13 @@ input:checked + .switch-button {
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-
+@media (prefers-color-scheme: dark) {
+  .uk-dotnav > * > :hover ,   
+    .uk-dotnav > * > :active ,
+    .uk-dotnav > .uk-active > * {
+    background-color: rgb(255 255 255 / 0.9);
+  }
+}
 
 /* Modal */
 
