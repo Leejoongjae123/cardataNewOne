@@ -311,7 +311,7 @@ async function page({ params }) {
               uk-sticky="media: 1024; end: #js-oversized; offset: 80"
             >
               <div className="box p-5 px-6 ,">
-                <h3 className="font-semibold text-lg text-black dark:text-white">
+                <h3 className="font-semibold text-lg text-black ">
                   {dictionary.detail.option[language]}
                 </h3>
 
@@ -321,7 +321,7 @@ async function page({ params }) {
                 >
                   <li className="uk-open">
                     <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
                       href="#"
                     >
                       {dictionary.detail.extint[language]}
@@ -338,8 +338,8 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div className="p-2 dark:text-white/80 uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
+                    <div className="p-2  uk-accordion-content">
+                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
                         {carData.optionExtInt.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
@@ -352,7 +352,7 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
                       href="#"
                     >
                       {dictionary.detail.safety[language]}
@@ -369,8 +369,8 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div className="p-2 dark:text-white/80 uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
+                    <div className="p-2  uk-accordion-content">
+                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
                         {carData.optionSafety.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
@@ -383,7 +383,7 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
                       href="#"
                     >
                       {dictionary.detail.convenience[language]}
@@ -400,8 +400,8 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div className="p-2 dark:text-white/80 uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
+                    <div className="p-2  uk-accordion-content">
+                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
                         {carData.optionConvenience.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
@@ -414,7 +414,7 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
                       href="#"
                     >
                       {dictionary.detail.seat[language]}
@@ -431,8 +431,8 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div className="p-2 dark:text-white/80 uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
+                    <div className="p-2  uk-accordion-content">
+                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
                         {carData.optionSeat.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
@@ -445,7 +445,7 @@ async function page({ params }) {
                   </li>
                   <li>
                     <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black dark:text-white dark:bg-gray-800 group uk-accordion-title"
+                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
                       href="#"
                     >
                       {dictionary.detail.etc[language]}
@@ -462,8 +462,8 @@ async function page({ params }) {
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
                     </a>
-                    <div className="p-2 dark:text-white/80 uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm dark:text-white/80">
+                    <div className="p-2  uk-accordion-content">
+                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
                         {carData.optionEtc.map((elem, index) => {
                           return (
                             <li className="flex items-center gap-3 col-span-1">
@@ -478,7 +478,7 @@ async function page({ params }) {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="box p-5 px-6 pr-0 col-span-1">
-                  <h3 className="font-semibold text-lg text-black dark:text-white">
+                  <h3 className="font-semibold text-lg text-black ">
                     {dictionary.detail.insurance[language]}
                   </h3>
                   <div className="grid grid-cols-2 gap-2 text-sm mt-4">
@@ -490,7 +490,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
                           {carData.history[language]}
                         </h3>
                         <p>{dictionary.detail.insurance1[language]}</p>
@@ -504,7 +504,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {carData.changeCount[language]}
                         </h3>
                         <p>{dictionary.detail.insurance2[language]}</p>
@@ -518,7 +518,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {carData.accidentSelf[language]}
                         </h3>
                         <p>{dictionary.detail.insurance3[language]}</p>
@@ -532,7 +532,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {carData.accidentOther[language]}
                         </h3>
                         <p>{dictionary.detail.insurance4[language]}</p>
@@ -542,7 +542,7 @@ async function page({ params }) {
                 </div>
 
                 <div className="box p-5 px-6 pr-0 cols-span-1">
-                  <h3 className="font-semibold text-lg text-black dark:text-white">
+                  <h3 className="font-semibold text-lg text-black ">
                     {dictionary.detail.price[language]}
                   </h3>
                   <div className="grid grid-cols-2 gap-2 text-sm mt-4">
@@ -555,7 +555,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {formatNumber(carData.leaseReceivePrice)} KRW
                         </h3>
                         <p>{dictionary.detail.price1[language]}</p>
@@ -570,7 +570,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
                           {formatNumber(carData.leasePriceIn)} KRW
                         </h3>
                         <p>{dictionary.detail.price2[language]}</p>
@@ -585,7 +585,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {formatNumber(carData.leasePriceOut)} KRW
                         </h3>
                         <p>{dictionary.detail.price3[language]}</p>
@@ -600,7 +600,7 @@ async function page({ params }) {
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                           {formatNumber(carData.leasePriceAll)} KRW
                         </h3>
                         <p>{dictionary.detail.price4[language]}</p>
@@ -610,7 +610,7 @@ async function page({ params }) {
                 </div>
               </div>
               <div className="box p-5 px-6 pr-0">
-                <h3 className="font-semibold text-lg text-black dark:text-white">
+                <h3 className="font-semibold text-lg text-black ">
                   {dictionary.detail.issues[language]}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
@@ -622,7 +622,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black    text-base font-normal">
                         {carData.performanceDashboard[language]}
                       </h3>
                       <p>{dictionary.detail.issue1[language]}</p>
@@ -637,7 +637,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceDistance[language]}
                       </h3>
                       <p>{dictionary.detail.issue2[language]}</p>
@@ -652,7 +652,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceVIN[language]}
                       </h3>
                       <p>{dictionary.detail.issue3[language]}</p>
@@ -667,7 +667,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceEmit[language]}
                       </h3>
                       <p>{dictionary.detail.issue4[language]}</p>
@@ -682,7 +682,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceTuning[language]}
                       </h3>
                       <p>{dictionary.detail.issue5[language]}</p>
@@ -697,7 +697,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceSpecial[language]}
                       </h3>
                       <p>{dictionary.detail.issue6[language]}</p>
@@ -712,7 +712,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceChange[language]}
                       </h3>
                       <p>{dictionary.detail.issue7[language]}</p>
@@ -727,7 +727,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceColor[language]}
                       </h3>
                       <p>{dictionary.detail.issue8[language]}</p>
@@ -742,7 +742,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceOption[language]}
                       </h3>
                       <p>{dictionary.detail.issue9[language]}</p>
@@ -757,7 +757,7 @@ async function page({ params }) {
                       ></ion-icon>
                     </div>
                     <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black dark:text-white text-base font-normal">
+                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
                         {carData.performanceRecall[language]}
                       </h3>
                       <p>{dictionary.detail.issue10[language]}</p>

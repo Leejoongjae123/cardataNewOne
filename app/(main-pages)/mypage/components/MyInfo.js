@@ -274,7 +274,7 @@ function MyInfo({ session, language, dictionary }) {
                   /> */}
                   <button
                     type="submit"
-                    className="px-4 py-1 rounded-full bg-slate-100/60 border dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                    className="px-4 py-1 rounded-full bg-slate-100/60 border "
                   >
                     {" "}
                     Change
