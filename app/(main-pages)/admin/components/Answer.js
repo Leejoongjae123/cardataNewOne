@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Pagination } from "@nextui-org/react";
 import { createClient } from "@/utils/supabase/client";
 import { Chip, Textarea } from "@nextui-org/react";
@@ -11,11 +11,17 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Checkbox,
+  Input,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "@nextui-org/react";
 import axios from "axios";
+import { SearchIcon } from "./SearchIcon";
+import debounce from "lodash/debounce";
 
 function Answer({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -34,14 +40,29 @@ function Answer({ session, language }) {
   const [productData, setProductData] = useState(null);
   const [answer, setAnswer] = useState(null);
   const [message, setMessage] = useState(null);
-
+  const [searchValue, setSearchValue] = useState("");
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
+  const [isUnanswered, setIsUnanswered] = useState(false);
   const itemsPerPage = 5;
+
   const getData = async () => {
-    const { data, error, count } = await supabase
+    let query = supabase
       .from("requests")
       .select("*, productId(*),userId(*)", { count: "exact" })
-      .order("created_at", { ascending: false })
-      .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      .order("created_at", { ascending: false });
+
+    // searchValue가 있을 경우 title 검색 조건 추가
+    if (searchValue) {
+      query = query.ilike('titlekr', `%${searchValue}%`);
+    }
+    if (isUnanswered) {
+      query = query.is('response', false);
+    }
+
+    const { data, error, count } = await query.range(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage - 1
+    );
 
     if (error) {
       console.error("데이터 조회 실패:", error);
@@ -51,13 +72,25 @@ function Answer({ session, language }) {
     setCount(count);
     setTotalPages(Math.ceil(count / itemsPerPage));
   };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   useEffect(() => {
     getData();
-  }, [currentPage]);
+  }, [currentPage, debouncedSearchValue, isUnanswered]);
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+    debouncedSearch(e.target.value);
+  };
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      setDebouncedSearchValue(value);
+    }, 300),
+    []
+  );
 
   const changeData = async () => {
     const { data, error } = await supabase
@@ -138,13 +171,39 @@ function Answer({ session, language }) {
       onOpen2();
     } else {
       setMessage("메일 송부 실패");
-      onOpen2()
+      onOpen2();
     }
   };
   console.log("responseData:", responseData);
 
   return (
     <div>
+      <div className="flex justify-end gap-3">
+        <Select
+          placeholder="category"
+          className="max-w-xs w-1/2 md:w-1/4"
+          defaultSelectedKeys={["title"]}
+          onChange={(e) => setSearchCategory(e.target.value)}
+        >
+          <SelectItem key="title" value="title">
+            제목
+          </SelectItem>
+        </Select>
+        <Input
+          startContent={
+            <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+          }
+          onChange={handleSearchChange}
+          value={searchValue}
+          className="w-1/2 md:w-1/4"
+          type="text"
+          variant="bordered"
+        />
+        <Checkbox isSelected={isUnanswered} onValueChange={setIsUnanswered}>
+          미회신
+        </Checkbox>
+      </div>
+
       <ToastContainer
         position="top-center"
         autoClose={1000}

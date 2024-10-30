@@ -231,6 +231,7 @@ async function page({ params }) {
                       language={language}
                       dictionary={dictionary}
                       profiles={profiles}
+                      titlekr={carData.title['kr']}
                     ></RequestEst>
                     
                     {profiles.role === "master" && (

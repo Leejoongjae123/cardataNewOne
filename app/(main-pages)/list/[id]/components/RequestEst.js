@@ -22,6 +22,7 @@ function RequestEst({
   language,
   dictionary,
   profiles,
+  titlekr,
 }) {
   const {
     isOpen: isOpen1,
@@ -78,6 +79,7 @@ function RequestEst({
           thumbImage: thumbImage,
           title: title,
           description: description,
+          titlekr: titlekr,
         },
       ]);
       if (error) {

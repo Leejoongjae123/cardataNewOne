@@ -114,7 +114,6 @@ function Role({ session, language }) {
   const handleCancel = () => {
     setSelectData(null);
   };
-  console.log("selectData:", selectData);
 
   return (
     <>
