@@ -395,6 +395,18 @@ export const dictionary = {
       ru:"Общая сумма",
       ar:"المبلغ الكلي",
     },
+    price5:{
+      kr:"승계지원금",
+      en:"Transfer Support",
+      ru:"Поддержка передачи",
+      ar:"دعم التحويل",
+    },
+    outCondition:{
+      kr:"렌트 만기 후 구매 조건",
+      en:"Purchase Conditions after Lease Expiration",
+      ru:"Условия покупки после истечения срока аренды",
+      ar:"الظروف المطلوبة للشراء بعد انتهاء الإيجار",
+    },
     issue1:{
       kr:"주행거리 계기상태",
       en:"Odometer Status",

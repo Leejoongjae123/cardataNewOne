@@ -73,6 +73,7 @@ async function page({ params }) {
     carData.inqCrrgsnb,
   ].join(" • ");
 
+  console.log("carData:", carData);
   return (
     <div>
       <div className="mx-auto flex flex-col">
@@ -89,9 +90,13 @@ async function page({ params }) {
                     <Chip
                       className="mx-5"
                       variant="bordered"
-                      color={carData.sellType === "렌트" ? "danger" : "primary"}
+                      color={
+                        extractKrValue(carData.sellType) === "렌트"
+                          ? "danger"
+                          : "primary"
+                      }
                     >
-                      {carData.sellType === "렌트"
+                      {extractKrValue(carData.sellType) === "렌트"
                         ? dictionary.detail.cartypeRent[language]
                         : dictionary.detail.cartypeLease[language]}
                     </Chip>
@@ -326,11 +331,14 @@ async function page({ params }) {
               uk-sticky="media: 1024; end: #js-oversized; offset: 80"
             >
               <div className="box p-5 px-6 ,">
-              
                 <h3 className="font-semibold text-lg text-black ">
                   {dictionary.detail.option[language]}
                 </h3>
-                <AccordionComponent carData={carData} dictionary={dictionary} language={language}></AccordionComponent>
+                <AccordionComponent
+                  carData={carData}
+                  dictionary={dictionary}
+                  language={language}
+                ></AccordionComponent>
                 {/* <ul
                   className="relative space-y-3 uk-accordion my-3"
                   uk-accordion="active: 1; multiple: true"
@@ -557,7 +565,9 @@ async function page({ params }) {
                   </div>
                 </div>
 
-                <div className="box p-5 px-6 pr-0 cols-span-1">
+                <div
+                  className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "hidden" : ""}`}
+                >
                   <h3 className="font-semibold text-lg text-black ">
                     {dictionary.detail.price[language]}
                   </h3>
@@ -624,6 +634,81 @@ async function page({ params }) {
                     </div>
                   </div>
                 </div>
+                <div
+                  className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "" : "hidden"}`}
+                >
+                  <h3 className="font-semibold text-lg text-black ">
+                    {dictionary.detail.price[language]}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="heart"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {formatNumber(carData.rentSupportPrice)} KRW
+                        </h3>
+                        <p>{dictionary.detail.price5[language]}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
+                          {formatNumber(carData.rentPriceIn)} KRW
+                        </h3>
+                        <p>{dictionary.detail.price2[language]}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {formatNumber(carData.rentPriceOut)} KRW
+                        </h3>
+                        <p>{dictionary.detail.price3[language]}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {formatNumber(carData.rentPriceAll)} KRW
+                        </h3>
+                        <p>{dictionary.detail.price4[language]}</p>
+                      </div>
+                    </div>
+                    <div className="w-full justify-end flex "></div>
+                    <div>
+                      <p className="text-sm text-end px-5">
+                      ※ {dictionary.detail.outCondition[language]}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="box p-5 px-6 pr-0">
                 <h3 className="font-semibold text-lg text-black ">
@@ -654,7 +739,7 @@ async function page({ params }) {
                     </div>
                     <div>
                       <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceDistance[language]}
+                        {getKrValue(carData.performanceDistance)}km
                       </h3>
                       <p>{dictionary.detail.issue2[language]}</p>
                     </div>
@@ -800,4 +885,26 @@ function formatNumber(value) {
 
   // Format the number with commas as thousand separators
   return multipliedValue.toLocaleString();
+}
+
+function extractKrValue(inputString) {
+  if (inputString.includes("{")) {
+    try {
+      const jsonObject = JSON.parse(inputString);
+      return jsonObject.kr;
+    } catch (error) {
+      console.error("Invalid JSON string:", error);
+      return inputString;
+    }
+  } else {
+    return inputString;
+  }
+}
+
+function getKrValue(input) {
+  if (typeof input === "object" && input !== null) {
+    return input.kr;
+  } else {
+    return input;
+  }
 }
