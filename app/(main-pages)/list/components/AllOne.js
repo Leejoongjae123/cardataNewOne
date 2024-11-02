@@ -49,7 +49,7 @@ function AllOne({language, dictionary}) {
     const { data, error } = await supabase
       .from("category")
       .select("model")
-      .eq("manufacturer", selectedManufacturer);
+      .eq("modelGroup", selectedModelGroup);
 
     if (error) {
       console.log(error);
@@ -67,7 +67,7 @@ function AllOne({language, dictionary}) {
     const { data, error } = await supabase
       .from("category")
       .select("modelGroup")
-      .eq("model", selectedModel);
+      .eq("manufacturer", selectedManufacturer);
 
     if (error) {
       console.log(error);
@@ -123,11 +123,11 @@ function AllOne({language, dictionary}) {
 
   useEffect(() => {
     getModel();
-  }, [selectedManufacturer]);
+  }, [selectedModelGroup]);
 
   useEffect(() => {
     getModelGroup();
-  }, [selectedModel]);
+  }, [selectedManufacturer]);
 
   return (
     <div>
@@ -175,29 +175,32 @@ function AllOne({language, dictionary}) {
           </div>
           <div className="col-span-1">
             <Select
+              items={modelGroup}
+              label={dictionary.list.modelGroup[language]}
+              placeholder={dictionary.list.select[language]}
+              className="max-w-xs"
+              onChange={(e) => {
+                setSelectedModelGroup(e.target.value);
+                setSelectedModel("");
+              }}
+            >
+              {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
+            </Select>
+          </div>
+          <div className="col-span-1">
+            <Select
               items={model}
               label={dictionary.list.model[language]}
               placeholder={dictionary.list.select[language]}
               className="max-w-xs"
               onChange={(e) => {
                 setSelectedModel(e.target.value);
-                setSelectedModelGroup("");
               }}
             >
               {(model) => <SelectItem>{model.label}</SelectItem>}
             </Select>
           </div>
-          <div className="col-span-1">
-            <Select
-              items={modelGroup}
-              label={dictionary.list.modelGroup[language]}
-              placeholder={dictionary.list.select[language]}
-              className="max-w-xs"
-              onChange={(e) => setSelectedModelGroup(e.target.value)}
-            >
-              {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
-            </Select>
-          </div>
+
 
           {/* <div className="w-full h-15 p-2">
             <button
