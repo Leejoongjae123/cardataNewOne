@@ -122,28 +122,28 @@ function Answer({ session, language }) {
   };
 
   const handleSendMail = async () => {
-    const response = await axios.post(
-      "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
-      {
-        receiver: responseData.userId.email,
-        responsedatetime: formatDateToWords(new Date()),
-        name: responseData.productId.title[language],
-        number: responseData.productId.inqCrrgsnb,
-        modelyear: parseInt(responseData.productId.year),
-        mileage: parseInt(responseData.productId.mileage),
-        fuel: responseData.productId.fuelType[language],
-        color: responseData.productId.clr[language],
-        accidenthistory: responseData.productId.accidentSelf[language],
-        result: responseData.answer,
-        id: responseData.productId.id.toString(),
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const response = await axios.post(
+    //   "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
+    //   {
+    //     receiver: responseData.userId.email,
+    //     responsedatetime: formatDateToWords(new Date()),
+    //     name: responseData.productId.title[language],
+    //     number: responseData.productId.inqCrrgsnb,
+    //     modelyear: parseInt(responseData.productId.year),
+    //     mileage: parseInt(responseData.productId.mileage),
+    //     fuel: responseData.productId.fuelType[language],
+    //     color: responseData.productId.clr[language],
+    //     accidenthistory: responseData.productId.accidentSelf[language],
+    //     result: responseData.answer,
+    //     id: responseData.productId.id.toString(),
+    //   },
+    //   {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
     const response2 = await axios.post(
       "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
       {
@@ -166,7 +166,7 @@ function Answer({ session, language }) {
         },
       }
     );
-    if (response.status === 200) {
+    if (response2.status === 200) {
       setMessage("메일 송부 완료");
       onOpen2();
     } else {
@@ -174,7 +174,6 @@ function Answer({ session, language }) {
       onOpen2();
     }
   };
-  console.log("responseData:", responseData);
 
   return (
     <div>
