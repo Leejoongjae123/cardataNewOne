@@ -111,9 +111,9 @@ export async function signUpFirstAction(formData) {
   if (!confirmPassword) {
     return encodedRedirect("error", "/sign-up", "Confirm password is required");
   }
-  if (!name) {
-    return encodedRedirect("error", "/sign-up", "Name is required");
-  }
+  // if (!name) {
+  //   return encodedRedirect("error", "/sign-up", "Name is required");
+  // }
   // if (!phone) {
   //   return encodedRedirect("error", "/sign-up", "Mobile number is required");
   // }
