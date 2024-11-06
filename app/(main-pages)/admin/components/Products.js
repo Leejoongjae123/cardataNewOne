@@ -33,9 +33,12 @@ import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
 function Role({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onOpenChange: onOpenChange2,
+  } = useDisclosure();
   const supabase = createClient();
-
 
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -48,14 +51,10 @@ function Role({ session, language }) {
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
   console.log("searchCategory:", searchCategory);
   const getData = async () => {
-
-
-
-
     let query = supabase
       .from("cardata")
       .select("*", { count: "exact" })
@@ -63,7 +62,8 @@ function Role({ session, language }) {
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
     if (searchValue) {
-      query = query.ilike(searchCategory, `%${searchValue}%`);
+      // title->>kr는 JSON 필드 title에서 kr 키의 값을 추출합니다
+      query = query.ilike("title->>kr", `%${searchValue}%`);
     }
 
     const { data, error, count } = await query;
@@ -147,12 +147,9 @@ function Role({ session, language }) {
   };
 
   const handleDelete = async (itemId) => {
-
-
-
     const { error } = await supabase.from("cardata").delete().eq("id", itemId);
     if (error) {
-      console.log("삭제 실패")
+      console.log("삭제 실패");
     } else {
       console.log("삭제 성공");
       getData();
@@ -213,7 +210,9 @@ function Role({ session, language }) {
                 <TableColumn className="text-center w-1/4 whitespace-nowrap">
                   진행상황
                 </TableColumn>
-                <TableColumn className="text-center w-1/4 whitespace-nowrap">찜하기</TableColumn>
+                <TableColumn className="text-center w-1/4 whitespace-nowrap">
+                  찜하기
+                </TableColumn>
                 <TableColumn className="text-center w-1/4 whitespace-nowrap">
                   삭제하기
                 </TableColumn>
@@ -240,7 +239,7 @@ function Role({ session, language }) {
                         }
                         classNames={{
                           listbox: "w-32",
-                          popover: "w-32"
+                          popover: "w-32",
                         }}
                       >
                         <SelectItem key="in" value="in" className="w-full">
@@ -268,7 +267,10 @@ function Role({ session, language }) {
                       <Button
                         color="danger"
                         variant="bordered"
-                        onPress={() => {onOpen2(); setSelectedItem(item)}}
+                        onPress={() => {
+                          onOpen2();
+                          setSelectedItem(item);
+                        }}
                         isDisabled={item.isRequest}
                       >
                         삭제하기
@@ -318,7 +320,9 @@ function Role({ session, language }) {
                     </div>
                     <div>
                       <h1 className="text-medium">사고유무</h1>
-                      <p className="text-sm">{selectData.accidentSelf[language]}</p>
+                      <p className="text-sm">
+                        {selectData.accidentSelf[language]}
+                      </p>
                     </div>
                     <div>
                       <h1 className="text-medium">차량번호</h1>
@@ -363,9 +367,9 @@ function Role({ session, language }) {
                     안내
                   </ModalHeader>
                   <ModalBody className="grid grid-cols-1">
-                    <p>정말 해당 상품을 삭제하시겠습니까?</p>  
+                    <p>정말 해당 상품을 삭제하시겠습니까?</p>
                   </ModalBody>
-                  
+
                   <ModalFooter>
                     <Button
                       className="text-white"

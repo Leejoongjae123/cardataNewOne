@@ -57,14 +57,14 @@ async function Header() {
         </div>
 
         <div className="hidden md:flex w-full flex-row justify-center items-center">
-          <div className="px-2 md:px-10">
+          <div className="px-2 md:px-10 whitespace-nowrap overflow-hidden text-ellipsis">
             <Link href={"/list"}>{dictionary.header.list[language]}</Link>
           </div>
-          <div className="px-2 md:px-10">
+          <div className="px-2 md:px-10 whitespace-nowrap overflow-hidden text-ellipsis">
             <Link href={"/mypage"}>{dictionary.header.mypage[language]}</Link>
           </div>
           {profiles.role === 'master' && (
-            <div className="px-2 md:px-10">
+            <div className="px-2 md:px-10 whitespace-nowrap overflow-hidden text-ellipsis">
               <Link href={"/admin"}>{dictionary.header.admin[language]}</Link>
             </div>
           )}

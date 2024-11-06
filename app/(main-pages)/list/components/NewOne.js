@@ -24,6 +24,7 @@ function NewOne({ language, dictionary }) {
       .select("*")
       .order("created_at", { ascending: false })
       .eq("like", false) // Add this line to filter for like = false
+      .eq("platform", selectedPlatform) // Add platform filter
       .limit(10);
 
     const { data, error } = await query;
@@ -37,8 +38,9 @@ function NewOne({ language, dictionary }) {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedPlatform]);
 
+  console.log(data);
   return (
     <div className="mt-10">
       <div className="page-heading">
@@ -63,9 +65,9 @@ function NewOne({ language, dictionary }) {
             </li>
             <li>
               <a
-                // onClick={() => {
-                //   setSelectedPlatform("Other");
-                // }}
+                onClick={() => {
+                  setSelectedPlatform("Other");
+                }}
               >
                 {dictionary.list.othercar[language]}
               </a>
@@ -109,20 +111,41 @@ function NewOne({ language, dictionary }) {
                   </Link>
                   <div className="card-body flex justify-between">
                     <div className="flex-1">
-                      <p className="card-text text-black font-medium line-clamp-2">
-                        {item.title[language]}
-                      </p>
-                      <div className="text-xs line-clamp-1 mt-1 text-right">
-                        {dictionary.list.mileage[language]}:
-                        {parseInt(item.mileage)}km{" "}
-                      </div>
-                      <div className="text-xs line-clamp-1 mt-1 text-right">
-                        {dictionary.list.year[language]}:{parseInt(item.year)}{" "}
-                      </div>
-                      <div className="text-xs line-clamp-1 mt-1 text-right">
-                        {dictionary.list.accident[language]}:
-                        {item.accidentSelf[language]}{" "}
-                      </div>
+                      {selectedPlatform === "SKEncar" ? (
+                        // SKEncar인 경우
+                        <>
+                          <p className="card-text text-black font-medium line-clamp-2">
+                            {item.title?.[language]}
+                          </p>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            {dictionary.list.mileage?.[language]}:
+                            {parseInt(item.mileage)}km
+                          </div>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            {dictionary.list.year?.[language]}:{parseInt(item?.year)}
+                          </div>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            {dictionary.list.accident[language]}:
+                            {item.accidentSelf?.[language]}
+                          </div>
+                        </>
+                      ) : (
+                        // Other 플랫폼인 경우
+                        <>
+                          <p className="card-text text-black font-medium line-clamp-2">
+                          {item.titlePo?.[language]}
+                          </p>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            Mileage:{item.mileagePo}km
+                          </div>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            Year:{item.modelYearPo}
+                          </div>
+                          <div className="text-xs line-clamp-1 mt-1 text-right">
+                            Accident:{item.isAccidentPo?.[language]}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

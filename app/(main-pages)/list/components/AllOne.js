@@ -6,8 +6,8 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { animals } from "./data";
 import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
-import {Chip} from "@nextui-org/react";
-function AllOne({language, dictionary}) {
+import { Chip } from "@nextui-org/react";
+function AllOne({ language, dictionary }) {
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
 
   const [manufacturer, setManufacturer] = useState([]);
@@ -19,8 +19,10 @@ function AllOne({language, dictionary}) {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState("1");
-  const [selectedPlatform, setSelectedPlatform]=useState("SKEncar")
+  const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
+  const [search, setSearch] = useState("");
   const itemsPerPage = 20;
+
 
   const getManufacturer = async () => {
     const supabase = createClient();
@@ -82,15 +84,20 @@ function AllOne({language, dictionary}) {
       setModelGroup(formattedModelGroups);
     }
   };
-
+  console.log(search, selectedPlatform);
   const getData = async () => {
     const supabase = createClient();
     let query = supabase
       .from("cardata")
       .select("*", { count: "exact" })
-      .eq('like', false)  // Add this line to filter for like = false
-      .order('created_at', { ascending: false })
+      .eq("like", false)
+      .eq("platform", selectedPlatform)
+      .order("created_at", { ascending: false })
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+
+    if (search && selectedPlatform === "Other") {
+      query = query.ilike("titlePo->>en", `%${search}%`);
+    }
 
     if (selectedManufacturer) {
       query = query.eq("manufacturerEN", selectedManufacturer);
@@ -112,6 +119,21 @@ function AllOne({language, dictionary}) {
     }
   };
 
+  const debounce = (func, delay) => {
+    let debounceTimer;
+    return function (...args) {
+      const context = this;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    };
+  };
+
+  const debouncedGetData = debounce(getData, 300);
+
+  useEffect(() => {
+    debouncedGetData();
+  }, [search]);
+
   useEffect(() => {
     getData();
   }, [currentPage, selectedManufacturer, selectedModel, selectedModelGroup]);
@@ -119,7 +141,9 @@ function AllOne({language, dictionary}) {
   useEffect(() => {
     getManufacturer();
     getData();
-  }, []);
+  }, [selectedPlatform]);
+
+  
 
   useEffect(() => {
     getModel();
@@ -141,76 +165,103 @@ function AllOne({language, dictionary}) {
           >
             <li>
               {" "}
-              <a onClick={()=>{
-                setSelectedPlatform("SKEncar")
-              }}> {dictionary.list.skencar[language]}</a>
+              <a
+                onClick={() => {
+                  setSelectedPlatform("SKEncar");
+                }}
+              >
+                {" "}
+                {dictionary.list.skencar[language]}
+              </a>
             </li>
             <li>
-              
-              <a 
-              // onClick={()=>{
-              //   setSelectedPlatform("Other")
-              // }}
-              > {dictionary.list.othercar[language]}</a>{" "}
+              <a
+                onClick={() => {
+                  setSelectedPlatform("Other");
+                }}
+              >
+                {" "}
+                {dictionary.list.othercar[language]}
+              </a>{" "}
             </li>
           </ul>
         </nav>
       </div>
       <div className="flex">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full h-15 my-5">
-          <div className="col-span-1">
-            <Select
-              items={manufacturer}
-              label={dictionary.list.manufacturer[language]}
-              placeholder={dictionary.list.select[language]}
-              className="max-w-xs"
-              onChange={(e) => {
-                setSelectedManufacturer(e.target.value);
-                setSelectedModel("");
-                setSelectedModelGroup("");
-              }}
-            >
-              {(manufacturer) => <SelectItem>{manufacturer.label}</SelectItem>}
-            </Select>
+        {selectedPlatform === "SKEncar" ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full h-15 my-5">
+            <div className="col-span-1">
+              <Select
+                items={manufacturer}
+                label={dictionary.list.manufacturer[language]}
+                placeholder={dictionary.list.select[language]}
+                className="max-w-xs"
+                onChange={(e) => {
+                  setSelectedManufacturer(e.target.value);
+                  setSelectedModel("");
+                  setSelectedModelGroup("");
+                }}
+              >
+                {(manufacturer) => <SelectItem>{manufacturer.label}</SelectItem>}
+              </Select>
+            </div>
+            <div className="col-span-1">
+              <Select
+                items={modelGroup}
+                label={dictionary.list.modelGroup[language]}
+                placeholder={dictionary.list.select[language]}
+                className="max-w-xs"
+                onChange={(e) => {
+                  setSelectedModelGroup(e.target.value);
+                  setSelectedModel("");
+                }}
+              >
+                {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
+              </Select>
+            </div>
+            <div className="col-span-1">
+              <Select
+                items={model}
+                label={dictionary.list.model[language]}
+                placeholder={dictionary.list.select[language]}
+                className="max-w-xs"
+                onChange={(e) => {
+                  setSelectedModel(e.target.value);
+                }}
+              >
+                {(model) => <SelectItem>{model.label}</SelectItem>}
+              </Select>
+            </div>
           </div>
-          <div className="col-span-1">
-            <Select
-              items={modelGroup}
-              label={dictionary.list.modelGroup[language]}
-              placeholder={dictionary.list.select[language]}
-              className="max-w-xs"
-              onChange={(e) => {
-                setSelectedModelGroup(e.target.value);
-                setSelectedModel("");
-              }}
-            >
-              {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
-            </Select>
+        ) : (
+          <div className="flex w-full my-5">
+            <div className="w-full">
+              <Input
+                type="text"
+                placeholder="Search..."
+                className="w-full"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                startContent={
+                  <svg
+                    className="w-5 h-5 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                }
+              />
+            </div>
           </div>
-          <div className="col-span-1">
-            <Select
-              items={model}
-              label={dictionary.list.model[language]}
-              placeholder={dictionary.list.select[language]}
-              className="max-w-xs"
-              onChange={(e) => {
-                setSelectedModel(e.target.value);
-              }}
-            >
-              {(model) => <SelectItem>{model.label}</SelectItem>}
-            </Select>
-          </div>
-
-
-          {/* <div className="w-full h-15 p-2">
-            <button
-              type="button"
-              className="button bg-primary text-white w-full h-full px-5"
-            >
-              Search
-            </button>
-          </div> */}
-        </div>
+        )}
       </div>
       <div
         className="grid grid-cols-2 md:grid-cols-4 gap-5"
@@ -234,18 +285,41 @@ function AllOne({language, dictionary}) {
             </Link>
             <div className="card-body flex justify-between">
               <div className="flex-1">
-                <p className="card-text text-black font-medium line-clamp-2">
-                  {item.title[language]}
-                </p>
-                <div className="text-xs line-clamp-1 mt-1 text-right">
-                  {dictionary.list.mileage[language]}:{parseInt(item.mileage)}km{" "}
-                </div>
-                <div className="text-xs line-clamp-1 mt-1 text-right">
-                  {dictionary.list.year[language]}:{parseInt(item.year)}{" "}
-                </div>
-                <div className="text-xs line-clamp-1 mt-1 text-right">
-                  {dictionary.list.accident[language]}:{item.accidentSelf[language]}{" "}
-                </div>
+                {selectedPlatform === "SKEncar" ? (
+                  // SKEncar인 경우
+                  <>
+                    <p className="card-text text-black font-medium line-clamp-2">
+                      {item.title?.[language]}
+                    </p>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      {dictionary.list.mileage?.[language]}:
+                      {parseInt(item.mileage)}km
+                    </div>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      {dictionary.list.year?.[language]}:{parseInt(item?.year)}
+                    </div>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      {dictionary.list.accident[language]}:
+                      {item.accidentSelf?.[language]}
+                    </div>
+                  </>
+                ) : (
+                  // Other 플랫폼인 경우
+                  <>
+                    <p className="card-text text-black font-medium line-clamp-2">
+                      {item.titlePo?.[language]}
+                    </p>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      Mileage:{item.mileagePo}km
+                    </div>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      Year:{item.modelYearPo}
+                    </div>
+                    <div className="text-xs line-clamp-1 mt-1 text-right">
+                      Accident:{item.isAccidentPo?.[language]}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
