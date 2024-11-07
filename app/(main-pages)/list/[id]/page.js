@@ -63,17 +63,16 @@ async function page({ params }) {
     // Handle the error appropriately
   }
   const carSpec = [
-    parseInt(carData.mileage).toString() + "km",
-    parseInt(carData.year),
-    carData.fuelType[language],
-    carData.carCategory[language],
-    carData.dsp,
-    carData.trns[language],
-    carData.clr[language],
-    carData.inqCrrgsnb,
+    parseInt(carData?.mileage).toString() + "km",
+    parseInt(carData?.year),
+    carData?.fuelType?.[language],
+    carData?.carCategory?.[language],
+    carData?.dsp?.[language],
+    carData?.trns?.[language],
+    carData?.clr?.[language],
+    carData?.inqCrrgsnb,
   ].join(" • ");
 
-  console.log("carData:", carData);
   return (
     <div>
       <div className="mx-auto flex flex-col">
@@ -86,33 +85,39 @@ async function page({ params }) {
                   <LanguageSelect />
                 </div>
                 <div className="flex justify-start items-center w-full space-x-3">
-                  <div className="flex justify-start items-center">
-                    <Chip
-                      className="mx-5"
-                      variant="bordered"
-                      color={
-                        extractKrValue(carData.sellType) === "렌트"
-                          ? "danger"
-                          : "primary"
-                      }
-                    >
-                      {extractKrValue(carData.sellType) === "렌트"
-                        ? dictionary.detail.cartypeRent[language]
-                        : dictionary.detail.cartypeLease[language]}
-                    </Chip>
-                  </div>
+                  {carData.platform === "SKEncar" && (
+                    <div className="flex justify-start items-center">
+                      <Chip
+                        className="mx-5"
+                        variant="bordered"
+                        color={
+                          extractKrValue(carData.sellType) === "렌트"
+                            ? "danger"
+                            : "primary"
+                        }
+                      >
+                        {extractKrValue(carData.sellType) === "렌트"
+                          ? dictionary.detail.cartypeRent[language]
+                          : dictionary.detail.cartypeLease[language]}
+                      </Chip>
+                    </div>
+                  )}
 
                   <div className="block text-lg font-semibold">
-                    {carData.title[language]}
+                    {carData.platform === "SKEncar"
+                      ? carData.title[language]
+                      : carData.titlePo[language]}{" "}
                   </div>
                 </div>
                 <div className="hidden md:block">
                   <LanguageSelect />
                 </div>
               </div>
-              <div>
-                <p className="text-medium">{carSpec}</p>
-              </div>
+              {carData.platform === "SKEncar" && (
+                <div>
+                  <p className="text-medium">{carSpec}</p>
+                </div>
+              )}
             </div>
             <div className="w-full h-full flex flex-col lg:flex-row px-5 py-5 gap-5 justify-center items-center">
               <div
@@ -129,7 +134,11 @@ async function page({ params }) {
                         <a
                           className="inline"
                           href={elem.url}
-                          data-caption={carData.title[language]}
+                          data-caption={
+                            carData.platform === "SKEncar"
+                              ? carData.title[language]
+                              : carData.titlePo[language]
+                          }
                         >
                           <img
                             src={elem.url}
@@ -188,7 +197,9 @@ async function page({ params }) {
                     {dictionary.detail.mainInfo[language]}
                   </h1>
                   <div>
-                    <div className="flex w-full justify-around items-center">
+                    <div
+                      className={`flex w-full justify-around items-center ${carData.platform === "SKEncar" ? "" : "hidden"}`}
+                    >
                       {carData.sellType === "리스" ? (
                         <>
                           <div className="text-sm border-r pr-2 text-center">
@@ -228,12 +239,26 @@ async function page({ params }) {
                         </>
                       )}
                     </div>
+                    <div
+                      className={`${carData.platform === "Other" ? "" : "hidden"} flex flex-col gap-1`}
+                    >
+                      <div>1.이름:{carData?.titlePo?.[language]}</div>
+                      <div>2.가격:{carData?.salePricePo}만원</div>
+                      <div>3.연식:{carData?.modelYearPo}</div>
+                      <div>4.주행거리:{carData?.mileagePo}km</div>
+                      <div>5.사고유무:{carData?.isAccidentPo?.[language]}</div>
+                      <div>6.차량번호:{carData?.carNoPo}</div>
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-1 py-2 justify-between items-center">
                     <RequestEst
                       description={carSpec}
-                      title={carData.title[language]}
+                      title={
+                        carData.platform === "SKEncar"
+                          ? carData.title[language]
+                          : carData.titlePo[language]
+                      }
                       desc={carData.description}
                       thumbImage={carData.uploadedImageUrls[0].url}
                       productId={carData.productId}
@@ -242,7 +267,11 @@ async function page({ params }) {
                       language={language}
                       dictionary={dictionary}
                       profiles={profiles}
-                      titlekr={carData.title["kr"]}
+                      titlekr={
+                        carData.platform === "SKEncar"
+                          ? carData.title["kr"]
+                          : carData.titlePo["kr"]
+                      }
                     ></RequestEst>
 
                     {profiles.role === "master" && (
@@ -257,8 +286,10 @@ async function page({ params }) {
                     )}
                   </div>
                   {profiles.role === "master" ? (
-                    <div>
-                      <h1 className="text-medium font-bold mb-2 ">
+                    <div
+                      className={carData.platform === "SKEncar" ? "" : "hidden"}
+                    >
+                      <h1 className="text-medium font-bold mb-2  ">
                         {dictionary.detail.seller[language]}
                       </h1>
                       <div className="flex justify-center items-center gap-3 py-2 text-sm font-medium mt-2">
@@ -277,8 +308,8 @@ async function page({ params }) {
                       </div>
                     </div>
                   ) : (
-                    <div>
-                      <p className="text-sm text-black font-light text-center">
+                    <div className="">
+                      <p className="text-sm text-black font-light text-center ">
                         {dictionary.detail.onlyfor1[language]}
                       </p>
                     </div>
@@ -289,27 +320,6 @@ async function page({ params }) {
                     dictionary={dictionary}
                   ></Exchanger>
 
-                  {/* <Card className="w-full">
-                    <CardHeader className="flex gap-3">
-                      <div className="flex flex-col">
-                        <p className="text-md">환율 계산</p>
-                      </div>
-                    </CardHeader>
-                    <Divider />
-                    <CardBody>
-                      
-                    </CardBody>
-                    <Divider />
-                    <CardFooter>
-                      <Link
-                        isExternal
-                        showAnchorIcon
-                        href="https://github.com/nextui-org/nextui"
-                      >
-                        Visit source code on GitHub.
-                      </Link>
-                    </CardFooter>
-                  </Card> */}
                   <button
                     className="button bg-secondery px-3 w-full"
                     uk-tooltip="title: Chat; offset: 8"
@@ -323,283 +333,251 @@ async function page({ params }) {
           </div>
         </div>
 
-        <div className="flex flex-col w-full my-5" id="js-oversized">
-          <div></div>
-          <div className="w-full">
-            <div
-              className="lg:space-y-4 lg:pb-8 max-lg:grid sm:grid-cols-2 max-lg:gap-6"
-              uk-sticky="media: 1024; end: #js-oversized; offset: 80"
-            >
-              <div className="box p-5 px-6 ,">
-                <h3 className="font-semibold text-lg text-black ">
-                  {dictionary.detail.option[language]}
-                </h3>
-                <AccordionComponent
-                  carData={carData}
-                  dictionary={dictionary}
-                  language={language}
-                ></AccordionComponent>
-                {/* <ul
-                  className="relative space-y-3 uk-accordion my-3"
-                  uk-accordion="active: 1; multiple: true"
-                >
-                  <li className="uk-open">
-                    <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
-                      href="#"
-                    >
-                      {dictionary.detail.extint[language]}
-                      <svg
-                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </a>
-                    <div className="p-2  uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
-                        {carData.optionExtInt.map((elem, index) => {
-                          return (
-                            <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName[language]}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
-                      href="#"
-                    >
-                      {dictionary.detail.safety[language]}
-                      <svg
-                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </a>
-                    <div className="p-2  uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
-                        {carData.optionSafety.map((elem, index) => {
-                          return (
-                            <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName[language]}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
-                      href="#"
-                    >
-                      {dictionary.detail.convenience[language]}
-                      <svg
-                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </a>
-                    <div className="p-2  uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
-                        {carData.optionConvenience.map((elem, index) => {
-                          return (
-                            <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName[language]}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
-                      href="#"
-                    >
-                      {dictionary.detail.seat[language]}
-                      <svg
-                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </a>
-                    <div className="p-2  uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
-                        {carData.optionSeat.map((elem, index) => {
-                          return (
-                            <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName[language]}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center justify-between p-3 text-base bg-white shadow rounded-md text-black "
-                      href="#"
-                    >
-                      {dictionary.detail.etc[language]}
-                      <svg
-                        className="duration-200 group-aria-expanded:rotate-180 w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </a>
-                    <div className="p-2  uk-accordion-content">
-                      <ul className="grid grid-cols-3 space-y-4 text-gray-600 text-sm ">
-                        {carData.optionEtc.map((elem, index) => {
-                          return (
-                            <li className="flex items-center gap-3 col-span-1">
-                              {elem.optionName[language]}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </li>
-                </ul> */}
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="box p-5 px-6 pr-0 col-span-1">
+        {carData.platform === "SKEncar" && (
+          <div className="flex flex-col w-full my-5" id="js-oversized">
+            <div></div>
+            <div className="w-full">
+              <div
+                className="lg:space-y-4 lg:pb-8 max-lg:grid sm:grid-cols-2 max-lg:gap-6"
+                uk-sticky="media: 1024; end: #js-oversized; offset: 80"
+              >
+                <div className="box p-5 px-6 ,">
                   <h3 className="font-semibold text-lg text-black ">
-                    {dictionary.detail.insurance[language]}
+                    {dictionary.detail.option[language]}
                   </h3>
-                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        <ion-icon
-                          name="heart"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
+                  <AccordionComponent
+                    carData={carData}
+                    dictionary={dictionary}
+                    language={language}
+                  ></AccordionComponent>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="box p-5 px-6 pr-0 col-span-1">
+                    <h3 className="font-semibold text-lg text-black ">
+                      {dictionary.detail.insurance[language]}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          <ion-icon
+                            name="heart"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
+                            {carData.history?.[language]}
+                          </h3>
+                          <p>{dictionary.detail.insurance1[language]}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
-                          {carData.history[language]}
-                        </h3>
-                        <p>{dictionary.detail.insurance1[language]}</p>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {carData.changeCount[language]}
+                          </h3>
+                          <p>{dictionary.detail.insurance2[language]}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        <ion-icon
-                          name="leaf-outline"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          <ion-icon
+                            name="heart"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {carData.accidentSelf[language]}
+                          </h3>
+                          <p>{dictionary.detail.insurance3[language]}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {carData.changeCount[language]}
-                        </h3>
-                        <p>{dictionary.detail.insurance2[language]}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        <ion-icon
-                          name="heart"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
-                      </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {carData.accidentSelf[language]}
-                        </h3>
-                        <p>{dictionary.detail.insurance3[language]}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        <ion-icon
-                          name="leaf-outline"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
-                      </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {carData.accidentOther[language]}
-                        </h3>
-                        <p>{dictionary.detail.insurance4[language]}</p>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {carData.accidentOther[language]}
+                          </h3>
+                          <p>{dictionary.detail.insurance4[language]}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div
-                  className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "hidden" : ""}`}
-                >
+                  <div
+                    className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "hidden" : ""}`}
+                  >
+                    <h3 className="font-semibold text-lg text-black ">
+                      {dictionary.detail.price[language]}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="heart"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.leaseReceivePrice)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price1[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
+                            {formatNumber(carData.leasePriceIn)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price2[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.leasePriceOut)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price3[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.leasePriceAll)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price4[language]}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "" : "hidden"}`}
+                  >
+                    <h3 className="font-semibold text-lg text-black ">
+                      {dictionary.detail.price[language]}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="heart"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.rentSupportPrice)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price5[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
+                            {formatNumber(carData.rentPriceIn)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price2[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.rentPriceOut)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price3[language]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                          {" "}
+                          <ion-icon
+                            name="leaf-outline"
+                            className="text-2xl text-rose-600"
+                          ></ion-icon>
+                        </div>
+                        <div>
+                          <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                            {formatNumber(carData.rentPriceAll)} KRW
+                          </h3>
+                          <p>{dictionary.detail.price4[language]}</p>
+                        </div>
+                      </div>
+                      <div className="w-full justify-end flex "></div>
+                      <div>
+                        <p className="text-sm text-end px-5">
+                          ※ {dictionary.detail.outCondition[language]}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="box p-5 px-6 pr-0">
                   <h3 className="font-semibold text-lg text-black ">
-                    {dictionary.detail.price[language]}
+                    {dictionary.detail.issues[language]}
                   </h3>
-                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
                     <div className="flex gap-3">
                       <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        {" "}
                         <ion-icon
                           name="heart"
                           className="text-2xl text-rose-600"
                         ></ion-icon>
                       </div>
                       <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.leaseReceivePrice)} KRW
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black    text-base font-normal">
+                          {carData.performanceDashboard[language]}
                         </h3>
-                        <p>{dictionary.detail.price1[language]}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        {" "}
-                        <ion-icon
-                          name="leaf-outline"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
-                      </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
-                          {formatNumber(carData.leasePriceIn)} KRW
-                        </h3>
-                        <p>{dictionary.detail.price2[language]}</p>
+                        <p>{dictionary.detail.issue1[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -612,9 +590,9 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.leasePriceOut)} KRW
+                          {getKrValue(carData.performanceDistance)}km
                         </h3>
-                        <p>{dictionary.detail.price3[language]}</p>
+                        <p>{dictionary.detail.issue2[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -627,48 +605,9 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.leasePriceAll)} KRW
+                          {carData.performanceVIN[language]}
                         </h3>
-                        <p>{dictionary.detail.price4[language]}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={`box p-5 px-6 pr-0 cols-span-1 ${extractKrValue(carData.sellType) === "렌트" ? "" : "hidden"}`}
-                >
-                  <h3 className="font-semibold text-lg text-black ">
-                    {dictionary.detail.price[language]}
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2 text-sm mt-4">
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        {" "}
-                        <ion-icon
-                          name="heart"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
-                      </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.rentSupportPrice)} KRW
-                        </h3>
-                        <p>{dictionary.detail.price5[language]}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                        {" "}
-                        <ion-icon
-                          name="leaf-outline"
-                          className="text-2xl text-rose-600"
-                        ></ion-icon>
-                      </div>
-                      <div>
-                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black text-base font-normal">
-                          {formatNumber(carData.rentPriceIn)} KRW
-                        </h3>
-                        <p>{dictionary.detail.price2[language]}</p>
+                        <p>{dictionary.detail.issue3[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -681,9 +620,9 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.rentPriceOut)} KRW
+                          {carData.performanceEmit[language]}
                         </h3>
-                        <p>{dictionary.detail.price3[language]}</p>
+                        <p>{dictionary.detail.issue4[language]}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
@@ -696,179 +635,92 @@ async function page({ params }) {
                       </div>
                       <div>
                         <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                          {formatNumber(carData.rentPriceAll)} KRW
+                          {carData.performanceTuning[language]}
                         </h3>
-                        <p>{dictionary.detail.price4[language]}</p>
+                        <p>{dictionary.detail.issue5[language]}</p>
                       </div>
                     </div>
-                    <div className="w-full justify-end flex "></div>
-                    <div>
-                      <p className="text-sm text-end px-5">
-                      ※ {dictionary.detail.outCondition[language]}
-                      </p>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {carData.performanceSpecial[language]}
+                        </h3>
+                        <p>{dictionary.detail.issue6[language]}</p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="box p-5 px-6 pr-0">
-                <h3 className="font-semibold text-lg text-black ">
-                  {dictionary.detail.issues[language]}
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm mt-4">
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      <ion-icon
-                        name="heart"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {carData.performanceChange[language]}
+                        </h3>
+                        <p>{dictionary.detail.issue7[language]}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black    text-base font-normal">
-                        {carData.performanceDashboard[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue1[language]}</p>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {carData.performanceColor[language]}
+                        </h3>
+                        <p>{dictionary.detail.issue8[language]}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {carData.performanceOption[language]}
+                        </h3>
+                        <p>{dictionary.detail.issue9[language]}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {getKrValue(carData.performanceDistance)}km
-                      </h3>
-                      <p>{dictionary.detail.issue2[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceVIN[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue3[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceEmit[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue4[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceTuning[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue5[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceSpecial[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue6[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceChange[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue7[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceColor[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue8[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceOption[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue9[language]}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
-                      {" "}
-                      <ion-icon
-                        name="leaf-outline"
-                        className="text-2xl text-rose-600"
-                      ></ion-icon>
-                    </div>
-                    <div>
-                      <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
-                        {carData.performanceRecall[language]}
-                      </h3>
-                      <p>{dictionary.detail.issue10[language]}</p>
+                    <div className="flex gap-3">
+                      <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
+                        {" "}
+                        <ion-icon
+                          name="leaf-outline"
+                          className="text-2xl text-rose-600"
+                        ></ion-icon>
+                      </div>
+                      <div>
+                        <h3 className="sm:text-xl sm:font-semibold mt-1 text-black  text-base font-normal">
+                          {carData.performanceRecall[language]}
+                        </h3>
+                        <p>{dictionary.detail.issue10[language]}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -878,7 +730,7 @@ export default page;
 
 function formatNumber(value) {
   // Remove any non-numeric characters except the decimal point
-  const numericValue = value.replace(/[^\d.]/g, "");
+  const numericValue = value?.replace(/[^\d.]/g, "");
 
   // Convert the extracted value to a number and multiply by 10,000
   const multipliedValue = parseFloat(numericValue) * 10000;
@@ -888,7 +740,7 @@ function formatNumber(value) {
 }
 
 function extractKrValue(inputString) {
-  if (inputString.includes("{")) {
+  if (inputString?.includes("{")) {
     try {
       const jsonObject = JSON.parse(inputString);
       return jsonObject.kr;
@@ -908,3 +760,4 @@ function getKrValue(input) {
     return input;
   }
 }
+
