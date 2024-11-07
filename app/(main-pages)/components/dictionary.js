@@ -209,6 +209,42 @@ export const dictionary = {
     },
   },
   detail:{
+    titlePo:{
+      kr:"차량명",
+      en:"Car Name",
+      ru:"Название автомобиля",
+      ar:"اسم السيارة",
+    },
+    pricePo:{
+      kr:"차량가격",
+      en:"Car Price",
+      ru:"Цена автомобиля",
+      ar:"سعر السيارة",
+    },
+    modelYearPo:{
+      kr:"연식",
+      en:"Year",
+      ru:"Год",
+      ar:"السنة",
+    },
+    mileagePo:{
+      kr:"주행거리",
+      en:"Mileage",
+      ru:"Пробег",
+      ar:"المسافة",
+    },
+    isAccidentPo:{
+      kr:"사고이력",
+      en:"Accident History",
+      ru:"История аварий",
+      ar:"تاريخ الحوادث",
+    },
+    carNoPo:{
+      kr:"차량번호",
+      en:"Car Number",
+      ru:"Номер автомобиля",
+      ar:"رقم السيارة",
+    },
     error:{
       kr: "에러",
       en: "Error",

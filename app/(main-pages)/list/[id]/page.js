@@ -242,12 +242,12 @@ async function page({ params }) {
                     <div
                       className={`${carData.platform === "Other" ? "" : "hidden"} flex flex-col gap-1`}
                     >
-                      <div>1.이름:{carData?.titlePo?.[language]}</div>
-                      <div>2.가격:{carData?.salePricePo}만원</div>
-                      <div>3.연식:{carData?.modelYearPo}</div>
-                      <div>4.주행거리:{carData?.mileagePo}km</div>
-                      <div>5.사고유무:{carData?.isAccidentPo?.[language]}</div>
-                      <div>6.차량번호:{carData?.carNoPo}</div>
+                      <div>1.{dictionary.detail.titlePo[language]}:{carData?.titlePo?.[language]}</div>
+                      <div>2.{dictionary.detail.pricePo[language]}:{carData?.salePricePo}KRW</div>
+                      <div>3.{dictionary.detail.modelYearPo[language]}:{carData?.modelYearPo}</div>
+                      <div>4.{dictionary.detail.mileagePo[language]}:{carData?.mileagePo}km</div>
+                      <div>5.{dictionary.detail.isAccidentPo[language]}:{carData?.isAccidentPo?.[language]}</div>
+                      <div>6.{dictionary.detail.carNoPo[language]}:{carData?.carNoPo}</div>
                     </div>
                   </div>
 
