@@ -274,7 +274,7 @@ async function page({ params }) {
                       }
                     ></RequestEst>
 
-                    {profiles.role === "master" && (
+                    {profiles.role === "master" && carData.platform === "SKEncar" && (
                       <Link
                         className="text-center text-xs"
                         href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`}

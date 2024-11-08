@@ -1,5 +1,17 @@
 export const dictionary = {
   list: {
+    modealYearSlider:{
+      kr:"연식(년)",
+      en:"Model Year(Year)",
+      ru:"Модельный год(Год)",
+      ar:"السنة الموديل(السنة)",
+    },
+    mileageSlider:{
+      kr:"주행거리(km)",
+      en:"Mileage(km)",
+      ru:"Пробег(км)",
+      ar:"المسافة(كم)",
+    },
     skencar:{
       kr:"SK엔카",
       en:"SKencar",

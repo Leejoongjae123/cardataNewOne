@@ -7,9 +7,11 @@ import { animals } from "./data";
 import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
 import { Chip } from "@nextui-org/react";
+import { Slider } from "@nextui-org/react";
+
 function AllOne({ language, dictionary }) {
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
-
+  const currentYear = new Date().getFullYear();
   const [manufacturer, setManufacturer] = useState([]);
   const [model, setModel] = useState([]);
   const [modelGroup, setModelGroup] = useState([]);
@@ -21,10 +23,12 @@ function AllOne({ language, dictionary }) {
   const [totalPages, setTotalPages] = useState("1");
   const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
   const [search, setSearch] = useState("");
+  const [searchModelYear, setSearchModelYear] = useState([]);
+  const [searchMileage, setSearchMileage] = useState([]);
   const itemsPerPage = 20;
 
-
   const getManufacturer = async () => {
+    const currentYear = new Date().getFullYear();
     const supabase = createClient();
     const { data, error } = await supabase
       .from("category")
@@ -84,7 +88,6 @@ function AllOne({ language, dictionary }) {
       setModelGroup(formattedModelGroups);
     }
   };
-  console.log(search, selectedPlatform);
   const getData = async () => {
     const supabase = createClient();
     let query = supabase
@@ -109,6 +112,32 @@ function AllOne({ language, dictionary }) {
       query = query.eq("modelGroupEN", selectedModelGroup);
     }
 
+    if (
+      searchModelYear &&
+      searchModelYear.length === 2 &&
+      (searchModelYear[0] !== 2015 || searchModelYear[1] !== currentYear)
+    ) {
+      // 시작년도와 끝년도 사이의 모든 연도를 포함하는 배열 생성
+      const yearRange = Array.from(
+        { length: searchModelYear[1] - searchModelYear[0] + 1 },
+        (_, i) => String(searchModelYear[0] + i)
+      );
+      // 각 연도에 대해 LIKE 조건을 생성
+      query = query.or(
+        yearRange.map((year) => `year.ilike.${year}%`).join(",")
+      );
+    }
+
+    if (
+      searchMileage &&
+      searchMileage.length === 2 &&
+      (searchMileage[0] !== 0 || searchMileage[1] !== 300000)
+    ) {
+      query = query
+        .gte('mileage', searchMileage[0].toString())
+        .lte('mileage', searchMileage[1].toString());
+    }
+
     const { data, error, count } = await query;
 
     if (error) {
@@ -128,11 +157,11 @@ function AllOne({ language, dictionary }) {
     };
   };
 
-  const debouncedGetData = debounce(getData, 300);
+  const debouncedGetData = debounce(getData, 1000);
 
   useEffect(() => {
     debouncedGetData();
-  }, [search]);
+  }, [search, searchModelYear, searchMileage]);
 
   useEffect(() => {
     getData();
@@ -143,8 +172,6 @@ function AllOne({ language, dictionary }) {
     getData();
   }, [selectedPlatform]);
 
-  
-
   useEffect(() => {
     getModel();
   }, [selectedModelGroup]);
@@ -153,6 +180,8 @@ function AllOne({ language, dictionary }) {
     getModelGroup();
   }, [selectedManufacturer]);
 
+  console.log("searchModelYear", searchModelYear);
+  console.log("searchMileage", searchMileage);
   return (
     <div>
       <div className="page-heading">
@@ -189,48 +218,83 @@ function AllOne({ language, dictionary }) {
       </div>
       <div className="flex">
         {selectedPlatform === "SKEncar" ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full h-15 my-5">
-            <div className="col-span-1">
-              <Select
-                items={manufacturer}
-                label={dictionary.list.manufacturer[language]}
-                placeholder={dictionary.list.select[language]}
-                className="max-w-xs"
-                onChange={(e) => {
-                  setSelectedManufacturer(e.target.value);
-                  setSelectedModel("");
-                  setSelectedModelGroup("");
-                }}
-              >
-                {(manufacturer) => <SelectItem>{manufacturer.label}</SelectItem>}
-              </Select>
+          <div className="w-full h-full flex flex-col">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full h-15 my-5">
+              <div className="col-span-1">
+                <Select
+                  items={manufacturer}
+                  label={dictionary.list.manufacturer[language]}
+                  placeholder={dictionary.list.select[language]}
+                  className="max-w-xs"
+                  onChange={(e) => {
+                    setSelectedManufacturer(e.target.value);
+                    setSelectedModel("");
+                    setSelectedModelGroup("");
+                  }}
+                >
+                  {(manufacturer) => (
+                    <SelectItem>{manufacturer.label}</SelectItem>
+                  )}
+                </Select>
+              </div>
+              <div className="col-span-1">
+                <Select
+                  items={modelGroup}
+                  label={dictionary.list.modelGroup[language]}
+                  placeholder={dictionary.list.select[language]}
+                  className="max-w-xs"
+                  onChange={(e) => {
+                    setSelectedModelGroup(e.target.value);
+                    setSelectedModel("");
+                  }}
+                >
+                  {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
+                </Select>
+              </div>
+              <div className="col-span-1">
+                <Select
+                  items={model}
+                  label={dictionary.list.model[language]}
+                  placeholder={dictionary.list.select[language]}
+                  className="max-w-xs"
+                  onChange={(e) => {
+                    setSelectedModel(e.target.value);
+                  }}
+                >
+                  {(model) => <SelectItem>{model.label}</SelectItem>}
+                </Select>
+              </div>
             </div>
-            <div className="col-span-1">
-              <Select
-                items={modelGroup}
-                label={dictionary.list.modelGroup[language]}
-                placeholder={dictionary.list.select[language]}
-                className="max-w-xs"
-                onChange={(e) => {
-                  setSelectedModelGroup(e.target.value);
-                  setSelectedModel("");
-                }}
-              >
-                {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
-              </Select>
-            </div>
-            <div className="col-span-1">
-              <Select
-                items={model}
-                label={dictionary.list.model[language]}
-                placeholder={dictionary.list.select[language]}
-                className="max-w-xs"
-                onChange={(e) => {
-                  setSelectedModel(e.target.value);
-                }}
-              >
-                {(model) => <SelectItem>{model.label}</SelectItem>}
-              </Select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-15 my-5">
+              <div className="col-span-1">
+                <Slider
+                  label={dictionary.list.modealYearSlider[language]}
+                  step={1}
+                  minValue={2015}
+                  maxValue={currentYear}
+                  defaultValue={[2015, currentYear]}
+                  formatOptions={{
+                    useGrouping: false,
+                  }}
+                  className="w-full"
+                  onChange={(value) => {
+                    setSearchModelYear(value);
+                  }}
+                />
+              </div>
+              <div className="col-span-1">
+                <Slider
+                  label={dictionary.list.mileageSlider[language]}
+                  step={10000}
+                  minValue={0}
+                  maxValue={300000}
+                  defaultValue={[0, 300000]}
+                  className="w-full"
+                  onChange={(value) => {
+                    setSearchMileage(value);
+                  }}
+                />
+              </div>
             </div>
           </div>
         ) : (
