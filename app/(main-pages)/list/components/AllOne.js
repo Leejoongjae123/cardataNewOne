@@ -102,17 +102,18 @@ function AllOne({ language, dictionary }) {
       query = query.ilike("titlePo->>en", `%${search}%`);
     }
 
-    if (selectedManufacturer) {
+    if (selectedPlatform === "SKEncar" && selectedManufacturer) {
       query = query.eq("manufacturerEN", selectedManufacturer);
     }
-    if (selectedModel) {
+    if (selectedPlatform === "SKEncar" && selectedModel) {
       query = query.eq("modelEN", selectedModel);
     }
-    if (selectedModelGroup) {
+    if (selectedPlatform === "SKEncar" && selectedModelGroup) {
       query = query.eq("modelGroupEN", selectedModelGroup);
     }
 
     if (
+      selectedPlatform === "SKEncar" &&
       searchModelYear &&
       searchModelYear.length === 2 &&
       (searchModelYear[0] !== 2015 || searchModelYear[1] !== currentYear)
@@ -129,6 +130,7 @@ function AllOne({ language, dictionary }) {
     }
 
     if (
+      selectedPlatform === "SKEncar" &&
       searchMileage &&
       searchMileage.length === 2 &&
       (searchMileage[0] !== 0 || searchMileage[1] !== 300000)
