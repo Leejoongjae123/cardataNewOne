@@ -270,9 +270,9 @@ function AllOne({ language, dictionary }) {
                 <Slider
                   label={dictionary.list.modealYearSlider[language]}
                   step={1}
-                  minValue={2015}
+                  minValue={2000}
                   maxValue={currentYear}
-                  defaultValue={[2015, currentYear]}
+                  defaultValue={[2000, currentYear]}
                   formatOptions={{
                     useGrouping: false,
                   }}
