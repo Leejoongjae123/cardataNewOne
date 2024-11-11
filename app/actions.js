@@ -185,6 +185,23 @@ export const signInWithKakao = async () => {
   });
   console.log("로그인완료1")
 
+      // 로그인 성공 후 사용자 정보 가져오기
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user?.email) {
+    // profiles 테이블 업데이트
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({ email: user.email, name: user.name })
+      .eq("id", user.id);
+
+    if (updateError) {
+      console.error("Profile update error:", updateError);
+    }
+  }
+
   if (error) {
     console.error("Kakao login error:", error.message);
     return encodedRedirect("error", "/sign-in", error.message);
