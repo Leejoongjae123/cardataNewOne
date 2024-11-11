@@ -14,7 +14,7 @@ import { dictionary } from "@/app/(main-pages)/components/dictionary";
 function NewOne({ language, dictionary }) {
   const [data, setData] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
-  
+
   const items = Array.from({ length: 6 }, (_, index) => `Item ${index + 1}`);
 
   const getData = async () => {
@@ -99,7 +99,9 @@ function NewOne({ language, dictionary }) {
                         selectedPlatform === "SKEncar" ? "danger" : "success"
                       }
                     >
-                      {selectedPlatform}
+                      {selectedPlatform === "SKEncar"
+                        ? dictionary.list.tagSKEncar?.[language]
+                        : dictionary.list.tagOthercar?.[language]}
                     </Chip>
                   </div>
 
@@ -122,7 +124,8 @@ function NewOne({ language, dictionary }) {
                             {parseInt(item.mileage)}km
                           </div>
                           <div className="text-xs line-clamp-1 mt-1 text-right">
-                            {dictionary.list.year?.[language]}:{parseInt(item?.year)}
+                            {dictionary.list.year?.[language]}:
+                            {parseInt(item?.year)}
                           </div>
                           <div className="text-xs line-clamp-1 mt-1 text-right">
                             {dictionary.list.accident[language]}:
@@ -133,7 +136,7 @@ function NewOne({ language, dictionary }) {
                         // Other 플랫폼인 경우
                         <>
                           <p className="card-text text-black font-medium line-clamp-2">
-                          {item.titlePo?.[language]}
+                            {item.titlePo?.[language]}
                           </p>
                           <div className="text-xs line-clamp-1 mt-1 text-right">
                             Mileage:{item.mileagePo}km

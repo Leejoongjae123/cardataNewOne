@@ -1,5 +1,17 @@
 export const dictionary = {
   list: {
+    tagSKEncar:{
+      kr:"SK엔카",
+      en:"SKencar",
+      ru:"СКэнкар",
+      ar:"سكانكار",
+    },
+    tagOthercar:{
+      kr:"타업체",
+      en:"Other",
+      ru:"Другое",
+      ar:"أخرى",
+    },
     modealYearSlider:{
       kr:"연식(년)",
       en:"Model Year(Year)",

@@ -136,8 +136,8 @@ function AllOne({ language, dictionary }) {
       (searchMileage[0] !== 0 || searchMileage[1] !== 300000)
     ) {
       query = query
-        .gte('mileage', searchMileage[0].toString())
-        .lte('mileage', searchMileage[1].toString());
+        .gte("mileage", searchMileage[0].toString())
+        .lte("mileage", searchMileage[1].toString());
     }
 
     const { data, error, count } = await query;
@@ -340,7 +340,9 @@ function AllOne({ language, dictionary }) {
                 size="sm"
                 color={selectedPlatform === "SKEncar" ? "danger" : "success"}
               >
-                {selectedPlatform}
+                {selectedPlatform === "SKEncar"
+                  ? dictionary.list.tagSKEncar?.[language]
+                  : dictionary.list.tagOthercar?.[language]}
               </Chip>
             </div>
             <Link href={`/list/${item.id}`}>
