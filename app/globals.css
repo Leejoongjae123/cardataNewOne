@@ -8575,3 +8575,14 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .partner-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

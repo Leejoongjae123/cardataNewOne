@@ -28,7 +28,7 @@ export default async function ProtectedPage() {
         <h1 className="text-2xl font-bold">
           {dictionary.list.partner[language]}
         </h1>
-        <div className="grid grid-cols-6 gap-4 mt-4 place-items-center">
+        <div className="partner-grid gap-4 mt-4 place-items-center">
           {Array.from({ length: 17 }, (_, i) => (
             <img
               key={i}
