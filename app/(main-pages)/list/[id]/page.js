@@ -242,12 +242,30 @@ async function page({ params }) {
                     <div
                       className={`${carData.platform === "Other" ? "" : "hidden"} flex flex-col gap-1`}
                     >
-                      <div>1.{dictionary.detail.titlePo[language]}:{carData?.titlePo?.[language]}</div>
-                      <div>2.{dictionary.detail.pricePo[language]}:{carData?.salePricePo}KRW</div>
-                      <div>3.{dictionary.detail.modelYearPo[language]}:{carData?.modelYearPo}</div>
-                      <div>4.{dictionary.detail.mileagePo[language]}:{carData?.mileagePo}km</div>
-                      <div>5.{dictionary.detail.isAccidentPo[language]}:{carData?.isAccidentPo?.[language]}</div>
-                      <div>6.{dictionary.detail.carNoPo[language]}:{carData?.carNoPo}</div>
+                      <div>
+                        1.{dictionary.detail.titlePo[language]}:
+                        {carData?.titlePo?.[language]}
+                      </div>
+                      <div>
+                        2.{dictionary.detail.pricePo[language]}:
+                        {carData?.salePricePo}KRW
+                      </div>
+                      <div>
+                        3.{dictionary.detail.modelYearPo[language]}:
+                        {carData?.modelYearPo}
+                      </div>
+                      <div>
+                        4.{dictionary.detail.mileagePo[language]}:
+                        {carData?.mileagePo}km
+                      </div>
+                      <div>
+                        5.{dictionary.detail.isAccidentPo[language]}:
+                        {carData?.isAccidentPo?.[language]}
+                      </div>
+                      <div>
+                        6.{dictionary.detail.carNoPo[language]}:
+                        {carData?.carNoPo}
+                      </div>
                     </div>
                   </div>
 
@@ -285,16 +303,17 @@ async function page({ params }) {
                       productIdNaver={carData.productIdNaver}
                     ></RequestEst>
 
-                    {profiles.role === "master" && carData.platform === "SKEncar" && (
-                      <Link
-                        className="text-center text-xs"
-                        href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`}
-                        target="_blank"
-                      >
-                        http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
-                        {carData.productId}
-                      </Link>
-                    )}
+                    {profiles.role === "master" &&
+                      carData.platform === "SKEncar" && (
+                        <Link
+                          className="text-center text-xs"
+                          href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`}
+                          target="_blank"
+                        >
+                          http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
+                          {carData.productId}
+                        </Link>
+                      )}
                   </div>
                   {profiles.role === "master" ? (
                     <div
@@ -425,6 +444,13 @@ async function page({ params }) {
                         </div>
                       </div>
                     </div>
+                    {profiles.role === "master" && (
+                      <div className="flex gap-3 col-span-2 justify-center items-center mt-3">
+                        <Link target="_blank" href={carData?.accidentUrl}>
+                          보험이력 보기
+                        </Link>
+                      </div>
+                    )}
                   </div>
 
                   <div
@@ -711,7 +737,7 @@ async function page({ params }) {
                         <p>{dictionary.detail.issue9[language]}</p>
                       </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 ">
                       <div className="p-2 inline-flex rounded-full bg-rose-50 self-center">
                         {" "}
                         <ion-icon
@@ -727,6 +753,13 @@ async function page({ params }) {
                       </div>
                     </div>
                   </div>
+                  {profiles.role === "master" && (
+                    <div className="flex gap-3 justify-center items-center mt-3">
+                      <Link target="_blank" href={carData?.performanceUrl}>
+                        성능점검 보기
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -771,4 +804,3 @@ function getKrValue(input) {
     return input;
   }
 }
-
