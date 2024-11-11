@@ -227,7 +227,9 @@ function Role({ session, language }) {
                           setSelectData(item);
                         }}
                       >
-                        {item.title?.[language]}
+                        {item.platform === "SKEncar"
+                          ? item?.title?.[language]
+                          : item?.titlePo?.[language]}{" "}
                       </Link>
                     </TableCell>
                     <TableCell className="flex justify-center text-center whitespace-nowrap">
@@ -300,41 +302,87 @@ function Role({ session, language }) {
                   <ModalBody className="grid grid-cols-2">
                     <div className="flex flex-col">
                       <h1 className="text-medium">물품명</h1>
-                      <p className="text-sm">{selectData.title[language]}</p>
+                      <p className="text-sm">
+                        {selectData.platform === "SKEncar"
+                          ? selectData.title?.[language]
+                          : selectData.titlePo?.[language]}
+                      </p>
                     </div>
                     <div>
                       <h1 className="text-medium">판매가격</h1>
                       <p className="text-sm">
-                        {parseInt(selectData.carPrice).toLocaleString()}만원
+                        {selectData.platform === "SKEncar"
+                          ? parseInt(selectData.carPrice).toLocaleString()
+                          : parseInt(
+                              selectData.salePricePo
+                            ).toLocaleString()}{" "}
+                        만원
                       </p>
                     </div>
                     <div>
                       <h1 className="text-medium">연식</h1>
-                      <p className="text-sm">{parseInt(selectData.year)}</p>
+                      <p className="text-sm">
+                        {selectData.platform === "SKEncar"
+                          ? parseInt(selectData.year)
+                          : parseInt(selectData.modelYearPo)}
+                      </p>
                     </div>
                     <div>
                       <h1 className="text-medium">주행거리</h1>
                       <p className="text-sm">
-                        {parseInt(selectData.mileage)}km
+                        {selectData.platform === "SKEncar"
+                          ? parseInt(selectData.mileage)
+                          : parseInt(selectData.mileagePo)}
+                        km
                       </p>
                     </div>
                     <div>
                       <h1 className="text-medium">사고유무</h1>
                       <p className="text-sm">
-                        {selectData.accidentSelf[language]}
+                        {selectData.platform === "SKEncar"
+                          ? selectData.accidentSelf?.[language]
+                          : selectData.isAccidentPo?.[language]}
                       </p>
                     </div>
                     <div>
                       <h1 className="text-medium">차량번호</h1>
-                      <p className="text-sm">{selectData.inqCrrgsnb}</p>
+                      <p className="text-sm">
+                        {selectData.platform === "SKEncar"
+                          ? selectData.inqCrrgsnb
+                          : selectData.carNoPo}
+                      </p>
                     </div>
                     <div>
                       <h1 className="text-medium">판매자 이름</h1>
-                      <p className="text-sm">{selectData.sellerName}</p>
+                      <p className="text-sm">
+                        {selectData.platform === "SKEncar"
+                          ? selectData.sellerName
+                          : selectData.sellerNamePo}
+                      </p>
                     </div>
                     <div>
                       <h1 className="text-medium">판매자 연락처</h1>
-                      <p className="text-sm">{selectData.sellerPhone}</p>
+                      {selectData.platform === "SKEncar" ? (
+                        <p className="text-sm">{selectData.sellerPhone}</p>
+                      ) : (
+                        <p className="text-sm">{selectData.sellerPhonePo}</p>
+                      )}
+                    </div>
+                    <div>
+                      <h1 className="text-medium">상품URL</h1>
+                      <Link
+                        href={
+                          selectData.platform === "SKEncar"
+                            ? `http://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${selectData.productId}&view_type=normal&adv_attribute=&wtClick_forList=019&WT.hit=rent_list`
+                            : `https://cafe.naver.com/polamfe/ArticleRead.nhn?clubid=25751020&menuid=106&boardtype=L&articleid=${selectData.productIdNaver}`
+                        }
+                        className="text-sm block "
+                        target="_blank"
+                      >
+                        {selectData.platform === "SKEncar"
+                          ? `http://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${selectData.productId}`
+                          : `https://cafe.naver.com/polamfe/ArticleRead.nhn?clubid=25751020&menuid=106&boardtype=L&articleid=${selectData.productIdNaver}`}
+                      </Link>
                     </div>
                   </ModalBody>
                   <div className="p-10 rounded-lg flex justify-center items-center">

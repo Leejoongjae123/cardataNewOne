@@ -272,6 +272,17 @@ async function page({ params }) {
                           ? carData.title["kr"]
                           : carData.titlePo["kr"]
                       }
+                      titlePo={carData.titlePo?.[language]}
+                      salePricePo={carData.salePricePo}
+                      modelYearPo={carData.modelYearPo}
+                      mileagePo={carData.mileagePo}
+                      isAccidentPo={carData.isAccidentPo?.[language]}
+                      carNoPo={carData.carNoPo}
+                      sellerPhonePo={carData.sellerPhonePo}
+                      possibleRegionPo={carData.possibleRegionPo}
+                      isExchangeablePo={carData.isExchangeablePo}
+                      platform={carData.platform}
+                      productIdNaver={carData.productIdNaver}
                     ></RequestEst>
 
                     {profiles.role === "master" && carData.platform === "SKEncar" && (

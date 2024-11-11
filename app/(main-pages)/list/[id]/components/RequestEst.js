@@ -23,6 +23,18 @@ function RequestEst({
   dictionary,
   profiles,
   titlekr,
+  titlePo,
+  salePricePo,
+  modelYearPo,
+  mileagePo,
+  isAccidentPo,
+  carNoPo,
+  sellerPhonePo,
+  sellerAddressPo,
+  possibleRegionPo,
+  isExchangeablePo,
+  platform,
+  productIdNaver,
 }) {
   const {
     isOpen: isOpen1,
@@ -72,17 +84,39 @@ function RequestEst({
     }
 
     if (!existingData) {
-      const { data, error } = await supabase.from("requests").insert([
-        {
-          productId: id,
-          userId: userId,
-          encarId: productId,
-          thumbImage: thumbImage,
-          title: title,
-          description: description,
-          titlekr: titlekr,
-        },
-      ]);
+      const insertData =
+        platform === "SKEncar"
+          ? {
+              productId: id,
+              userId: userId,
+              encarId: productId,
+              thumbImage: thumbImage,
+              title: title,
+              description: description,
+              titlekr: titlekr,
+              platform: "SKEncar",
+            }
+          : {
+              productId: id,
+              userId: userId,
+              encarId: productIdNaver,
+              thumbImage: thumbImage,
+              title: titlePo,
+              description:
+                modelYearPo +
+                "/" +
+                mileagePo +
+                "/" +
+                isAccidentPo +
+                "/" +
+                carNoPo,
+              titlekr: titlekr,
+              platform: "Other",
+            };
+      const { data, error } = await supabase
+        .from("requests")
+        .insert([insertData]);
+
       if (error) {
         console.error(error);
       } else {

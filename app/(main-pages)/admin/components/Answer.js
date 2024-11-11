@@ -122,43 +122,38 @@ function Answer({ session, language }) {
   };
 
   const handleSendMail = async () => {
-    // const response = await axios.post(
-    //   "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
-    //   {
-    //     receiver: responseData.userId.email,
-    //     responsedatetime: formatDateToWords(new Date()),
-    //     name: responseData.productId.title[language],
-    //     number: responseData.productId.inqCrrgsnb,
-    //     modelyear: parseInt(responseData.productId.year),
-    //     mileage: parseInt(responseData.productId.mileage),
-    //     fuel: responseData.productId.fuelType[language],
-    //     color: responseData.productId.clr[language],
-    //     accidenthistory: responseData.productId.accidentSelf[language],
-    //     result: responseData.answer,
-    //     id: responseData.productId.id.toString(),
-    //   },
-    //   {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
+    // Prepare email data based on platform
+    const emailData = responseData.platform === "SKEncar" 
+      ? {
+          receiver: responseData.userId.recommenderEmail,
+          responsedatetime: formatDateToWords(new Date()),
+          name: responseData.productId.title[language],
+          number: responseData.productId.inqCrrgsnb,
+          modelyear: parseInt(responseData.productId.year),
+          mileage: parseInt(responseData.productId.mileage),
+          fuel: responseData.productId.fuelType[language],
+          color: responseData.productId.clr[language],
+          accidenthistory: responseData.productId.accidentSelf[language],
+          result: responseData.answer,
+          id: responseData.productId.id.toString(),
+        }
+      : {
+          receiver: responseData.userId.recommenderEmail,
+          responsedatetime: formatDateToWords(new Date()),
+          name: responseData.productId.titlePo[language],
+          number: responseData.productId.carNoPo,
+          modelyear: parseInt(responseData.productId.modelYearPo),
+          mileage: parseInt(responseData.productId.mileagePo),
+          fuel: "",
+          color: "",
+          accidenthistory: responseData.productId.isAccidentPo[language],
+          result: responseData.answer,
+          id: responseData.productId.id.toString(),
+        };
+
     const response2 = await axios.post(
       "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
-      {
-        receiver: responseData.userId.recommenderEmail,
-        responsedatetime: formatDateToWords(new Date()),
-        name: responseData.productId.title[language],
-        number: responseData.productId.inqCrrgsnb,
-        modelyear: parseInt(responseData.productId.year),
-        mileage: parseInt(responseData.productId.mileage),
-        fuel: responseData.productId.fuelType[language],
-        color: responseData.productId.clr[language],
-        accidenthistory: responseData.productId.accidentSelf[language],
-        result: responseData.answer,
-        id: responseData.productId.id.toString(),
-      },
+      emailData,
       {
         headers: {
           Accept: "application/json",
@@ -166,6 +161,7 @@ function Answer({ session, language }) {
         },
       }
     );
+
     if (response2.status === 200) {
       setMessage("메일 송부 완료");
       onOpen2();
@@ -174,6 +170,7 @@ function Answer({ session, language }) {
       onOpen2();
     }
   };
+  console.log("responseData:", responseData);
 
   return (
     <div>
@@ -262,7 +259,7 @@ function Answer({ session, language }) {
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
-                    {item.productId.title[language]}
+                    {item.titlekr}
                   </h1>
                 </div>
                 <p className="card-list-text">{item.description}</p>
@@ -296,9 +293,9 @@ function Answer({ session, language }) {
                 <div>
                   <h1>Sender</h1>
                   <ul>
-                    <li>Name:{responseData.userId.name}</li>
-                    <li>Email:{responseData.userId.email}</li>
-                    <li>Phone:{responseData.userId.phone}</li>
+                    <li>Name:{responseData.userId?.name}</li>
+                    <li>Email:{responseData.userId?.email}</li>
+                    <li>Phone:{responseData.userId?.phone}</li>
                   </ul>
                 </div>
                 <hr />
@@ -313,18 +310,31 @@ function Answer({ session, language }) {
 
                 <hr className="" />
                 <h2>Spec</h2>
-                <ul>
-                  <li>Name:{responseData.productId.title[language]}</li>
-                  <li>Number:{responseData.productId.inqCrrgsnb}</li>
-                  <li>Model Year:{responseData.productId.year}</li>
-                  <li>Mileage:{responseData.productId.mileage}</li>
-                  <li>Fuel:{responseData.productId.fuelType[language]}</li>
-                  <li>Color:{responseData.productId.clr[language]}</li>
-                  <li>
-                    Accident History:
-                    {responseData.productId.accidentSelf[language]}
-                  </li>
-                </ul>
+                {responseData.platform === "SKEncar" ? (
+                  <ul>
+                    <li>Name: {responseData?.productId?.title?.[language]}</li>
+                    <li>Number: {responseData?.productId?.inqCrrgsnb}</li>
+                    <li>Model Year: {responseData?.productId?.year}</li>
+                    <li>Mileage: {responseData?.productId?.mileage}</li>
+                    <li>Fuel: {responseData?.productId?.fuelType?.[language]}</li>
+                    <li>Color: {responseData?.productId?.clr?.[language]}</li>
+                    <li>
+                      Accident History:
+                      {responseData.productId?.accidentSelf?.[language]}
+                    </li>
+                  </ul>
+                ) : (
+                  <ul>
+                    <li>Name: {responseData.productId.titlePo?.[language]}</li>
+                    <li>Number: {responseData.productId.carNoPo}</li>
+                    <li>Model Year: {responseData.productId.modelYearPo}</li>
+                    <li>Mileage: {responseData.productId.mileagePo}</li>
+                    <li>
+                      Accident History:
+                      {responseData.productId?.isAccidentPo?.[language]}
+                    </li>
+                  </ul>
+                )}
                 <hr className="" />
                 <h2>Result</h2>
                 <Textarea
