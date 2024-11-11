@@ -6,7 +6,7 @@ export default function AccordionComponent({carData, dictionary, language }) {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
   return (
-    <Accordion variant="splitted" className="my-5 dark:bg-white dark:text-black" defaultExpandedKeys={["1"]}>
+    <Accordion variant="splitted" className="my-5 dark:bg-white dark:text-black" defaultExpandedKeys={["1"]} selectionMode="multiple">
       <AccordionItem
         className="shadow-sm border border-gray-200 bg-white"
         key="1"

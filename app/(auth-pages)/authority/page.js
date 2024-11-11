@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Link } from "@nextui-org/react";
 import { dictionary } from "@/app/(main-pages)/components/dictionary";
-
+import { cookies } from "next/headers";
 function page() {
   const languageCookie = cookies().get('language');
   const language = languageCookie ? languageCookie.value : 'kr';  
