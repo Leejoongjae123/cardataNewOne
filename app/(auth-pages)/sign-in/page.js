@@ -27,6 +27,8 @@ import GoogleButton from "./components/GoogleButton";
 export default function Login({ searchParams }) {
   const languageCookie = cookies().get("language");
   const language = languageCookie ? languageCookie.value : "kr";
+
+  
   console.log("language:", language);
   return (
     <div className="w-full flex ">

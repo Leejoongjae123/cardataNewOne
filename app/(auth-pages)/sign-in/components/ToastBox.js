@@ -11,6 +11,10 @@ function ToastBox({searchParams}) {
       console.log('111111')
       toast.error("Unable to Sign In")
     }
+    if (searchParams.error){
+      console.log('111111')
+      toast.error(searchParams.error)
+    }
   }
   useEffect(()=>{
     handleParams()

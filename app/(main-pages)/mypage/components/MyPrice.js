@@ -14,8 +14,16 @@ import {
 } from "@nextui-org/react";
 
 function MyPrice({ session, language, dictionary }) {
-  const { isOpen:isOpen1, onOpen:onOpen1, onOpenChange:onOpenChange1 } = useDisclosure();
-  const { isOpen:isOpen2, onOpen:onOpen2, onOpenChange:onOpenChange2 } = useDisclosure();
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onOpenChange: onOpenChange1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onOpenChange: onOpenChange2,
+  } = useDisclosure();
   const supabase = createClient();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -48,8 +56,8 @@ function MyPrice({ session, language, dictionary }) {
     getData();
   }, [currentPage]);
 
-  console.log('language:',language);
-  
+  console.log("language:", language);
+
   return (
     <div>
       <div className="box p-5 mt-4">
@@ -67,17 +75,25 @@ function MyPrice({ session, language, dictionary }) {
                     color={item.response ? "primary" : "danger"}
                   >
                     {item.response ? (
-                      <Button className="text-white" onPress={() => {
-                        setResponseData(item);
-                        onOpen1();
-                      }}>
+                      <Button
+                        className="text-white"
+                        onPress={() => {
+                          setResponseData(item);
+                          onOpen1();
+                        }}
+                      >
                         {dictionary.mypage.reviewComplete[language]}
                       </Button>
                     ) : (
-                      <Button onPress={() => {
-                        setResponseData(item);
-                        onOpen2();
-                      }} className="text-white">{dictionary.mypage.underreview[language]}</Button>
+                      <Button
+                        onPress={() => {
+                          setResponseData(item);
+                          onOpen2();
+                        }}
+                        className="text-white"
+                      >
+                        {dictionary.mypage.underreview[language]}
+                      </Button>
                     )}
                   </Chip>
                   <h1 className="ml-2 text-medium font-semibold">
@@ -104,7 +120,7 @@ function MyPrice({ session, language, dictionary }) {
           className="text-white"
         />
       </div>
-      <Modal size={'2xl'} isOpen={isOpen1} onOpenChange={onOpenChange1}>
+      <Modal size={"2xl"} isOpen={isOpen1} onOpenChange={onOpenChange1}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -115,25 +131,50 @@ function MyPrice({ session, language, dictionary }) {
                 {responseData && (
                   <>
                     <p>
-                      Hello, this is Sincar. I am sending this email to provide the
-                      vehicle appraisal value for the vehicle you requested on {formatDateToWords(responseData.response_at)}.
+                      Hello, this is Sincar. I am sending this email to provide
+                      the vehicle appraisal value for the vehicle you requested
+                      on {formatDateToWords(responseData.response_at)}.
                     </p>
-                    <hr className=""/>
+                    <hr className="" />
                     <h2>{dictionary.mypage.specification[language]}</h2>
-                    <ul>
-                      <li>Name:{responseData.productId?.title[language]}</li>
-                      <li>Number:{responseData.productId?.inqCrrgsnb}</li>
-                      <li>Model Year:{responseData.productId?.year}</li>
-                      <li>Mileage:{responseData.productId?.mileage}</li>
-                      <li>Fuel:{responseData.productId?.fuelType[language]}</li>
-                      <li>Color:{responseData.productId?.clr[language]}</li>
-                      <li>Accident History:{responseData.productId?.accidentSelf[language]}</li>
-                    </ul>
-                    <hr className=""/>
+                    {responseData.platform === "SKEncar" ? (
+                      <ul>
+                        <li>
+                          Name: {responseData?.productId?.title?.[language]}
+                        </li>
+                        <li>Number: {responseData?.productId?.inqCrrgsnb}</li>
+                        <li>Model Year: {responseData?.productId?.year}</li>
+                        <li>Mileage: {responseData?.productId?.mileage}</li>
+                        <li>
+                          Fuel: {responseData?.productId?.fuelType?.[language]}
+                        </li>
+                        <li>
+                          Color: {responseData?.productId?.clr?.[language]}
+                        </li>
+                        <li>
+                          Accident History:
+                          {responseData.productId?.accidentSelf?.[language]}
+                        </li>
+                      </ul>
+                    ) : (
+                      <ul>
+                        <li>
+                          Name: {responseData.productId.titlePo?.[language]}
+                        </li>
+                        <li>Number: {responseData.productId.carNoPo}</li>
+                        <li>
+                          Model Year: {responseData.productId.modelYearPo}
+                        </li>
+                        <li>Mileage: {responseData.productId.mileagePo}</li>
+                        <li>
+                          Accident History:
+                          {responseData.productId?.isAccidentPo?.[language]}
+                        </li>
+                      </ul>
+                    )}
+                    <hr className="" />
                     <h2>{dictionary.mypage.result[language]}</h2>
-                    <p>
-                      {responseData.answer}
-                    </p>
+                    <p>{responseData.answer}</p>
                   </>
                 )}
               </ModalBody>
@@ -150,16 +191,14 @@ function MyPrice({ session, language, dictionary }) {
           )}
         </ModalContent>
       </Modal>
-      <Modal size={'2xl'} isOpen={isOpen2} onOpenChange={onOpenChange2}>
+      <Modal size={"2xl"} isOpen={isOpen2} onOpenChange={onOpenChange2}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 {dictionary.mypage.contents[language]}
               </ModalHeader>
-              <ModalBody>
-                {dictionary.mypage.notyet[language]}
-              </ModalBody>
+              <ModalBody>{dictionary.mypage.notyet[language]}</ModalBody>
               <ModalFooter>
                 <Button
                   className="text-white"
@@ -191,6 +230,6 @@ function formatTimestamp(timestamp) {
 
 function formatDateToWords(timestamp) {
   const date = new Date(timestamp);
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return date.toLocaleDateString('en-US', options);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
 }
