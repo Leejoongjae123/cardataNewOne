@@ -114,15 +114,15 @@ export async function signUpFirstAction(formData) {
   // if (!name) {
   //   return encodedRedirect("error", "/sign-up", "Name is required");
   // }
-  // if (!phone) {
-  //   return encodedRedirect("error", "/sign-up", "Mobile number is required");
-  // }
+  if (!phone) {
+    return encodedRedirect("error", "/sign-up", "Mobile number is required");
+  }
   if (!recommenderEmail) {
     return encodedRedirect("error", "/sign-up", "Recommender email is required");
   }
-  // if (!recommenderPhone) {
-  //   return encodedRedirect("error", "/sign-up", "Recommender phone is required");
-  // }
+  if (!recommenderPhone) {
+    return encodedRedirect("error", "/sign-up", "Recommender phone is required");
+  }
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
   if (!password || !passwordRegex.test(password)) {
