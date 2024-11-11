@@ -20,6 +20,12 @@ export const dictionary = {
     }
   },
   list: {
+    partner:{
+      kr:"신카와 함께하는 파트너",
+      en:"Partner with Sincar",
+      ru:"Партнер с Sincar",
+      ar:"شريك مع Sincar",
+    },
     tagSKEncar:{
       kr:"SK엔카",
       en:"SKencar",
