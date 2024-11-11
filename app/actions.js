@@ -189,12 +189,12 @@ export const signInWithKakao = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
+  console.log("회원가입1user:", user);
   if (user?.email) {
     // profiles 테이블 업데이트
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ email: user.email, name: user.name })
+      .update({ email: user.email})
       .eq("id", user.id);
 
     if (updateError) {
