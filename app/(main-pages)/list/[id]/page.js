@@ -306,12 +306,13 @@ async function page({ params }) {
                     {profiles.role === "master" &&
                       carData.platform === "SKEncar" && (
                         <Link
-                          className="text-center text-xs"
+                          className="text-center text-xs my-2"
                           href={`http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=${carData.productId}`}
                           target="_blank"
                         >
-                          http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
-                          {carData.productId}
+                          {/* http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
+                          {carData.productId} */}
+                          상품링크 보기
                         </Link>
                       )}
                   </div>
