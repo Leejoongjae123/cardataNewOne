@@ -58,7 +58,19 @@ function RequestEst({
     if (!profiles.recommenderEmail) {
       onOpen3();
       return;
+    
     }
+    if (!profiles.recommenderPhone) {
+      onOpen3();
+      return;
+    
+    }
+    if (!profiles.phone) {
+      onOpen3();
+      return;
+    
+    }
+
 
     const { data: carData, error: carError } = await supabase
       .from("cardata")
