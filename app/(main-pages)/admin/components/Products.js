@@ -227,7 +227,7 @@ function Role({ session, language }) {
                           setSelectData(item);
                         }}
                       >
-                        {item.title[language]}
+                        {item.title?.[language]}
                       </Link>
                     </TableCell>
                     <TableCell className="flex justify-center text-center whitespace-nowrap">
