@@ -102,12 +102,12 @@ function Role({ session, language }) {
       .eq("id", selectData.id);
     if (error) {
       console.error("Error updating data:", error);
-      toast.error("change failed");
+      toast.error("변경 실패");
       return;
     }
     console.log("Data updated successfully:", data);
     console.log("error:", error);
-    toast.success("change successfully");
+    toast.success("변경 완료");
     getData();
   };
 

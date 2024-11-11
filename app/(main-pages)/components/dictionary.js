@@ -1,4 +1,24 @@
 export const dictionary = {
+  nopage:{
+    title:{
+      kr:"승인을 받으려면",
+      en:"To get approved",
+      ru:"Чтобы получить одобрение",
+      ar:"للحصول على الموافقة",
+    },
+    subtitle:{
+      kr:"+82 10-5088-0576 또는 +82 10-7939-1303 연락하거나 Sincar WhatsApp을 통해 문의하세요",
+      en:"Contact +82 10-5088-0576 or +82 10-7939-1303 or contact us through Sincar WhatsApp",
+      ru:"Свяжитесь с нами по телефону +7 916 508-80-57 или +7 916 793-91-30, или напишите нам в WhatsApp",
+      ar:"اتصل بنا على +966 50880576 أو +966 79391303 أو اتصل بنا عبر WhatsApp",
+    },
+    gotosignin:{
+      kr:"로그인 페이지로 이동",
+      en:"Go to Login Page",
+      ru:"Перейти на страницу входа",
+      ar:"Перейти на страницу входа",
+    }
+  },
   list: {
     tagSKEncar:{
       kr:"SK엔카",
@@ -112,10 +132,10 @@ export const dictionary = {
       ar: "تقديرات",
     },
     auth:{
-      kr: "인증",
-      en: "Auth",
-      ru: "Авторизация",
-      ar: "المصنع",
+      kr: "비밀번호 변경",
+      en: "Change Password",
+      ru: "Изменить пароль",
+      ar: "تغيير كلمة المرور",
     },
     info:{
       kr: "정보",

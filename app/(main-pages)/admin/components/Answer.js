@@ -22,6 +22,8 @@ import { Link } from "@nextui-org/react";
 import axios from "axios";
 import { SearchIcon } from "./SearchIcon";
 import debounce from "lodash/debounce";
+import Exchanger from "@/app/(main-pages)/list/[id]/components/Exchanger";
+import { dictionary } from "@/app/(main-pages)/components/dictionary";
 
 function Answer({ session, language }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -123,33 +125,34 @@ function Answer({ session, language }) {
 
   const handleSendMail = async () => {
     // Prepare email data based on platform
-    const emailData = responseData.platform === "SKEncar" 
-      ? {
-          receiver: responseData.userId.recommenderEmail,
-          responsedatetime: formatDateToWords(new Date()),
-          name: responseData.productId.title[language],
-          number: responseData.productId.inqCrrgsnb,
-          modelyear: parseInt(responseData.productId.year),
-          mileage: parseInt(responseData.productId.mileage),
-          fuel: responseData.productId.fuelType[language],
-          color: responseData.productId.clr[language],
-          accidenthistory: responseData.productId.accidentSelf[language],
-          result: responseData.answer,
-          id: responseData.productId.id.toString(),
-        }
-      : {
-          receiver: responseData.userId.recommenderEmail,
-          responsedatetime: formatDateToWords(new Date()),
-          name: responseData.productId.titlePo[language],
-          number: responseData.productId.carNoPo,
-          modelyear: parseInt(responseData.productId.modelYearPo),
-          mileage: parseInt(responseData.productId.mileagePo),
-          fuel: "",
-          color: "",
-          accidenthistory: responseData.productId.isAccidentPo[language],
-          result: responseData.answer,
-          id: responseData.productId.id.toString(),
-        };
+    const emailData =
+      responseData.platform === "SKEncar"
+        ? {
+            receiver: responseData.userId.recommenderEmail,
+            responsedatetime: formatDateToWords(new Date()),
+            name: responseData.productId.title[language],
+            number: responseData.productId.inqCrrgsnb,
+            modelyear: parseInt(responseData.productId.year),
+            mileage: parseInt(responseData.productId.mileage),
+            fuel: responseData.productId.fuelType[language],
+            color: responseData.productId.clr[language],
+            accidenthistory: responseData.productId.accidentSelf[language],
+            result: responseData.answer,
+            id: responseData.productId.id.toString(),
+          }
+        : {
+            receiver: responseData.userId.recommenderEmail,
+            responsedatetime: formatDateToWords(new Date()),
+            name: responseData.productId.titlePo[language],
+            number: responseData.productId.carNoPo,
+            modelyear: parseInt(responseData.productId.modelYearPo),
+            mileage: parseInt(responseData.productId.mileagePo),
+            fuel: "",
+            color: "",
+            accidenthistory: responseData.productId.isAccidentPo[language],
+            result: responseData.answer,
+            id: responseData.productId.id.toString(),
+          };
 
     const response2 = await axios.post(
       "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",
@@ -296,6 +299,9 @@ function Answer({ session, language }) {
                     <li>Name:{responseData.userId?.name}</li>
                     <li>Email:{responseData.userId?.email}</li>
                     <li>Phone:{responseData.userId?.phone}</li>
+                    <li>
+                      Recommender Email:{responseData.userId?.recommenderEmail}
+                    </li>
                   </ul>
                 </div>
                 <hr />
@@ -316,7 +322,9 @@ function Answer({ session, language }) {
                     <li>Number: {responseData?.productId?.inqCrrgsnb}</li>
                     <li>Model Year: {responseData?.productId?.year}</li>
                     <li>Mileage: {responseData?.productId?.mileage}</li>
-                    <li>Fuel: {responseData?.productId?.fuelType?.[language]}</li>
+                    <li>
+                      Fuel: {responseData?.productId?.fuelType?.[language]}
+                    </li>
                     <li>Color: {responseData?.productId?.clr?.[language]}</li>
                     <li>
                       Accident History:
@@ -346,13 +354,31 @@ function Answer({ session, language }) {
                 />
 
                 <hr />
-                <h1>※ 엔카경로</h1>
+                {responseData.platform === "SKEncar" ? (
+                  <h1>※ 엔카경로</h1>
+                ) : (
+                  <h1>※ 포람페경로</h1>
+                )}
+
                 <Link
+                  href={
+                    responseData.platform === "SKEncar"
+                      ? `http://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}&view_type=normal&adv_attribute=&wtClick_forList=019&WT.hit=rent_list`
+                      : `https://cafe.naver.com/polamfe/ArticleRead.nhn?clubid=25751020&menuid=106&boardtype=L&articleid=${responseData.productId.productIdNaver}`
+                  }
+                  className="text-sm block "
                   target="_blank"
-                  href={`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}
                 >
-                  {`https://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`}
+                  {responseData.platform === "SKEncar"
+                    ? `http://www.encar.com/dc/dc_cardetailview.do?pageid=fc_carleaserent_l01&listAdvType=rent&carid=${responseData.productId.productId}`
+                    : `https://cafe.naver.com/polamfe/ArticleRead.nhn?clubid=25751020&menuid=106&boardtype=L&articleid=${responseData.productId.productIdNaver}`}
                 </Link>
+                <div>
+                  <Exchanger
+                    language={language}
+                    dictionary={dictionary}
+                  ></Exchanger>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button
