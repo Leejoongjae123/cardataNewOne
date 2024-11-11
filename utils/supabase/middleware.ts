@@ -69,6 +69,15 @@ export const updateSession = async (request: NextRequest) => {
         return NextResponse.redirect(new URL("/sign-in", request.url));
       }
       if (!certificated) {
+        const user = await supabase.auth.getUser();
+        const { error: updateError } = await supabase
+        .from("profiles")
+        .update({ 
+          email: user.data.user?.email,
+          // 필요한 다른 필드들 업데이트
+        })
+        .eq("id", user.data.user?.id);
+        console.log("권한없음") 
         return NextResponse.redirect(new URL("/authority", request.url));
       }
       // 여기서 추가 검사나 로직을 수행할 수 있습니다.

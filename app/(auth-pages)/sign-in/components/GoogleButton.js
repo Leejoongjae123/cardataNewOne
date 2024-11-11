@@ -19,6 +19,9 @@ export default function GoogleButton({ dictionary, language }) {
         },
       },
     });
+
+
+    
   
     if (error) {
       console.error("Login error:", error);
