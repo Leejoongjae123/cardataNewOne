@@ -51,7 +51,7 @@ function StreamChat({ carData, userData, language }) {
     setIsLoading(true);
     try {
       const channelName = carData.title?.[language];
-      const fullChannelName = channelName + `_${language}`;
+      const fullChannelName = channelName+"_"+carData.id + `_${language}`;
       setFullChannelName(fullChannelName);
 
       // 기존 채널 검색

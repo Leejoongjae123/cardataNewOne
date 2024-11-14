@@ -8603,6 +8603,12 @@ h1, h2, h3, h4, h5, h6 {
   overflow-x: hidden;
   scrollbar-width: none;  /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
+  scroll-behavior: smooth; /* 부드러운 스크롤 효과 */
+  scroll-snap-type: y proximity; /* 스크롤 스냅 추가 */
+}
+/* 마지막 메시지에 스크롤 스냅 포인트 추가 */
+.str-chat__ul > li:last-child {
+  scroll-snap-align: end;
 }
 
 .str-chat__ul::-webkit-scrollbar {
