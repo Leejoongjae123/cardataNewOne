@@ -8586,3 +8586,25 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(6, 1fr);
   }
 }
+
+/* .str-chat__channel-list {
+  width: 30%;
+} */
+/* .str-chat__channel {
+  width: 100%;
+}
+.str-chat__thread {
+  width: 45%;
+} */
+
+.str-chat__ul {
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.str-chat__ul::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}

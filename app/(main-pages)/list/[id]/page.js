@@ -22,6 +22,7 @@ import { cookies } from "next/headers";
 import { dictionary } from "@/app/(main-pages)/components/dictionary";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import AccordionComponent from "./components/AccordionComponent";
+import ChatModal from "./components/ChatModal";
 async function page({ params }) {
   const languageCookie = cookies().get("language");
   const language = languageCookie ? languageCookie.value : "kr";
@@ -351,13 +352,7 @@ async function page({ params }) {
                     dictionary={dictionary}
                   ></Exchanger>
 
-                  <button
-                    className="button bg-secondery px-3 w-full"
-                    uk-tooltip="title: Chat; offset: 8"
-                  >
-                    <IoChatbubbleEllipsesOutline className="w-5 h-5 text-gray-500"></IoChatbubbleEllipsesOutline>
-                    {dictionary.detail.chat[language]}
-                  </button>
+                  <ChatModal carData={carData} profiles={profiles} language={language}></ChatModal>
                 </div>
               </div>
             </div>
