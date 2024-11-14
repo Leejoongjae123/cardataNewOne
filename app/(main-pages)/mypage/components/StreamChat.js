@@ -10,8 +10,9 @@ import {
   MessageList,
   MessageInput,
   Thread,
+
 } from "stream-chat-react";
-import { Button, Input, Spinner } from "@nextui-org/react";
+import { Button, Input, Spinner,Card } from "@nextui-org/react";
 import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 
@@ -170,7 +171,7 @@ function StreamChat({ carData, userData, language }) {
 
   console.log('activeChannel:', activeChannel)
   return (
-    <div className="flex w-[100vw] h-[100vh]">
+    <Card className="flex w-full h-full mt-5 p-5">
       <Chat client={client} theme="str-chat__theme-custom">
         <div className="grid grid-cols-3 w-full">
           <div className="col-span-1">
@@ -187,7 +188,10 @@ function StreamChat({ carData, userData, language }) {
           <div className="col-span-2 ">
               <Channel channel={activeChannel} className="w-full">
                 <Window className="w-full">
+                  <div className="px-5">
                   <ChannelHeader className="w-full"/>                    
+                  </div>
+                  
                   
                   <MessageList className="w-full" />
                   <MessageInput className="w-full" />
@@ -198,7 +202,7 @@ function StreamChat({ carData, userData, language }) {
           </div>
         </div>
       </Chat>
-    </div>
+    </Card>
   );
 }
 
