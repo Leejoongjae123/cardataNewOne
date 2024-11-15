@@ -14,8 +14,9 @@ import {
 import { Button, Input, Spinner } from "@nextui-org/react";
 import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
+import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
 
-function StreamChat({ dictionary, carData, userData, language }) {
+function StreamChat({ carSpec, dictionary, carData, userData, language }) {
   const [channelName, setChannelName] = useState("");
   const [activeChannel, setActiveChannel] = useState(null);
   const [fullChannelName, setFullChannelName] = useState("");
@@ -51,7 +52,7 @@ function StreamChat({ dictionary, carData, userData, language }) {
     setIsLoading(true);
     try {
       const channelName = carData.title?.[language];
-      const fullChannelName = channelName+"_"+carData.id + `_${language}`;
+      const fullChannelName = channelName + "_" + carData.id + `_${language}`;
       setFullChannelName(fullChannelName);
 
       // 기존 채널 검색
@@ -113,8 +114,6 @@ function StreamChat({ dictionary, carData, userData, language }) {
     }
   };
 
-  
-
   const handleChannelSelect = (channel) => {
     setActiveChannel(channel);
   };
@@ -165,14 +164,18 @@ function StreamChat({ dictionary, carData, userData, language }) {
     );
   };
 
+  console.log("carData:", carData);
+
   if (!client || isLoading)
     return (
       <div className="flex w-full h-full justify-center items-center">
-        <Spinner label={dictionary.chat.loading[language]} color="warning"></Spinner>
+        <Spinner
+          label={dictionary.chat.loading[language]}
+          color="warning"
+        ></Spinner>
       </div>
     );
 
-  console.log('activeChannel:', activeChannel)
   return (
     <div className="flex w-full h-full">
       <Chat client={client} theme="str-chat__theme-custom">
@@ -180,14 +183,32 @@ function StreamChat({ dictionary, carData, userData, language }) {
           <div className="w-full h-full">
             <Channel channel={activeChannel} className="w-full">
               <Window className="w-full ">
-                <div className="w-full px-10">
-                  <ChannelHeader className="w-full " />
+                {/* <div className="w-full px-10 flex">
+                  <Image src={carData?.uploadedImageUrls[0]?.url} alt={carData.title[language]} width={100} height={100}></Image>
+                  <div className="flex flex-col">
+                    <div className="text-lg font-bold">{carData.title[language]}</div>
+                    <div className="text-medium text-gray-500">{carData.price}원</div>
+                  </div>
+                </div> */}
+                <div className="flex px-10 gap-x-5">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl"
+                    src={carData?.uploadedImageUrls[0]?.url}
+                    width={100}
+                    height={100}
+                  />
+                  <div className="flex flex-col justify-center items-start px-10 w-full gap-y-5">
+                    <div className="text-lg font-bold">
+                      {carData.title[language]}
+                    </div>
+                    <div className="text-medium text-gray-500">
+                      {carSpec}
+                    </div>
+                  </div>
                 </div>
 
-                <MessageList 
-                  className="w-full"
-                  scrollBehavior="smooth" 
-                />
+                <MessageList className="w-full" scrollBehavior="smooth" />
                 <MessageInput className="w-full " />
               </Window>
               <Thread />

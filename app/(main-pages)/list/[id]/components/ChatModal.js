@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import StreamChat from "./StreamChat";
-function ChatModal({ dictionary,carData, profiles, language }) {
+function ChatModal({ carSpec, dictionary,carData, profiles, language }) {
 
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -57,7 +57,7 @@ function ChatModal({ dictionary,carData, profiles, language }) {
                 {dictionary.chat.title[language]}
               </ModalHeader>
               <ModalBody className="h-[50vh]">  {/* 최대 높이 50vh로 제한, 스크롤 가능 */}
-                <StreamChat dictionary={dictionary} carData={carData} userData={userData} language={language}></StreamChat>
+                <StreamChat carSpec={carSpec} dictionary={dictionary} carData={carData} userData={userData} language={language}></StreamChat>
               </ModalBody>
               {/* <ModalFooter>
                 <Button className="text-white" color="primary" onPress={onClose}>
