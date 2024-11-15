@@ -352,7 +352,7 @@ async function page({ params }) {
                     dictionary={dictionary}
                   ></Exchanger>
 
-                  <ChatModal carData={carData} profiles={profiles} language={language}></ChatModal>
+                  <ChatModal dictionary={dictionary} carData={carData} profiles={profiles} language={language}></ChatModal>
                 </div>
               </div>
             </div>

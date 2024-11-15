@@ -15,7 +15,7 @@ import { Button, Input, Spinner } from "@nextui-org/react";
 import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 
-function StreamChat({ carData, userData, language }) {
+function StreamChat({ dictionary, carData, userData, language }) {
   const [channelName, setChannelName] = useState("");
   const [activeChannel, setActiveChannel] = useState(null);
   const [fullChannelName, setFullChannelName] = useState("");
@@ -168,7 +168,7 @@ function StreamChat({ carData, userData, language }) {
   if (!client || isLoading)
     return (
       <div className="flex w-full h-full justify-center items-center">
-        <Spinner label="Loading..." color="warning"></Spinner>
+        <Spinner label={dictionary.chat.loading[language]} color="warning"></Spinner>
       </div>
     );
 

@@ -8598,7 +8598,7 @@ h1, h2, h3, h4, h5, h6 {
 } */
 
 .str-chat__ul {
-  max-height: 50vh;
+  height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;  /* Firefox */
@@ -8613,4 +8613,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .str-chat__ul::-webkit-scrollbar {
   display: none;  /* Chrome, Safari, Opera */
+}
+
+.str-chat__channel-list-messenger {
+  max-height: 60vh;
+  overflow-y: auto;
+  /* 모든 브라우저에서 스크롤바 숨기기 */
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+/* Chrome, Safari, Opera를 위한 스크롤바 숨기기 */
+.str-chat__channel-list-messenger::-webkit-scrollbar {
+  display: none;
+  width: 0;  /* 추가적인 안전장치 */
 }

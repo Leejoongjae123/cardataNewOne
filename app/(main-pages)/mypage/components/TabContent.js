@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyInfo from "./MyInfo";
 import MyAuth from "./MyAuth";
 import MyPrice from "./MyPrice";
@@ -8,8 +8,18 @@ import StreamChat from "./StreamChat";
 export default function TabContent({ profiles, session, language, dictionary }) {
   const [activeTab, setActiveTab] = useState("info");
 
+  const [defaultLanguage, setDefaultLanguage] = useState('ko');
+
+  useEffect(() => {
+    if (language === 'kr') {
+      setDefaultLanguage('ko');
+    } else if (language === 'en' || language === 'ru') {
+      setDefaultLanguage(language);
+    }
+  }, [language]);
 
   const userData = {
+    language:defaultLanguage,
     id: profiles.email.split("@")[0], // '@' 기준으로 분할하여 첫 번째 부분만 사용
     name: "client",
     image:
@@ -42,6 +52,8 @@ export default function TabContent({ profiles, session, language, dictionary }) 
         </li>
         <li className={activeTab === "info" ? "uk-active" : ""}>
           <StreamChat
+            defaultLanguage={defaultLanguage}
+            dictionary={dictionary}
             userData={userData}
             carData={carData}
             language={language}

@@ -1,4 +1,18 @@
 export const dictionary = {
+  chat:{
+    title:{
+      kr:"채팅",
+      en:"Chat",
+      ru:"Чат",
+      ar:"الدردشة",
+    },
+    loading:{
+      kr:"로딩중...",
+      en:"Loading...",
+      ru:"Загрузка...",
+      ar:"تحميل...",
+    },
+  },
   nopage:{
     title:{
       kr:"승인을 받으려면",
