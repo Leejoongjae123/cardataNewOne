@@ -280,7 +280,9 @@ function StreamChat({ dictionary, userData, language, defaultLanguage, session }
                           ) : (
                             <>
                               <div className="text-lg font-bold">
-                                {carData?.titlePo[language]}
+                                <Link target="_blank" href={`/list/${carData?.id}`}>
+                                  {carData?.titlePo[language]}
+                                </Link>
                               </div>
                               <div className="text-medium text-black">
                                 {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}

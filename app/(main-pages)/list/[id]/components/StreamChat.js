@@ -62,8 +62,9 @@ function StreamChat({
     setIsLoading(true);
 
     try {
-      const channelName = carData.title?.[language];
-      const fullChannelName = channelName + "_" + carData.id + `_${language}`;
+      const channelName = carData.platform === "SKEncar" 
+        ? carData.title?.[language] 
+        : carData.titlePo?.[language];      const fullChannelName = channelName + "_" + carData.id + `_${language}`;
       setFullChannelName(fullChannelName);
 
       // Check if the channel is already active
