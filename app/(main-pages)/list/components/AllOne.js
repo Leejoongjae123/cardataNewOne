@@ -39,13 +39,14 @@ function AllOne({ language, dictionary }) {
     } else if (data) {
       const uniqueManufacturers = Array.from(
         new Set(data.map((item) => item.manufacturer))
-      );
+      ).sort();
       const formattedManufacturers = uniqueManufacturers.map(
         (manufacturer) => ({
           key: manufacturer,
           label: manufacturer,
         })
       );
+      
       setManufacturer(formattedManufacturers);
     }
   };
@@ -60,7 +61,7 @@ function AllOne({ language, dictionary }) {
     if (error) {
       console.log(error);
     } else if (data) {
-      const uniqueModels = Array.from(new Set(data.map((item) => item.model)));
+      const uniqueModels = Array.from(new Set(data.map((item) => item.model))).sort();
       const formattedModels = uniqueModels.map((model) => ({
         key: model,
         label: model,
@@ -80,7 +81,7 @@ function AllOne({ language, dictionary }) {
     } else if (data) {
       const uniqueModelGroups = Array.from(
         new Set(data.map((item) => item.modelGroup))
-      );
+      ).sort();
       const formattedModelGroups = uniqueModelGroups.map((modelGroup) => ({
         key: modelGroup,
         label: modelGroup,
