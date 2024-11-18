@@ -62,9 +62,11 @@ function StreamChat({
     setIsLoading(true);
 
     try {
-      const channelName = carData.platform === "SKEncar" 
-        ? carData.title?.[language] 
-        : carData.titlePo?.[language];      const fullChannelName = channelName + "_" + carData.id + `_${language}`;
+      const channelName =
+        carData.platform === "SKEncar"
+          ? carData.title?.[language]
+          : carData.titlePo?.[language];
+      const fullChannelName = channelName + "_" + carData.id + `_${language}`;
       setFullChannelName(fullChannelName);
 
       // Check if the channel is already active
@@ -86,8 +88,6 @@ function StreamChat({
         console.error("채널 검색 중 오류 발생:", error);
         existingChannels = [];
       }
-
-
 
       if (existingChannels.length > 0) {
         const channel = existingChannels[0];
@@ -113,9 +113,9 @@ function StreamChat({
 
       try {
         const { data: existingChat, error: fetchError } = await supabase
-          .from('chatInfo')
-          .select('*')
-          .eq('chatId', newChannel.id)
+          .from("chatInfo")
+          .select("*")
+          .eq("chatId", newChannel.id)
           .limit(1); // Limit to 1 to ensure single row
         console.log("existingChat:", existingChat);
         if (fetchError) {
@@ -125,10 +125,8 @@ function StreamChat({
         } else {
           // Insert new chatId and profiles if it doesn't exist
           const { data, error } = await supabase
-            .from('chatInfo')
-            .insert([
-              { chatId: newChannel.id, profiles: profiles }
-            ]);
+            .from("chatInfo")
+            .insert([{ chatId: newChannel.id, profiles: profiles }]);
 
           if (error) {
             console.error("Supabase에 데이터 저장 중 오류 발생:", error);
@@ -197,15 +195,16 @@ function StreamChat({
                     <div className="text-medium text-gray-500">{carData.price}원</div>
                   </div>
                 </div> */}
-                <div className="flex px-10 gap-x-5">
+                <div className="flex flex-col lg:flex-row justify-center items-center px-0 md:px-10 gap-x-5">
                   <Image
                     alt="Card background"
-                    className="object-cover rounded-xl"
+                    className="object-cover rounded-xl mx-auto"
                     src={carData?.uploadedImageUrls[0]?.url}
                     width={100}
                     height={100}
                   />
-                  <div className="flex flex-col justify-center items-start px-10 w-full gap-y-5">
+
+                  <div className="flex flex-col justify-center items-start px-0 md:px-10 w-full gap-y-5">
                     {carData.platform === "SKEncar" ? (
                       <>
                         <div className="text-lg font-bold">

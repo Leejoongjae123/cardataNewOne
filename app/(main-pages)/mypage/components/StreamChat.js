@@ -17,6 +17,7 @@ import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 import { Streami18n } from "stream-chat-react";
 import { createClient } from "@/utils/supabase/client";
+import { FaChevronLeft } from "react-icons/fa6";
 
 function StreamChat({ dictionary, userData, language, defaultLanguage }) {
   const [channelName, setChannelName] = useState("");
@@ -24,6 +25,7 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
   const [carData, setCarData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [carSpec, setCarSpec] = useState("");
+  const [isMessageViewActive, setIsMessageViewActive] = useState(false);
   const supabase = createClient();
   useEffect(() => {
     const fetchCarData = async () => {
@@ -133,7 +135,7 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
     const { channel, setActiveChannel, setChannelName } = props;
     return (
       <div
-        className="p-4 border-b hover:bg-gray-100 cursor-pointer relative"
+        className="p-4  hover:bg-gray-100 cursor-pointer relative"
         onClick={() => {
           setActiveChannel(channel);
           setChannelName(channel?.data?.name || "이름 없는 채널");
@@ -157,6 +159,17 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
     );
   };
 
+  const handleChannelSelect = (channel) => {
+    setActiveChannel(channel);
+    setChannelName(channel?.data?.name || "이름 없는 채널");
+    setIsMessageViewActive(true);
+  };
+
+  const handleBackToChannelList = () => {
+    setIsMessageViewActive(false);
+    setActiveChannel(null);
+  };
+
   if (!client) {
     return (
       <div className="flex w-full h-full justify-center items-center">
@@ -174,62 +187,33 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
         theme="str-chat__theme-custom"
         i18nInstance={i18nInstance}
       >
-        <div className="grid grid-cols-3 w-full">
-          <div className="col-span-1 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 w-full">
+          <div className={`col-span-1 ${isMessageViewActive ? 'hidden md:block' : 'block'}`}>
             <ChannelList
-              className="w-full"
+              className="w-full border-r-none"
               filters={filters}
               sort={sort}
               options={options}
               Preview={(props) => (
                 <CustomChannelPreview
                   {...props}
-                  setActiveChannel={setActiveChannel}
+                  setActiveChannel={handleChannelSelect}
                   setChannelName={setChannelName}
                 />
               )}
-              // onSelect={handleChannelSelect} // Add this line
             />
           </div>
-          <div className="col-span-2 ">
-            <Channel channel={activeChannel} className="w-full">
-              <Window className="w-full">
-                {carData && !isLoading ? (
-                  <div className="flex px-10 gap-x-5">
-                    <Image
-                      alt="Card background"
-                      className="object-cover rounded-xl"
-                      src={carData?.uploadedImageUrls[0]?.url}
-                      width={100}
-                      height={100}
-                    />
-                    <div className="flex flex-col justify-center items-start px-10 w-full gap-y-5">
-                      {carData.platform === "SKEncar" ? (
-                        <>
-                          <div className="text-lg font-bold">
-                            {carData.title[language]}
-                          </div>
-                          <div className="text-medium text-gray-500">
-                            {carSpec}
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="text-lg font-bold">
-                            {carData?.titlePo[language]}
-                          </div>
-                          <div className="text-medium text-gray-500">
-                            {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ) : null}
-                {/* <ChannelHeader className="w-full" /> */}
-                {activeChannel && (
-                  <>
-                    <div className="flex px-10 gap-x-5 justify-center items-center">
+          {(!isMessageViewActive ? null : (
+            <div className="col-span-1 md:col-span-2 flex flex-col">
+              <div className="flex justify-start items-center md:hidden">
+                <div onClick={handleBackToChannelList} className="mb-4">
+                  <FaChevronLeft />
+                </div>
+              </div>
+              <Channel channel={activeChannel} className="w-full">
+                <Window className="w-full">
+                  {carData && !isLoading ? (
+                    <div className="flex px-10 gap-x-5">
                       <Image
                         alt="Card background"
                         className="object-cover rounded-xl"
@@ -237,12 +221,11 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
                         width={100}
                         height={100}
                       />
-                      <div className="flex flex-col justify-center items-start px-10 w-full gap-y-1">
-                        {carData?.platform === "SKEncar" && carData ? (
+                      <div className="flex flex-col justify-center items-start px-0 md:px-10 w-full gap-y-5">
+                        {carData.platform === "SKEncar" ? (
                           <>
-
                             <div className="text-lg font-bold">
-                              <Link target="_blank" href={`/list/${carData?.id}`}>{carData?.title?.[language]}</Link>
+                              {carData.title[language]}
                             </div>
                             <div className="text-medium text-gray-500">
                               {carSpec}
@@ -254,20 +237,59 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
                               {carData?.titlePo[language]}
                             </div>
                             <div className="text-medium text-gray-500">
-                              {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
+                              {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
                             </div>
                           </>
                         )}
                       </div>
                     </div>
-                    <MessageList className="w-full" />
-                    <MessageInput className="w-full" />
-                  </>
-                )}
-              </Window>
-              <Thread />
-            </Channel>
-          </div>
+                  ) : null}
+                  {/* <ChannelHeader className="w-full" /> */}
+                  {activeChannel && (
+                    <>
+                      <div className="flex flex-col lg:flex-row px-0 md:px-10 gap-x-5 justify-center items-center">
+                        <Image
+                          alt="Card background"
+                          className="object-cover rounded-xl"
+                          src={carData?.uploadedImageUrls[0]?.url}
+                          width={100}
+                          height={100}
+                        />
+                        <div className="flex flex-col justify-center items-start px-0 md:px-10 w-full gap-y-1">
+                          {carData?.platform === "SKEncar" && carData ? (
+                            <>
+                              <div className="text-lg font-bold">
+                                <Link target="_blank" href={`/list/${carData?.id}`}>{carData?.title?.[language]}</Link>
+                              </div>
+                              <div className="text-medium text-gray-500">
+                                {carSpec}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="text-lg font-bold">
+                                {carData?.titlePo[language]}
+                              </div>
+                              <div className="text-medium text-gray-500">
+                                {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <MessageList className="w-full" />
+                      <MessageInput className="w-full" />
+                    </>
+                  )}
+                </Window>
+                <Thread />
+              </Channel>
+            </div>
+          )) || (
+            <div className="hidden md:flex md:col-span-2 justify-center items-center">
+              <div className="text-gray-500">채팅방을 선택해주세요</div>
+            </div>
+          )}
         </div>
       </Chat>
     </Card>

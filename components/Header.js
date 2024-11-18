@@ -38,8 +38,8 @@ async function Header() {
               <Image
                 src="/images/logo1.png"
                 alt="Sincar"
-                width={100}
-                height={100}
+                width={80}
+                height={50}
               />
             </Link>
             </div>

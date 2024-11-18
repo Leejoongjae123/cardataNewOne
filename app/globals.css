@@ -8605,6 +8605,7 @@ h1, h2, h3, h4, h5, h6 {
   -ms-overflow-style: none;  /* IE and Edge */
   scroll-behavior: smooth; /* 부드러운 스크롤 효과 */
   scroll-snap-type: y proximity; /* 스크롤 스냅 추가 */
+  border-right: none;
 }
 /* 마지막 메시지에 스크롤 스냅 포인트 추가 */
 .str-chat__ul > li:last-child {
@@ -8621,6 +8622,11 @@ h1, h2, h3, h4, h5, h6 {
   /* 모든 브라우저에서 스크롤바 숨기기 */
   scrollbar-width: none;  /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
+  right: 0;
+  border-right: none;
+}
+.str-chat{
+  border-right: none;
 }
 
 /* Chrome, Safari, Opera를 위한 스크롤바 숨기기 */

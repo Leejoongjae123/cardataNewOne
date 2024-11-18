@@ -17,6 +17,7 @@ import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 import { Streami18n } from "stream-chat-react";
 import { createClient } from "@/utils/supabase/client";
+import { FaChevronLeft } from "react-icons/fa";
 
 function StreamChat({ dictionary, userData, language, defaultLanguage, session }) {
   const [channelName, setChannelName] = useState("");
@@ -26,6 +27,7 @@ function StreamChat({ dictionary, userData, language, defaultLanguage, session }
   const [carSpec, setCarSpec] = useState("");
   const [userProfiles, setUserProfiles] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [isMessageViewActive, setIsMessageViewActive] = useState(false);
   
   console.log('userProfiles:', userProfiles);
   
@@ -179,6 +181,17 @@ function StreamChat({ dictionary, userData, language, defaultLanguage, session }
     );
   };
 
+  const handleChannelSelect = (channel) => {
+    setActiveChannel(channel);
+    setChannelName(channel?.data?.name || "이름 없는 채널");
+    setUserId(channel?.data?.created_by);
+    setIsMessageViewActive(true);
+  };
+
+  const handleBackToChannelList = () => {
+    setIsMessageViewActive(false);
+  };
+
   if (!client) {
     return (
       <div className="flex w-full h-full justify-center items-center">
@@ -196,8 +209,8 @@ function StreamChat({ dictionary, userData, language, defaultLanguage, session }
         theme="str-chat__theme-custom"
         i18nInstance={i18nInstance}
       >
-        <div className="grid grid-cols-3 w-full">
-          <div className="col-span-1 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 w-full">
+          <div className={`col-span-1 ${isMessageViewActive ? 'hidden md:block' : 'block'}`}>
             <ChannelList
               className="w-full"
               filters={filters}
@@ -206,104 +219,119 @@ function StreamChat({ dictionary, userData, language, defaultLanguage, session }
               Preview={(props) => (
                 <CustomChannelPreview
                   {...props}
-                  setActiveChannel={setActiveChannel}
+                  setActiveChannel={handleChannelSelect}
                   setChannelName={setChannelName}
                   setUserId={setUserId}
                 />
               )}
-              // onSelect={handleChannelSelect} // Add this line
             />
           </div>
-          <div className="col-span-2 ">
-            <Channel channel={activeChannel} className="w-full">
-              <Window className="w-full">
-                {carData && !isLoading ? (
-                  <div className="flex px-10 gap-x-5">
-                    <Image
-                      alt="Card background"
-                      className="object-cover rounded-xl"
-                      src={carData?.uploadedImageUrls[0]?.url}
-                      width={100}
-                      height={100}
-                    />
-                    <div className="flex flex-col justify-center items-start px-10 w-full gap-y-5">
-                      {carData.platform === "SKEncar" ? (
-                        <>
-                          <div className="text-lg font-bold">
-                            {carData.title[language]}
-                          </div>
-                          <div className="text-medium text-gray-500">
-                            {carSpec}
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="text-lg font-bold">
-                            {carData?.titlePo[language]}
-                          </div>
-                          <div className="text-medium text-gray-500">
-                            {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
-                          </div>
-                        </>
-                      )}
+          {(!isMessageViewActive ? null : (
+            <div className="col-span-1 md:col-span-2 flex flex-col">
+              <div className="flex justify-start items-center md:hidden">
+                <div onClick={handleBackToChannelList} className="mb-4">
+                  <FaChevronLeft />
+                </div>
+              </div>
+              <Channel channel={activeChannel} className="w-full">
+                <Window className="w-full">
+                  {carData && !isLoading ? (
+                    <div className="flex flex-col lg:flex-row px-0 lg:px-10 gap-x-5">
+                      <Image
+                        alt="Card background"
+                        className="object-cover rounded-xl"
+                        src={carData?.uploadedImageUrls[0]?.url}
+                        width={100}
+                        height={100}
+                      />
+                      <div className="flex flex-col justify-center items-start px-0 lg:px-10 w-full gap-y-5">
+                        {carData.platform === "SKEncar" ? (
+                          <>
+                            <div className="text-lg font-bold">
+                              {carData.title[language]}
+                            </div>
+                            <div className="text-medium text-gray-500">
+                              {carSpec}
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="text-lg font-bold">
+                              {carData?.titlePo[language]}
+                            </div>
+                            <div className="text-medium text-gray-500">
+                              {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ) : null}
-                {/* <ChannelHeader className="w-full" /> */}
-                {activeChannel && (
-                  <>
-                    <div className="flex flex-col">
-                      <div className="flex px-10 gap-x-5 justify-center items-center">
-                        <Image
-                          alt="Card background"
-                          className="object-cover rounded-xl"
-                          src={carData?.uploadedImageUrls[0]?.url}
-                          width={100}
-                          height={100}
-                        />
-                        <div className="flex flex-col justify-center items-start px-10 w-full gap-y-1">
-                          {carData?.platform === "SKEncar" && carData ? (
-                            <>
-                              <div className="text-lg font-bold">
-                                <Link
-                                  target="_blank"
-                                  href={`/list/${carData?.id}`}
-                                >
-                                  {carData?.title?.[language]}
-                                </Link>
-                              </div>
-                              <div className="text-medium text-black">
-                                {carSpec}
-                              </div>
-                              <div className="text-sm text-gray-500">유저정보: {userProfiles?.name}•{userProfiles?.email}•{userProfiles?.phone}</div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="text-lg font-bold">
-                                <Link target="_blank" href={`/list/${carData?.id}`}>
-                                  {carData?.titlePo[language]}
-                                </Link>
-                              </div>
-                              <div className="text-medium text-black">
-                                {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
-                              </div>
-                              <div className="text-sm text-gray-500">유저정보: {userProfiles?.name}•{userProfiles?.email}•{userProfiles?.phone}</div>
-                            </>
-                          )}
+                  ) : null}
+                  {/* <ChannelHeader className="w-full" /> */}
+                  {activeChannel && (
+                    <>
+                      <div className="flex flex-col">
+                        <div className="flex flex-col lg:flex-row px-0 lg:px-10 gap-x-5 justify-center items-center">
+                          <Image
+                            alt="Card background"
+                            className="object-cover rounded-xl"
+                            src={carData?.uploadedImageUrls[0]?.url}
+                            width={100}
+                            height={100}
+                          />
+                          <div className="flex flex-col justify-center items-start px-0 lg:px-10 w-full gap-y-1">
+                            {carData?.platform === "SKEncar" && carData ? (
+                              <>
+                                <div className="text-lg font-bold">
+                                  <Link
+                                    target="_blank"
+                                    href={`/list/${carData?.id}`}
+                                  >
+                                    {carData?.title?.[language]}
+                                  </Link>
+                                </div>
+                                <div className="text-medium text-black">
+                                  {carSpec}
+                                </div>
+                                
+                                <ul className="text-sm text-gray-500">
+                                  <li>이름: {userProfiles?.name}</li>
+                                  <li>이메일: {userProfiles?.email}</li>
+                                  <li>전화번호: {userProfiles?.phone}</li>
+                                </ul>
+                              </>
+                            ) : (
+                              <>
+                                <div className="text-lg font-bold">
+                                  <Link target="_blank" href={`/list/${carData?.id}`}>
+                                    {carData?.titlePo[language]}
+                                  </Link>
+                                </div>
+                                <div className="text-medium text-black">
+                                  {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
+                                </div>
+                                <div className="text-sm text-gray-500">유저정보: {userProfiles?.name}•{userProfiles?.email}•{userProfiles?.phone}</div>
+                              </>
+                            )}
+                          </div>
+                          
                         </div>
                         
                       </div>
-                      
-                    </div>
 
-                    <MessageList className="w-full" />
-                    <MessageInput className="w-full" />
-                  </>
-                )}
-              </Window>
-              <Thread />
-            </Channel>
-          </div>
+                      <MessageList className="w-full" />
+                      <MessageInput className="w-full" />
+                    </>
+                  )}
+                </Window>
+                <Thread />
+              </Channel>
+            </div>
+          )) || (
+            <div className="hidden md:flex md:col-span-2 justify-center items-center">
+              <div className="text-gray-500">채팅방을 선택해주세요</div>
+            </div>
+          )}
         </div>
       </Chat>
     </Card>
