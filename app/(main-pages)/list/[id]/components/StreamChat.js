@@ -15,12 +15,21 @@ import { Button, Input, Spinner } from "@nextui-org/react";
 import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
-
-function StreamChat({ carSpec, dictionary, carData, userData, language }) {
+import { createClient } from "@/utils/supabase/client";
+function StreamChat({
+  profiles,
+  carSpec,
+  dictionary,
+  carData,
+  userData,
+  language,
+}) {
   const [channelName, setChannelName] = useState("");
   const [activeChannel, setActiveChannel] = useState(null);
   const [fullChannelName, setFullChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreatingChannel, setIsCreatingChannel] = useState(false);
+  const supabase = createClient();
 
   const tokenProvider = useCallback(async () => {
     return await createToken(userData.id);
@@ -48,19 +57,36 @@ function StreamChat({ carSpec, dictionary, carData, userData, language }) {
   }, [client, fullChannelName]);
 
   const findOrCreateChannel = async () => {
-    if (!client) return;
+    if (!client || isCreatingChannel) return;
+    setIsCreatingChannel(true);
     setIsLoading(true);
+
     try {
       const channelName = carData.title?.[language];
       const fullChannelName = channelName + "_" + carData.id + `_${language}`;
       setFullChannelName(fullChannelName);
 
+      // Check if the channel is already active
+      if (activeChannel && activeChannel.data.name === fullChannelName) {
+        setIsLoading(false);
+        return;
+      }
+      console.log("123123");
+
       // 기존 채널 검색
-      const existingChannels = await client.queryChannels(
-        { name: fullChannelName },
-        { last_message_at: -1 },
-        { limit: 1 }
-      );
+      let existingChannels = [];
+      try {
+        existingChannels = await client.queryChannels(
+          { name: fullChannelName },
+          { last_message_at: -1 },
+          { limit: 1 }
+        );
+      } catch (error) {
+        console.error("채널 검색 중 오류 발생:", error);
+        existingChannels = [];
+      }
+
+
 
       if (existingChannels.length > 0) {
         const channel = existingChannels[0];
@@ -78,73 +104,51 @@ function StreamChat({ carSpec, dictionary, carData, userData, language }) {
         created_by_id: userData.id,
       });
 
+      console.log("newChannel:", newChannel);
+
       await newChannel.create();
       await newChannel.watch();
       setActiveChannel(newChannel);
+
+      try {
+        const { data: existingChat, error: fetchError } = await supabase
+          .from('chatInfo')
+          .select('*')
+          .eq('chatId', newChannel.id)
+          .limit(1); // Limit to 1 to ensure single row
+        console.log("existingChat:", existingChat);
+        if (fetchError) {
+          console.error("Supabase에서 chatId 조회 중 오류 발생:", fetchError);
+        } else if (existingChat && existingChat.length > 0) {
+          console.log("이미 존재하는 chatId입니다. 데이터 저장을 건너뜁니다.");
+        } else {
+          // Insert new chatId and profiles if it doesn't exist
+          const { data, error } = await supabase
+            .from('chatInfo')
+            .insert([
+              { chatId: newChannel.id, profiles: profiles }
+            ]);
+
+          if (error) {
+            console.error("Supabase에 데이터 저장 중 오류 발생:", error);
+          } else {
+            console.log("Supabase에 데이터가 성공적으로 저장되었습니다:", data);
+          }
+        }
+      } catch (error) {
+        console.error("Supabase 처리 중 오류 발생:", error);
+      }
     } catch (error) {
       console.error("채널 처리 중 오류 발생:", error);
     } finally {
       setIsLoading(false);
+      setIsCreatingChannel(false);
     }
   };
-
-  const showChannelId = () => {
-    const activeChannel = client.activeChannel;
-    if (activeChannel) {
-      alert(`현재 채널 ID: ${activeChannel.id}`);
-    } else {
-      alert("선택된 채널이 없습니다.");
-    }
-  };
-
-  const showAllChannels = async () => {
-    try {
-      const channels = await client.queryChannels(filters, sort, options);
-      console.log(
-        "모든 채널 목록:",
-        channels.map((channel) => ({
-          id: channel.id,
-          name: channel.data.name,
-          members: channel.data.member_count,
-          lastMessage: channel.state.last_message_at,
-        }))
-      );
-    } catch (error) {
-      console.error("채널 목록 조회 중 오류 발생:", error);
-    }
-  };
-
-  const handleChannelSelect = (channel) => {
-    setActiveChannel(channel);
-  };
-
-  const deleteChannel = async (channel, e) => {
-    try {
-      // 버튼 클릭 이벤트가 상위로 전파되는 것을 방지
-      e.stopPropagation();
-
-      const confirmDelete = window.confirm(
-        "정말로 이 채널을 삭제하시겠습니까?"
-      );
-      if (!confirmDelete) return;
-
-      await channel.delete();
-      if (activeChannel?.cid === channel.cid) {
-        setActiveChannel(null);
-      }
-      alert("채널이 삭제되었습니다.");
-    } catch (error) {
-      console.error("채널 삭제 중 오류 발생:", error);
-      alert("채널 삭제 중 오류가 발생했습니다.");
-    }
-  };
-
-  
 
   // CustomChannelPreview 컴포넌트 수정
   const CustomChannelPreview = (props) => {
     const { channel, setActiveChannel } = props;
-
     return (
       <div
         className="flex justify-between p-4 border-b hover:bg-gray-100 cursor-pointer"
@@ -212,10 +216,10 @@ function StreamChat({ carSpec, dictionary, carData, userData, language }) {
                       </>
                     ) : (
                       <>
-                      <div className="text-lg font-bold">
-                        {carData?.titlePo[language]}
-                      </div>
-                      <div className="text-medium text-gray-500">
+                        <div className="text-lg font-bold">
+                          {carData?.titlePo[language]}
+                        </div>
+                        <div className="text-medium text-gray-500">
                           {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
                         </div>
                       </>

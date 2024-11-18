@@ -5,12 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 import TabContent from "./components/TabContent";
 import { cookies } from "next/headers";
 import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
+import { dictionary } from "@/app/(main-pages)/components/dictionary";
 export default async function Page() {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
   const languageCookie = cookies().get('language');
   const language = languageCookie ? languageCookie.value : 'kr';
-
+  
   return (
     <div className="mt-10">
       <div className="page-heading flex flex-col justify-start items-start">
@@ -28,7 +29,7 @@ export default async function Page() {
           </ul>
         </nav>
       </div>
-      <TabContent session={session} language={language} />
+      <TabContent session={session} language={language} dictionary={dictionary}/>
     </div>
   );
 }

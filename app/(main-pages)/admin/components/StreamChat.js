@@ -12,19 +12,25 @@ import {
   MessageInput,
   Thread,
 } from "stream-chat-react";
-import { Link,Image, Button, Input, Spinner, Card } from "@nextui-org/react";
+import { Link, Image, Button, Input, Spinner, Card } from "@nextui-org/react";
 import { createToken } from "@/lib/action";
 import "stream-chat-react/dist/css/v2/index.css";
 import { Streami18n } from "stream-chat-react";
 import { createClient } from "@/utils/supabase/client";
 
-function StreamChat({ dictionary, userData, language, defaultLanguage }) {
+function StreamChat({ dictionary, userData, language, defaultLanguage, session }) {
   const [channelName, setChannelName] = useState("");
   const [activeChannel, setActiveChannel] = useState(null);
   const [carData, setCarData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [carSpec, setCarSpec] = useState("");
+  const [userProfiles, setUserProfiles] = useState(null);
+  const [userId, setUserId] = useState(null);
+  
+  console.log('userProfiles:', userProfiles);
+  
   const supabase = createClient();
+
   useEffect(() => {
     const fetchCarData = async () => {
       const parts = channelName.split("_");
@@ -32,18 +38,18 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
 
       const carId = parts[parts.length - 2];
       try {
-        const { data, error } = await supabase
+        const { data: carData, error: carError } = await supabase
           .from("cardata")
           .select("*")
           .eq("id", carId)
           .single();
 
-        if (error) {
-          console.error("Error fetching car data:", error);
+        if (carError) {
+          console.error("Error fetching car data:", carError);
           return;
         }
 
-        setCarData(data);
+        setCarData(carData);
 
         setCarSpec(
           [
@@ -58,6 +64,21 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
           ].join(" • ")
         );
 
+        if (activeChannel) {
+          const { data: userProfileData, error: userProfileError } = await supabase
+            .from("chatInfo")
+            .select("*")
+            .eq("chatId", activeChannel.id)
+            .single()
+
+          if (userProfileError) {
+            console.error("Error fetching user profiles:", userProfileError);
+            return;
+          }
+
+          setUserProfiles(userProfileData?.profiles);
+        }
+
         setIsLoading(true);
       } catch (error) {
         console.error("Error fetching car data:", error);
@@ -65,7 +86,7 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
     };
 
     fetchCarData();
-  }, [channelName]);
+  }, [channelName, activeChannel]);
 
   console.log("carData:", carData);
 
@@ -130,13 +151,14 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
 
   // CustomChannelPreview 컴포넌트 수정
   const CustomChannelPreview = (props) => {
-    const { channel, setActiveChannel, setChannelName } = props;
+    const { channel, setActiveChannel, setChannelName, setUserId } = props;
     return (
       <div
         className="p-4 border-b hover:bg-gray-100 cursor-pointer relative"
         onClick={() => {
           setActiveChannel(channel);
           setChannelName(channel?.data?.name || "이름 없는 채널");
+          setUserId(channel?.data?.created_by);
         }}
       >
         <div className="font-bold text-lg">
@@ -186,6 +208,7 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
                   {...props}
                   setActiveChannel={setActiveChannel}
                   setChannelName={setChannelName}
+                  setUserId={setUserId}
                 />
               )}
               // onSelect={handleChannelSelect} // Add this line
@@ -229,37 +252,48 @@ function StreamChat({ dictionary, userData, language, defaultLanguage }) {
                 {/* <ChannelHeader className="w-full" /> */}
                 {activeChannel && (
                   <>
-                    <div className="flex px-10 gap-x-5 justify-center items-center">
-                      <Image
-                        alt="Card background"
-                        className="object-cover rounded-xl"
-                        src={carData?.uploadedImageUrls[0]?.url}
-                        width={100}
-                        height={100}
-                      />
-                      <div className="flex flex-col justify-center items-start px-10 w-full gap-y-1">
-                        {carData?.platform === "SKEncar" && carData ? (
-                          <>
-
-                            <div className="text-lg font-bold">
-                              <Link target="_blank" href={`/list/${carData?.id}`}>{carData?.title?.[language]}</Link>
-                            </div>
-                            <div className="text-medium text-gray-500">
-                              {carSpec}
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="text-lg font-bold">
-                              {carData?.titlePo[language]}
-                            </div>
-                            <div className="text-medium text-gray-500">
-                              {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
-                            </div>
-                          </>
-                        )}
+                    <div className="flex flex-col">
+                      <div className="flex px-10 gap-x-5 justify-center items-center">
+                        <Image
+                          alt="Card background"
+                          className="object-cover rounded-xl"
+                          src={carData?.uploadedImageUrls[0]?.url}
+                          width={100}
+                          height={100}
+                        />
+                        <div className="flex flex-col justify-center items-start px-10 w-full gap-y-1">
+                          {carData?.platform === "SKEncar" && carData ? (
+                            <>
+                              <div className="text-lg font-bold">
+                                <Link
+                                  target="_blank"
+                                  href={`/list/${carData?.id}`}
+                                >
+                                  {carData?.title?.[language]}
+                                </Link>
+                              </div>
+                              <div className="text-medium text-black">
+                                {carSpec}
+                              </div>
+                              <div className="text-sm text-gray-500">유저정보: {userProfiles?.name}•{userProfiles?.email}•{userProfiles?.phone}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="text-lg font-bold">
+                                {carData?.titlePo[language]}
+                              </div>
+                              <div className="text-medium text-black">
+                                {`${carData?.modelYearPo} · ${carData?.mileagePo}km · ${carData?.isAccidentPo[language]} · ${carData?.carNoPo}`}
+                              </div>
+                              <div className="text-sm text-gray-500">유저정보: {userProfiles?.name}•{userProfiles?.email}•{userProfiles?.phone}</div>
+                            </>
+                          )}
+                        </div>
+                        
                       </div>
+                      
                     </div>
+
                     <MessageList className="w-full" />
                     <MessageInput className="w-full" />
                   </>

@@ -55,7 +55,6 @@ export default function TabContent({ profiles, session, language, dictionary }) 
             defaultLanguage={defaultLanguage}
             dictionary={dictionary}
             userData={userData}
-            carData={carData}
             language={language}
             
           />
