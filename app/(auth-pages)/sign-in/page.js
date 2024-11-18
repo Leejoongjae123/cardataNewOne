@@ -130,7 +130,7 @@ export default function Login({ searchParams }) {
               />
             </div>
 
-            <div className="text-center flex items-center gap-6">
+            {/* <div className="text-center flex items-center gap-6">
               <hr className="flex-1 border-slate-200 " />
               {dictionary.signIn.orcontinuewith[language]}
               <hr className="flex-1 border-slate-200 " />
@@ -141,37 +141,10 @@ export default function Login({ searchParams }) {
               uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true"
             >
               <KakaoButton dictionary={dictionary} language={language}></KakaoButton>
-              {/* <Button
-                className="w-full"
-                startContent={
-                  <RiKakaoTalkFill className="text-2xl text-yellow-400" />
-                }
-                variant="bordered"
-
-              >
-                {dictionary.signIn.kakao[language]}
-              </Button> */}
               <GoogleButton dictionary={dictionary} language={language}></GoogleButton>
-              {/* <Button
-                className="w-full"
-                startContent={<FcGoogle className="text-2xl " />}
-                variant="bordered"
-              >
-                {dictionary.signIn.google[language]}
-              </Button> */}
-              
-              {/* <FacebookButton dictionary={dictionary} language={language}></FacebookButton> */}
-              
-              {/* <Button
-                className="w-full"
-                startContent={<FaFacebook className="text-xl text-blue-600" />}
-                variant="bordered"
-              >
-                {dictionary.signIn.facebook[language]}
-              </Button> */}
 
               
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

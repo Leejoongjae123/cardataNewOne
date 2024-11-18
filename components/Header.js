@@ -2,7 +2,8 @@ import React from "react";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
-import Image from "next/image";
+// import Image from "next/image";
+import { Image } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import MobileMenu from "@/components/MobileMenu";
 import { headers } from "next/headers";
@@ -48,7 +49,8 @@ async function Header() {
                 src="/images/logo1.png"
                 alt="Sincar"
                 width={200}
-                height={200}
+                height={80}
+                className="object-cover"
               />
             </Link>
             </div>

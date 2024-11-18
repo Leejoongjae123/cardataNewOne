@@ -139,6 +139,8 @@ function StreamChat({ carSpec, dictionary, carData, userData, language }) {
     }
   };
 
+  
+
   // CustomChannelPreview 컴포넌트 수정
   const CustomChannelPreview = (props) => {
     const { channel, setActiveChannel } = props;
@@ -199,12 +201,25 @@ function StreamChat({ carSpec, dictionary, carData, userData, language }) {
                     height={100}
                   />
                   <div className="flex flex-col justify-center items-start px-10 w-full gap-y-5">
-                    <div className="text-lg font-bold">
-                      {carData.title[language]}
-                    </div>
-                    <div className="text-medium text-gray-500">
-                      {carSpec}
-                    </div>
+                    {carData.platform === "SKEncar" ? (
+                      <>
+                        <div className="text-lg font-bold">
+                          {carData.title[language]}
+                        </div>
+                        <div className="text-medium text-gray-500">
+                          {carSpec}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                      <div className="text-lg font-bold">
+                        {carData?.titlePo[language]}
+                      </div>
+                      <div className="text-medium text-gray-500">
+                          {`${carData.modelYearPo} · ${carData.mileagePo}km · ${carData.isAccidentPo[language]} · ${carData.carNoPo}`}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
