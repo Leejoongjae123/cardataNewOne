@@ -8,12 +8,8 @@ import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
 import { Chip } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
-import { useRouter, useSearchParams } from 'next/navigation';
 
 function AllOne({ language, dictionary }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
   const currentYear = new Date().getFullYear();
   const [manufacturer, setManufacturer] = useState([]);
@@ -29,7 +25,6 @@ function AllOne({ language, dictionary }) {
   const [search, setSearch] = useState("");
   const [searchModelYear, setSearchModelYear] = useState([]);
   const [searchMileage, setSearchMileage] = useState([]);
-  const [selectedPage, setSelectedPage] = useState(1);
   const itemsPerPage = 20;
 
   const getManufacturer = async () => {
@@ -95,9 +90,6 @@ function AllOne({ language, dictionary }) {
     }
   };
   const getData = async () => {
-    
-    if (!selectedPlatform) return;
-    
     const supabase = createClient();
     let query = supabase
       .from("cardata")
@@ -172,40 +164,15 @@ function AllOne({ language, dictionary }) {
 
   useEffect(() => {
     debouncedGetData();
-  }, [search, searchModelYear, searchMileage,selectedManufacturer, selectedModel, selectedModelGroup, selectedPlatform]);
+  }, [search, searchModelYear, searchMileage]);
 
   useEffect(() => {
-    const initializeFromURL = () => {
-      const manufacturerParam = searchParams.get('manufacturer');
-      const modelGroupParam = searchParams.get('modelGroup');
-      const modelParam = searchParams.get('model');
-      const pageParam = searchParams.get('page');
-      
-      if (manufacturerParam) {
-        setSelectedManufacturer(manufacturerParam);
-        if (modelGroupParam) {
-          setSelectedModelGroup(modelGroupParam);
-          if (modelParam) {
-            setSelectedModel(modelParam);
-          }
-        }
-      }
-      if (pageParam) {
-        setSelectedPage(parseInt(pageParam));
-      }
-    };
-
-    initializeFromURL();
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (selectedPlatform) {
-      getData();
-    }
-  }, [currentPage, selectedManufacturer, selectedModel, selectedModelGroup, selectedPlatform,selectedPage]);
+    getData();
+  }, [currentPage, selectedManufacturer, selectedModel, selectedModelGroup]);
 
   useEffect(() => {
     getManufacturer();
+    getData();
   }, [selectedPlatform]);
 
   useEffect(() => {
@@ -216,24 +183,6 @@ function AllOne({ language, dictionary }) {
     getModelGroup();
   }, [selectedManufacturer]);
 
-  // Update URL when filters change
-  const updateURL = (manufacturer, modelGroup, model, page) => {
-    const params = new URLSearchParams();
-    if (manufacturer) params.set('manufacturer', manufacturer);
-    if (modelGroup) params.set('modelGroup', modelGroup);
-    if (model) params.set('model', model);
-    if (page) params.set('page', page.toString());
-    router.push(`/list?${params.toString()}`);
-  };
-  useEffect(() => {
-    setCurrentPage(selectedPage)
-  }, [selectedPage])
-
-  console.log('selectedManufacturer:', selectedManufacturer)
-  console.log('selectedModelGroup:', selectedModelGroup)
-  console.log('selectedModel:', selectedModel)
-  console.log('selectedPlatform:', selectedPlatform)
-  console.log('currentPage:', currentPage)
 
   return (
     <div>
@@ -279,18 +228,14 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.manufacturer[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedManufacturer}
-                  selectedKeys={[selectedManufacturer]}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    setSelectedManufacturer(value);
+                    setSelectedManufacturer(e.target.value);
                     setSelectedModel("");
                     setSelectedModelGroup("");
-                    updateURL(value, "", "",selectedPage);
                   }}
                 >
                   {(manufacturer) => (
-                    <SelectItem key={manufacturer.key}>{manufacturer.label}</SelectItem>
+                    <SelectItem>{manufacturer.label}</SelectItem>
                   )}
                 </Select>
               </div>
@@ -300,16 +245,12 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.modelGroup[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedModelGroup}
-                  selectedKeys={[selectedModelGroup]}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    setSelectedModelGroup(value);
+                    setSelectedModelGroup(e.target.value);
                     setSelectedModel("");
-                    updateURL(selectedManufacturer, value, "",selectedPage);
                   }}
                 >
-                  {(modelGroup) => <SelectItem key={modelGroup.key}>{modelGroup.label}</SelectItem>}
+                  {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
                 </Select>
               </div>
               <div className="col-span-1">
@@ -318,15 +259,11 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.model[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedModel}
-                  selectedKeys={[selectedModel]}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    setSelectedModel(value);
-                    updateURL(selectedManufacturer, selectedModelGroup, value,selectedPage);
+                    setSelectedModel(e.target.value);
                   }}
                 >
-                  {(model) => <SelectItem key={model.key}>{model.label}</SelectItem>}
+                  {(model) => <SelectItem>{model.label}</SelectItem>}
                 </Select>
               </div>
             </div>
@@ -435,7 +372,7 @@ function AllOne({ language, dictionary }) {
                     </div>
                   </>
                 ) : (
-                  // Other ��랫폼인 경우
+                  // Other 플랫폼인 경우
                   <>
                     <p className="card-text text-black font-medium line-clamp-2">
                       {item.titlePo?.[language]}
@@ -462,11 +399,7 @@ function AllOne({ language, dictionary }) {
           total={totalPages}
           initialPage={1}
           page={currentPage}
-          onChange={(page) => {
-            setCurrentPage(page);
-            setSelectedPage(page);
-            updateURL(selectedManufacturer, selectedModelGroup, selectedModel, page);
-          }}
+          onChange={(page) => setCurrentPage(page)}
         />
       </div>
     </div>
