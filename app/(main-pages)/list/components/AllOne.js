@@ -30,6 +30,7 @@ function AllOne({ language, dictionary }) {
   const [search, setSearch] = useState("");
   const [searchModelYear, setSearchModelYear] = useState([]);
   const [searchMileage, setSearchMileage] = useState([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const itemsPerPage = 20;
 
@@ -185,18 +186,22 @@ function AllOne({ language, dictionary }) {
   ]);
 
   useEffect(() => {
-    const initializeFromURL = () => {
+    const initializeFromURL = async () => {
       const manufacturerParam = searchParams.get("manufacturer");
       const modelGroupParam = searchParams.get("modelGroup");
       const modelParam = searchParams.get("model");
       const pageParam = searchParams.get("page");
 
       if (manufacturerParam) {
+        await getManufacturer();
         setSelectedManufacturer(manufacturerParam);
         if (modelGroupParam) {
+          await getModelGroup();
           setSelectedModelGroup(modelGroupParam);
           if (modelParam) {
+            await getModel();
             setSelectedModel(modelParam);
+            setIsInitialized(true);
           }
         }
       }
@@ -210,7 +215,7 @@ function AllOne({ language, dictionary }) {
   }, [searchParams]);
 
   useEffect(() => {
-    if (selectedPlatform) {
+    if (selectedPlatform && isInitialized) {
       getData();
     }
   }, [
