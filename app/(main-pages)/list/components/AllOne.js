@@ -280,10 +280,11 @@ function AllOne({ language, dictionary }) {
               <a
                 onClick={() => {
                   setSelectedPlatform("SKEncar");
-                  setManufacturer([]); // 빈 문자열 대신 빈 배열로 변경
-                  setModel([]); // 빈 문자열 대신 빈 배열로 변경
-                  setModelGroup([]); // 빈 문자열 대신 빈 배열로 변경
+                  setSelectedManufacturer("");
+                  setSelectedModel("");
+                  setSelectedModelGroup("");
                   updateURL("", "", "", "", "SKEncar");
+                  getManufacturer();
                 }}
               >
                 {" "}
@@ -294,9 +295,9 @@ function AllOne({ language, dictionary }) {
               <a
                 onClick={() => {
                   setSelectedPlatform("Other");
-                  setManufacturer([]);
-                  setModel([]);
-                  setModelGroup([]);
+                  setSelectedManufacturer("");
+                  setSelectedModel("");
+                  setSelectedModelGroup("");
                   updateURL("", "", "", "", "Other");
                 }}
               >
