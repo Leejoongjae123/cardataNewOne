@@ -58,6 +58,10 @@ function AllOne({ language, dictionary }) {
     }
   };
 
+  useEffect(() => {
+    getManufacturer();
+  }, []);
+
   const getModel = async () => {
     const supabase = createClient();
     const { data, error } = await supabase
@@ -313,8 +317,7 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.manufacturer[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedManufacturer}
-                  selectedKeys={[selectedManufacturer]}
+                  selectedKeys={selectedManufacturer ? [selectedManufacturer] : []}
                   onChange={(e) => {
                     const value = e.target.value;
                     setSelectedManufacturer(value);
@@ -337,8 +340,7 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.modelGroup[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedModelGroup}
-                  selectedKeys={[selectedModelGroup]}
+                  selectedKeys={selectedModelGroup ? [selectedModelGroup] : []}
                   onChange={(e) => {
                     const value = e.target.value;
                     setSelectedModelGroup(value);
@@ -360,8 +362,7 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.model[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  // value={selectedModel}
-                  selectedKeys={[selectedModel]}
+                  selectedKeys={selectedModel ? [selectedModel] : []}
                   onChange={(e) => {
                     const value = e.target.value;
                     setSelectedModel(value);
