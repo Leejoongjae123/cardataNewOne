@@ -32,7 +32,7 @@ export default function Login({ searchParams }) {
   console.log("language:", language);
   return (
     <div className="w-full flex ">
-      <ToastBox searchParams={searchParams}></ToastBox>
+      {/* <ToastBox searchParams={searchParams}></ToastBox> */}
       <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center z-10 flex-col">
         <img src="/images/logo1.png" className="w-48  " alt="" />
         <div
@@ -108,21 +108,6 @@ export default function Login({ searchParams }) {
             </div>
 
             <div>
-              {/* <button
-                type="submit"
-                className="button bg-primary text-white w-full"
-                formAction={signInAction}
-              >
-                <Spinner size="sm" />
-                Sign in
-              </button> */}
-              {/* <SubmitButton
-                type="submit"
-                className="w-full text-white bg-primary hover:bg-primary/90 transition-colors"
-                formAction={signInAction}
-              >
-                {dictionary.signIn.signin[language]}
-              </SubmitButton> */}
               <SignInButton
                 signInAction={signInAction}
                 dictionary={dictionary}

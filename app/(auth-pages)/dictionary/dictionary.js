@@ -54,6 +54,30 @@ export const dictionary={
     }
   },
   signIn: {
+    errorConfirm:{
+      kr:"확인",
+      en:"Confirm",
+      ru:"Подтвердить",
+      ar:"تأكيد",
+    },
+    errorTitle:{
+      kr:"로그인 에러",
+      en:"Login error",
+      ru:"Ошибка входа",
+      ar:"خطأ في تسجيل الدخول",
+    },
+    errorMessage1:{
+      kr:"로그인에 실패하였습니다. 아이디 혹은 비밀번호를 재확인 해주세요",
+      en:"Login failed. Please check your ID or password.",
+      ru:"Ошибка входа. Пожалуйста, проверьте свой ID или пароль.",
+      ar:"خطأ في تسجيل الدخول. يرجى مراجعة اسم المستخدم أو كلمة المرور.",
+    },
+    errorMessage2:{
+      kr:"이메일 정보를 입력 후 로그인 해주세요",
+      en:"Please enter your email information and log in.",
+      ru:"Пожалуйста, введите свою электронную почту и войдите.",
+      ar:"يرجى إدخال معلومات البريد الإلكتروني الخاص بك وقم بتسجيل الدخول.",
+    },
     title: {
       kr: "당신의 계정으로 로그인 하세요",
     en: "Log in with your account",
