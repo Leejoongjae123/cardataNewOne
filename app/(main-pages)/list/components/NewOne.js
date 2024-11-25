@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Chip } from "@nextui-org/react";
 import LanguageSelect from "@/app/(auth-pages)/components/LanguageSelect";
 import { dictionary } from "@/app/(main-pages)/components/dictionary";
-
+import { Tabs, Tab } from "@nextui-org/react";
 function NewOne({ language, dictionary }) {
   const [data, setData] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
@@ -48,35 +48,24 @@ function NewOne({ language, dictionary }) {
           <h1 className="page-title test"> {dictionary.list.new[language]} </h1>
           <LanguageSelect />
         </div>
-
-        <nav className="nav__underline mb-5">
-          <ul
-            className="group"
-            uk-switcher="connect: #group-tabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
-          >
-            <li>
-              <a
-                onClick={() => {
-                  setSelectedPlatform("SKEncar");
-                }}
-              >
-                {dictionary.list.skencar[language]}
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  setSelectedPlatform("Other");
-                }}
-              >
-                {dictionary.list.othercar[language]}
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <Tabs
+          classNames="mt-5"
+          aria-label="Options"
+          selectedKey={selectedPlatform}
+          onSelectionChange={(key) => {
+            setSelectedPlatform(key);
+          }}
+          fullWidth
+          size="lg"
+          className="mt-5"
+        >
+          <Tab key="SKEncar" title="SKEncar" className="flex-1" />
+          <Tab key="Other" title="Other" className="flex-1" />
+        </Tabs>
+        
       </div>
       <div
-        className="relative"
+        className="relative mt-5"
         tabIndex="-1"
         uk-slider="autoplay: true;infinite: false;autoplayInterval:2000"
       >

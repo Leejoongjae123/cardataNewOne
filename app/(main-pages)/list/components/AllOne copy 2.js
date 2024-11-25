@@ -8,8 +8,12 @@ import { Input } from "@nextui-org/input";
 import { createClient } from "@/utils/supabase/client";
 import { Chip } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function AllOne({ language, dictionary }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const items = Array.from({ length: 20 }, (_, index) => `Item ${index + 1}`);
   const currentYear = new Date().getFullYear();
   const [manufacturer, setManufacturer] = useState([]);
@@ -20,11 +24,14 @@ function AllOne({ language, dictionary }) {
   const [selectedModelGroup, setSelectedModelGroup] = useState("");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState("1");
+  const [selectedPage, setSelectedPage] = useState(1);
+  const [totalPages, setTotalPages] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("SKEncar");
   const [search, setSearch] = useState("");
   const [searchModelYear, setSearchModelYear] = useState([]);
   const [searchMileage, setSearchMileage] = useState([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const itemsPerPage = 20;
 
   const getManufacturer = async () => {
@@ -46,10 +53,14 @@ function AllOne({ language, dictionary }) {
           label: manufacturer,
         })
       );
-      
+
       setManufacturer(formattedManufacturers);
     }
   };
+
+  useEffect(() => {
+    getManufacturer();
+  }, []);
 
   const getModel = async () => {
     const supabase = createClient();
@@ -61,7 +72,9 @@ function AllOne({ language, dictionary }) {
     if (error) {
       console.log(error);
     } else if (data) {
-      const uniqueModels = Array.from(new Set(data.map((item) => item.model))).sort();
+      const uniqueModels = Array.from(
+        new Set(data.map((item) => item.model))
+      ).sort();
       const formattedModels = uniqueModels.map((model) => ({
         key: model,
         label: model,
@@ -90,6 +103,8 @@ function AllOne({ language, dictionary }) {
     }
   };
   const getData = async () => {
+    if (!selectedPlatform) return;
+
     const supabase = createClient();
     let query = supabase
       .from("cardata")
@@ -164,15 +179,56 @@ function AllOne({ language, dictionary }) {
 
   useEffect(() => {
     debouncedGetData();
-  }, [search, searchModelYear, searchMileage]);
+  }, [
+    currentPage,
+    search,
+    searchModelYear,
+    searchMileage,
+    selectedManufacturer,
+    selectedModel,
+    selectedModelGroup,
+    selectedPlatform,
+  ]);
 
   useEffect(() => {
-    getData();
-  }, [currentPage, selectedManufacturer, selectedModel, selectedModelGroup]);
+    const initializeFromURL = async () => {
+      const manufacturerParam = searchParams.get("manufacturer");
+      const modelGroupParam = searchParams.get("modelGroup");
+      const modelParam = searchParams.get("model");
+      const pageParam = searchParams.get("page");
+      const platformParam = searchParams.get("platform");
+      const searchParam = searchParams.get("search");
+
+      if (platformParam) {
+        setSelectedPlatform(platformParam);
+      }
+
+      if (manufacturerParam) {
+        await getManufacturer();
+        setSelectedManufacturer(manufacturerParam);
+        if (modelGroupParam) {
+          await getModelGroup();
+          setSelectedModelGroup(modelGroupParam);
+          if (modelParam) {
+            await getModel();
+            setSelectedModel(modelParam);
+            setIsInitialized(true);
+          }
+        }
+      }
+      if (pageParam) {
+        setSelectedPage(parseInt(pageParam));
+        handlePageChange(parseInt(pageParam));
+      }
+    };
+
+    initializeFromURL();
+  }, [searchParams]);
 
   useEffect(() => {
-    getManufacturer();
-    getData();
+    if (selectedPlatform && isInitialized) {
+      getManufacturer();
+    }
   }, [selectedPlatform]);
 
   useEffect(() => {
@@ -183,6 +239,31 @@ function AllOne({ language, dictionary }) {
     getModelGroup();
   }, [selectedManufacturer]);
 
+  // Update URL when filters change
+  const updateURL = (manufacturer, modelGroup, model, page, platform, search) => {
+    const params = new URLSearchParams();
+    if (manufacturer) params.set("manufacturer", manufacturer);
+    if (modelGroup) params.set("modelGroup", modelGroup);
+    if (model) params.set("model", model);
+    if (page) params.set("page", page.toString());
+    if (platform) params.set("platform", platform);
+    if (search) params.set("search", search);
+
+    router.push(`/list?${params.toString()}`);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setSelectedPage(page);
+    updateURL(
+      selectedManufacturer, 
+      selectedModelGroup, 
+      selectedModel, 
+      page,
+      selectedPlatform,
+      search
+    );
+  };
 
   return (
     <div>
@@ -199,6 +280,11 @@ function AllOne({ language, dictionary }) {
               <a
                 onClick={() => {
                   setSelectedPlatform("SKEncar");
+                  setSelectedManufacturer("");
+                  setSelectedModel("");
+                  setSelectedModelGroup("");
+                  updateURL("", "", "", "", "SKEncar");
+                  getManufacturer();
                 }}
               >
                 {" "}
@@ -209,6 +295,10 @@ function AllOne({ language, dictionary }) {
               <a
                 onClick={() => {
                   setSelectedPlatform("Other");
+                  setSelectedManufacturer("");
+                  setSelectedModel("");
+                  setSelectedModelGroup("");
+                  updateURL("", "", "", "", "Other");
                 }}
               >
                 {" "}
@@ -228,14 +318,20 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.manufacturer[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
+                  selectedKeys={selectedManufacturer ? [selectedManufacturer] : []}
                   onChange={(e) => {
-                    setSelectedManufacturer(e.target.value);
+                    const value = e.target.value;
+                    setSelectedManufacturer(value);
                     setSelectedModel("");
                     setSelectedModelGroup("");
+                    setSelectedPlatform("SKEncar");
+                    updateURL(value, "", "", selectedPage, "SKEncar");
                   }}
                 >
                   {(manufacturer) => (
-                    <SelectItem>{manufacturer.label}</SelectItem>
+                    <SelectItem key={manufacturer.key}>
+                      {manufacturer.label}
+                    </SelectItem>
                   )}
                 </Select>
               </div>
@@ -245,12 +341,20 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.modelGroup[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
+                  selectedKeys={selectedModelGroup ? [selectedModelGroup] : []}
                   onChange={(e) => {
-                    setSelectedModelGroup(e.target.value);
+                    const value = e.target.value;
+                    setSelectedModelGroup(value);
                     setSelectedModel("");
+                    setSelectedPlatform("SKEncar");
+                    updateURL(selectedManufacturer, value, "", selectedPage);
                   }}
                 >
-                  {(modelGroup) => <SelectItem>{modelGroup.label}</SelectItem>}
+                  {(modelGroup) => (
+                    <SelectItem key={modelGroup.key}>
+                      {modelGroup.label}
+                    </SelectItem>
+                  )}
                 </Select>
               </div>
               <div className="col-span-1">
@@ -259,11 +363,22 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.model[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
+                  selectedKeys={selectedModel ? [selectedModel] : []}
                   onChange={(e) => {
-                    setSelectedModel(e.target.value);
+                    const value = e.target.value;
+                    setSelectedModel(value);
+                    setSelectedPlatform("SKEncar");
+                    updateURL(
+                      selectedManufacturer,
+                      selectedModelGroup,
+                      value,
+                      selectedPage
+                    );
                   }}
                 >
-                  {(model) => <SelectItem>{model.label}</SelectItem>}
+                  {(model) => (
+                    <SelectItem key={model.key}>{model.label}</SelectItem>
+                  )}
                 </Select>
               </div>
             </div>
@@ -307,7 +422,10 @@ function AllOne({ language, dictionary }) {
                 placeholder="Search..."
                 className="w-full"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  updateURL("", "", "", "", "Other",e.target.value);
+                }}
                 startContent={
                   <svg
                     className="w-5 h-5 text-gray-500"
@@ -372,7 +490,7 @@ function AllOne({ language, dictionary }) {
                     </div>
                   </>
                 ) : (
-                  // Other 플랫폼인 경우
+                  // Other 랫폼인 경우
                   <>
                     <p className="card-text text-black font-medium line-clamp-2">
                       {item.titlePo?.[language]}
@@ -394,13 +512,16 @@ function AllOne({ language, dictionary }) {
         ))}
       </div>
       <div className="flex w-full justify-center items-center py-5">
-        <Pagination
-          className="text-white"
-          total={totalPages}
-          initialPage={1}
-          page={currentPage}
-          onChange={(page) => setCurrentPage(page)}
-        />
+        {totalPages && (
+          <Pagination
+            className="text-white"
+            showControls
+            color="primary"
+            initialPage={currentPage}
+            total={totalPages}
+            onChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );
