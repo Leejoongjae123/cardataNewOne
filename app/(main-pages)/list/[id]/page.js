@@ -313,7 +313,7 @@ async function page({ params }) {
                         >
                           {/* http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carleaserent_l01&listAdvType=rent&carid=$
                           {carData.productId} */}
-                          상품링크 보기
+                          {dictionary.list.seeLink[language]}
                         </Link>
                       )}
                   </div>
@@ -443,7 +443,7 @@ async function page({ params }) {
                     {profiles.role === "master" && (
                       <div className="flex gap-3 col-span-2 justify-center items-center mt-3">
                         <Link target="_blank" href={carData?.accidentUrl}>
-                          보험이력 보기
+                          {dictionary.list.seeInsuranceHistory[language]}
                         </Link>
                       </div>
                     )}
@@ -752,7 +752,7 @@ async function page({ params }) {
                   {profiles.role === "master" && (
                     <div className="flex gap-3 justify-center items-center mt-3">
                       <Link target="_blank" href={carData?.performanceUrl}>
-                        성능점검 보기
+                        {dictionary.list.seePerformanceHistory[language]}
                       </Link>
                     </div>
                   )}

@@ -15,15 +15,15 @@ export const dictionary = {
   },
   nopage:{
     title:{
-      kr:"승인을 받으려면",
-      en:"To get approved",
-      ru:"Чтобы получить одобрение",
-      ar:"للحصول على الموافقة",
+      kr:"가입을 축하합니다!",
+      en:"Congratulations on signing up!",
+      ru:"Спасибо за регистрацию!",
+      ar:"تهانينا بالتسجيل!",
     },
     subtitle:{
-      kr:"+82 10-5088-0576 또는 +82 10-7939-1303 연락하거나 Sincar WhatsApp을 통해 문의하세요",
-      en:"Contact +82 10-5088-0576 or +82 10-7939-1303 or contact us through Sincar WhatsApp",
-      ru:"Свяжитесь с нами по телефону +7 916 508-80-57 или +7 916 793-91-30, или напишите нам в WhatsApp",
+      kr:"+82 10-2609-0761 연락하거나 Sincar WhatsApp을 통해 문의하세요",
+      en:"Contact +82 10-2609-0761 or contact us through Sincar WhatsApp",
+      ru:"Ваш запрос находится на одобрении у администратора. Для ускорения обработки просим связаться по номеру: 82-10-2609-0761 или напишите в WhatsApp. ",
       ar:"اتصل بنا على +966 50880576 أو +966 79391303 أو اتصل بنا عبر WhatsApp",
     },
     gotosignin:{
@@ -34,6 +34,24 @@ export const dictionary = {
     }
   },
   list: {
+    seeLink:{
+      kr:"상품링크 보기",
+      en:"See Product Link",
+      ru:"Посмотреть ссылку на товар",
+      ar:"عرض رابط المنتج",
+    },
+    seePerformanceHistory:{
+      kr:"성능점검 보기",
+      en:"See Performance History",
+      ru:"Данные техосмотра",
+      ar:"عرض تاريخ الأداء",
+    },
+    seeInsuranceHistory:{
+      kr:"보험이력 보기",
+      en:"See Insurance History",
+      ru:"Данные страховой",
+      ar:"عرض تاريخ التأمين",
+    },
     partner:{
       kr:"신카와 함께하는 파트너",
       en:"Partner with Sincar",
@@ -148,7 +166,7 @@ export const dictionary = {
     estimates: {
       kr: "견적",
       en: "Estimates",
-      ru: "Оценки",
+      ru: "Предложения",
       ar: "تقديرات",
     },
     auth:{
@@ -160,7 +178,7 @@ export const dictionary = {
     info:{
       kr: "정보",
       en: "Info",
-      ru: "Информация",
+      ru: "Личная информация",
       ar: "المعلومات",
     },
     chat:{
@@ -244,7 +262,7 @@ export const dictionary = {
     businessCertificate:{
       kr: "사업자 등록증",
       en: "Business Certificate",
-      ru: "Сертификат предприятия",
+      ru: "Регистрационный сертификат юр. лица",
       ar: "شهادة تجارية",
     },
     viewBusinessCertificate:{
@@ -384,7 +402,7 @@ export const dictionary = {
     applyEstimate:{
       kr:"견적신청하기",
       en:"Apply Estimate",
-      ru:"Применить оценку",
+      ru:"Запросить цену",
       ar:"تطبيق التقدير",
     },
     chat:{
@@ -438,7 +456,7 @@ export const dictionary = {
     price:{
       kr:"가격",
       en:"Price",
-      ru:"Цена",
+      ru:"Платеж в банк",
       ar:"السعر",
     },
     issues:{
@@ -576,7 +594,7 @@ export const dictionary = {
     applyModalTitle:{
       kr:"견적 신청완료",
       en:"Estimate Application Complete",
-      ru:"Применение оценки завершено",
+      ru:"Запрос отправлен.",
       ar:"تطبيق التقدير منجز",
     },
     applyModalContents1:{
@@ -588,7 +606,7 @@ export const dictionary = {
     applyModalContents2:{
       kr:'담당자가 빠른 시일 내에 파악하여 가입하신 메일 주소로 회신 드리겠습니다.',
       en:'The manager will reply to the email address you registered as soon as possible.',
-      ru:'Менеджер ответит на вашу электронную почту в ближайшее время.',
+      ru:'Если машина находится в лизинге, расчет цены требует подтверждения со стороны банка, поэтому может занять до 1 дня. Подтвердить.',
       ar:'سيتم الرد على بريدك الإلكتروني المسجل في أقرب وقت.',
     },
     applyModalButton:{
@@ -600,7 +618,7 @@ export const dictionary = {
     applyModalContents1_1:{
       kr:"이미 견적신청을 완료하였습니다.",
       en:"You have already completed the estimate application.",
-      ru:"Вы уже завершили заявку на оценку.",
+      ru:"Мы получили ваш запрос. Менеджер ответит на вашу электронную почту в ближайшее время",
       ar:"لقد قمت بالفعل بطلب تقدير.",
     },
     onlyfor1:{

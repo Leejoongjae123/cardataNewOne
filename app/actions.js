@@ -41,7 +41,7 @@ export const signUpAction = async (formData) => {
     return encodedRedirect(
       "success",
       "/sign-up",
-      "Thanks for signing up! Please check your email for a verification link."
+      "Thanks for signing up!"
     );
   }
 };
@@ -125,13 +125,13 @@ export async function signUpFirstAction(formData) {
   }
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
-  if (!password || !passwordRegex.test(password)) {
-    return encodedRedirect(
-      "error",
-      "/sign-up",
-      "Password must be at least 8 characters long and include at least one number and one special character"
-    );
-  }
+  // if (!password || !passwordRegex.test(password)) {
+  //   return encodedRedirect(
+  //     "error",
+  //     "/sign-up",
+  //     "Password must be at least 8 characters long and include at least one number and one special character"
+  //   );
+  // }
 
   if (password !== confirmPassword) {
     return encodedRedirect("error", "/sign-up", "Passwords do not match");

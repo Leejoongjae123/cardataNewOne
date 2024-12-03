@@ -28,11 +28,9 @@ export default function Login({ searchParams }) {
   const languageCookie = cookies().get("language");
   const language = languageCookie ? languageCookie.value : "kr";
 
-  
-  console.log("language:", language);
   return (
     <div className="w-full flex ">
-      {/* <ToastBox searchParams={searchParams}></ToastBox> */}
+      <ToastBox searchParams={searchParams}></ToastBox>
       <div className="w-full md:w-1/3 relative col-span-1 p-10 min-h-screen bg-white shadow-xl flex items-center justify-center z-10 flex-col">
         <img src="/images/logo1.png" className="w-48  " alt="" />
         <div

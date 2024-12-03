@@ -41,7 +41,7 @@ export default function LanguageSelect() {
           English
         </option>
         <option className="text-black" value="ru">
-          русский язык
+          Русский
         </option>
         {/* <option className="text-black" value="ar">
           العربية

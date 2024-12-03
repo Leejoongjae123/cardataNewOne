@@ -15,7 +15,12 @@ function ToastBox({searchParams}) {
       toast.error(searchParams.error)
       console.log(searchParams.error)
     }
+    if (searchParams.success){
+      toast.success(searchParams.success)
+    }
   }
+
+  console.log('searchParams:',searchParams)
   useEffect(()=>{
     handleParams()
   },[])

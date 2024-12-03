@@ -77,10 +77,10 @@ export default function SignUp({ searchParams }) {
                   className="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 "
                 />
               </div>
-              <p>*{dictionary.signUp.condition1[language]}</p>
-              <p>
+              {/* <p>*{dictionary.signUp.condition1[language]}</p> */}
+              {/* <p>
                 *{dictionary.signUp.condition2[language]}
-              </p>
+              </p> */}
             </div>
             <div>
               <label htmlFor="confirm password" className="">

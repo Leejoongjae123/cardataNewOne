@@ -98,7 +98,7 @@ export default function Login({ searchParams }) {
       return encodedRedirect(
         "success",
         "/sign-in",
-        "Thanks for signing up! Please check your email for a verification link."
+        "Thanks for signing up!"
       );
     }
   };
