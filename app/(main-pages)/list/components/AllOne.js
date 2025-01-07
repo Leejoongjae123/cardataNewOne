@@ -115,9 +115,11 @@ function AllOne({ language, dictionary }) {
       .order("created_at", { ascending: false })
       .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
-    if (search && selectedPlatform === "Other") {
-      query = query.ilike("titlePo->>en", `%${search}%`);
-    }
+      if (search && selectedPlatform === "Other") {
+        query = query.or(
+          `titlePo->>en.ilike.%${search}%,titlePo->>kr.ilike.%${search}%`
+        );
+      }
 
     if (selectedPlatform === "SKEncar" && selectedManufacturer) {
       query = query.eq("manufacturerEN", selectedManufacturer);

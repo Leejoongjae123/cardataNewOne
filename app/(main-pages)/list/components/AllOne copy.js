@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/client";
 import { Chip } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 
 function AllOne({ language, dictionary }) {
   const router = useRouter();
@@ -178,19 +179,6 @@ function AllOne({ language, dictionary }) {
   const debouncedGetData = debounce(getData, 1000);
 
   useEffect(() => {
-    debouncedGetData();
-  }, [
-    currentPage,
-    search,
-    searchModelYear,
-    searchMileage,
-    selectedManufacturer,
-    selectedModel,
-    selectedModelGroup,
-    selectedPlatform,
-  ]);
-
-  useEffect(() => {
     const initializeFromURL = async () => {
       const manufacturerParam = searchParams.get("manufacturer");
       const modelGroupParam = searchParams.get("modelGroup");
@@ -198,11 +186,30 @@ function AllOne({ language, dictionary }) {
       const pageParam = searchParams.get("page");
       const platformParam = searchParams.get("platform");
       const searchParam = searchParams.get("search");
+      const modelYearParam = searchParams.get("modelYear");
+      const mileageParam = searchParams.get("mileage");
 
+      // Initialize platform and search
       if (platformParam) {
         setSelectedPlatform(platformParam);
       }
+      if (searchParam) {
+        setSearch(searchParam);
+      }
 
+      // Initialize model year range
+      if (modelYearParam) {
+        const [startYear, endYear] = modelYearParam.split(",").map(Number);
+        setSearchModelYear([startYear, endYear]);
+      }
+
+      // Initialize mileage range
+      if (mileageParam) {
+        const [startMileage, endMileage] = mileageParam.split(",").map(Number);
+        setSearchMileage([startMileage, endMileage]);
+      }
+
+      // Initialize manufacturer, model group, and model
       if (manufacturerParam) {
         await getManufacturer();
         setSelectedManufacturer(manufacturerParam);
@@ -212,18 +219,28 @@ function AllOne({ language, dictionary }) {
           if (modelParam) {
             await getModel();
             setSelectedModel(modelParam);
-            setIsInitialized(true);
           }
         }
       }
+
+      // Initialize page
       if (pageParam) {
         setSelectedPage(parseInt(pageParam));
-        handlePageChange(parseInt(pageParam));
+        setCurrentPage(parseInt(pageParam));
       }
+
+      // Set initialization flag and trigger data fetch
+      setIsInitialized(true);
     };
 
     initializeFromURL();
-  }, [searchParams]);
+  }, []);
+
+  useEffect(() => {
+    if (isInitialized) {
+      debouncedGetData();
+    }
+  }, [searchParams, isInitialized]);
 
   useEffect(() => {
     if (selectedPlatform && isInitialized) {
@@ -240,7 +257,16 @@ function AllOne({ language, dictionary }) {
   }, [selectedManufacturer]);
 
   // Update URL when filters change
-  const updateURL = (manufacturer, modelGroup, model, page, platform, search) => {
+  const updateURL = (
+    manufacturer,
+    modelGroup,
+    model,
+    page,
+    platform,
+    search,
+    modelYear,
+    mileage
+  ) => {
     const params = new URLSearchParams();
     if (manufacturer) params.set("manufacturer", manufacturer);
     if (modelGroup) params.set("modelGroup", modelGroup);
@@ -248,6 +274,8 @@ function AllOne({ language, dictionary }) {
     if (page) params.set("page", page.toString());
     if (platform) params.set("platform", platform);
     if (search) params.set("search", search);
+    if (modelYear) params.set("modelYear", modelYear.toString());
+    if (mileage) params.set("mileage", mileage.toString());
 
     router.push(`/list?${params.toString()}`);
   };
@@ -256,57 +284,54 @@ function AllOne({ language, dictionary }) {
     setCurrentPage(page);
     setSelectedPage(page);
     updateURL(
-      selectedManufacturer, 
-      selectedModelGroup, 
-      selectedModel, 
+      selectedManufacturer,
+      selectedModelGroup,
+      selectedModel,
       page,
       selectedPlatform,
-      search
+      search,
+      searchModelYear,
+      searchMileage
     );
   };
+
+  // Add this useEffect to update pagination when searchParams changes
+  useEffect(() => {
+    const pageParam = searchParams.get("page");
+    if (pageParam) {
+      setCurrentPage(parseInt(pageParam));
+      setSelectedPage(parseInt(pageParam));
+    }
+  }, [searchParams]);
 
   return (
     <div>
       <div className="page-heading">
         <h1 className="page-title test"> {dictionary.list.all[language]} </h1>
 
-        <nav className="nav__underline">
-          <ul
-            className="group"
-            uk-switcher="connect: #group-tabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"
-          >
-            <li>
-              {" "}
-              <a
-                onClick={() => {
-                  setSelectedPlatform("SKEncar");
-                  setSelectedManufacturer("");
-                  setSelectedModel("");
-                  setSelectedModelGroup("");
-                  updateURL("", "", "", "", "SKEncar");
-                  getManufacturer();
-                }}
-              >
-                {" "}
-                {dictionary.list.skencar[language]}
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  setSelectedPlatform("Other");
-                  setSelectedManufacturer("");
-                  setSelectedModel("");
-                  setSelectedModelGroup("");
-                  updateURL("", "", "", "", "Other");
-                }}
-              >
-                {" "}
-                {dictionary.list.othercar[language]}
-              </a>{" "}
-            </li>
-          </ul>
-        </nav>
+        <Tabs
+          aria-label="Options"
+          selectedKey={selectedPlatform}
+          onSelectionChange={(key) => {
+            setSelectedPlatform(key);
+            updateURL(
+              selectedManufacturer,
+              selectedModelGroup,
+              selectedModel,
+              selectedPage,
+              key,
+              search,
+              searchModelYear,
+              searchMileage
+            );
+          }}
+          fullWidth
+          size="lg"
+          className="mt-5"
+        >
+          <Tab key="SKEncar" title="SKEncar" className="flex-1" />
+          <Tab key="Other" title="Other" className="flex-1" />
+        </Tabs>
       </div>
       <div className="flex">
         {selectedPlatform === "SKEncar" ? (
@@ -318,14 +343,16 @@ function AllOne({ language, dictionary }) {
                   label={dictionary.list.manufacturer[language]}
                   placeholder={dictionary.list.select[language]}
                   className="max-w-xs"
-                  selectedKeys={selectedManufacturer ? [selectedManufacturer] : []}
+                  selectedKeys={
+                    selectedManufacturer ? [selectedManufacturer] : []
+                  }
                   onChange={(e) => {
                     const value = e.target.value;
                     setSelectedManufacturer(value);
                     setSelectedModel("");
                     setSelectedModelGroup("");
                     setSelectedPlatform("SKEncar");
-                    updateURL(value, "", "", selectedPage, "SKEncar");
+                    updateURL(value, "", "", 1, "SKEncar", search, searchModelYear, searchMileage);
                   }}
                 >
                   {(manufacturer) => (
@@ -347,7 +374,7 @@ function AllOne({ language, dictionary }) {
                     setSelectedModelGroup(value);
                     setSelectedModel("");
                     setSelectedPlatform("SKEncar");
-                    updateURL(selectedManufacturer, value, "", selectedPage);
+                    updateURL(selectedManufacturer, value, "", 1, "SKEncar",search,searchModelYear,searchMileage);
                   }}
                 >
                   {(modelGroup) => (
@@ -372,7 +399,11 @@ function AllOne({ language, dictionary }) {
                       selectedManufacturer,
                       selectedModelGroup,
                       value,
-                      selectedPage
+                      1,
+                      "SKEncar",
+                      search,
+                      searchModelYear,
+                      searchMileage
                     );
                   }}
                 >
@@ -390,12 +421,22 @@ function AllOne({ language, dictionary }) {
                   minValue={2000}
                   maxValue={currentYear}
                   defaultValue={[2000, currentYear]}
+                  {...(searchModelYear?.length === 2 && { value: searchModelYear })}
                   formatOptions={{
                     useGrouping: false,
                   }}
                   className="w-full"
                   onChange={(value) => {
                     setSearchModelYear(value);
+                    updateURL(
+                      selectedManufacturer,
+                      selectedModelGroup,
+                      selectedModel,
+                      selectedPage,
+                      "SKEncar",
+                      search,
+                      value
+                    );
                   }}
                 />
               </div>
@@ -406,9 +447,20 @@ function AllOne({ language, dictionary }) {
                   minValue={0}
                   maxValue={300000}
                   defaultValue={[0, 300000]}
+                  {...(searchMileage?.length === 2 && { value: searchMileage })}
                   className="w-full"
                   onChange={(value) => {
                     setSearchMileage(value);
+                    updateURL(
+                      selectedManufacturer,
+                      selectedModelGroup,
+                      selectedModel,
+                      selectedPage,
+                      "SKEncar",
+                      search,
+                      searchModelYear,
+                      value
+                    );
                   }}
                 />
               </div>
@@ -424,7 +476,7 @@ function AllOne({ language, dictionary }) {
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  updateURL("", "", "", "", "Other",e.target.value);
+                  updateURL("", "", "", currentPage, "Other", e.target.value);
                 }}
                 startContent={
                   <svg
@@ -517,7 +569,7 @@ function AllOne({ language, dictionary }) {
             className="text-white"
             showControls
             color="primary"
-            initialPage={currentPage}
+            page={currentPage}
             total={totalPages}
             onChange={handlePageChange}
           />
