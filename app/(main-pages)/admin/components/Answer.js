@@ -125,6 +125,7 @@ function Answer({ session, language }) {
 
   const handleSendMail = async () => {
     // Prepare email data based on platform
+    console.log("responseData:", responseData);
     const emailData =
       responseData.platform === "SKEncar"
         ? {
@@ -137,7 +138,7 @@ function Answer({ session, language }) {
             fuel: responseData.productId.fuelType[language],
             color: responseData.productId.clr[language],
             accidenthistory: responseData.productId.accidentSelf[language],
-            result: responseData.answer,
+            result: responseData.answer || "",
             id: responseData.productId.id.toString(),
           }
         : {
@@ -150,9 +151,10 @@ function Answer({ session, language }) {
             fuel: "",
             color: "",
             accidenthistory: responseData.productId.isAccidentPo[language],
-            result: responseData.answer,
+            result: responseData.answer || "",
             id: responseData.productId.id.toString(),
           };
+          
 
     const response2 = await axios.post(
       "https://ye6igz6td727rdifjkb4gsco3u0krbpw.lambda-url.ap-northeast-2.on.aws/send-email",

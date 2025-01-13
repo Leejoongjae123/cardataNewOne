@@ -117,7 +117,7 @@ function AllOne({ language, dictionary }) {
 
       if (search && selectedPlatform === "Other") {
         query = query.or(
-          `titlePo->>en.ilike.%${search}%,titlePo->>kr.ilike.%${search}%`
+          `titlePo->>en.ilike.%${search}%,titlePo->>kr.ilike.%${search}%` //240107 한글 검색도 되도록 수정
         );
       }
 
